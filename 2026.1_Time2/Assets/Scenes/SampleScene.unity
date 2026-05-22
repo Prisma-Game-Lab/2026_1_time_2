@@ -131,6 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 180230369}
+  - component: {fileID: 180230370}
   m_Layer: 0
   m_Name: ArmaPivot
   m_TagString: Untagged
@@ -154,6 +155,20 @@ Transform:
   - {fileID: 1997556870}
   m_Father: {fileID: 1702505626}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &180230370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180230368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c353f66db5807db48881e1aabe0b026b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAngle: 120
+  attackSpeed: 7
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,13 +795,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1997556869}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.05261141, y: 0.08425503, z: 0.6755584, w: 0.73058474}
-  m_LocalPosition: {x: -0.94, y: 0.78, z: 0.03}
+  m_LocalRotation: {x: -0.08319034, y: 0.054273427, z: 0.30519554, w: 0.94709533}
+  m_LocalPosition: {x: -0.01, y: 1.07, z: 0.03}
   m_LocalScale: {x: 0.19640002, y: 0.2932684, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 180230369}
-  m_LocalEulerAnglesHint: {x: -10.994, y: 3.038, z: 85.226}
+  m_LocalEulerAnglesHint: {x: -10.994, y: 3.038, z: 35.43}
 --- !u!212 &1997556871
 SpriteRenderer:
   m_ObjectHideFlags: 0
