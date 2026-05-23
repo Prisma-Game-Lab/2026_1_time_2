@@ -5,20 +5,18 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
 
-    public float rotationAngle = 60f;
     public float attackSpeed = 5f;
+    public float attackDamage = 10f;
 
+    [Header("Animação do Ataque")]
+    public float rotationAngle = 60f;
     private bool isAttacking = false;
 
-    // Start is called before the first frame update
     void Start()
     {
-
-
-        
+          
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetMouseButtonDown(0) && !isAttacking)
@@ -33,11 +31,13 @@ public class PlayerAttack : MonoBehaviour
 
         isAttacking = true;
 
-        Quaternion localOriginRotation = transform.localRotation;
+        //Calcula as rotações de início e fim do ataque
 
+        Quaternion localOriginRotation = transform.localRotation;
         Quaternion startRotation = localOriginRotation * Quaternion.Euler(0, 0, rotationAngle / 2f);
         Quaternion endRotation = localOriginRotation * Quaternion.Euler(0, 0, -rotationAngle / 2f);
 
+        //Faz a rotação do ataque funcionar, primeiro indo um pouco para um lado, depois para o outro e depois voltando para a posição original
         float t = 0;
 
         while(t < 1f)
@@ -65,4 +65,18 @@ public class PlayerAttack : MonoBehaviour
 
         isAttacking = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+
+        if (isAttacking)
+        {
+            if (other.CompareTag("Enemy"))
+            {
+                Debug.Log("Inimigo atingido! Dano: " + attackDamage);
+            }
+        }
+    }
+
+
 }
