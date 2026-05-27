@@ -78,5 +78,10 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    public bool IsWeaponAttacking()
+    {
+        return isAttacking;
+    }
+
 
 }
