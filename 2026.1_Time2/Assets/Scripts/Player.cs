@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Armas")]
+    public GameObject[] weapons;
+
+    [Header("Outros")]
 
     public float movementSpeed = 5f;
 
@@ -26,6 +30,7 @@ public class Player : MonoBehaviour
 
 
         RotateTowardsMouse();
+        SelectWeapon();
     }
 
 
@@ -54,6 +59,31 @@ public class Player : MonoBehaviour
 
         // 4. Aplica a rotação no eixo Z
         transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
+    }
+
+    void SelectWeapon()
+    {
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            PlayerAttack bastaoScript = GetComponentInChildren<PlayerAttack>();
+
+            if (bastaoScript == null || !bastaoScript.IsWeaponAttacking())
+            {
+                // Ativa a próxima arma
+                for (int i = 0; i < weapons.Length; i++)
+                {
+                    if (weapons[i].activeSelf)
+                    {
+                        weapons[i].SetActive(false);
+                        int nextIndex = (i + 1) % weapons.Length;
+                        weapons[nextIndex].SetActive(true);
+                        break;
+                    }
+                }
+            }
+        }
+
     }
 
 }
