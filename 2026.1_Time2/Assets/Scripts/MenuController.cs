@@ -8,7 +8,7 @@ public class MenuController : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("RoadMap");
     }
 
     public void OpenSettings()

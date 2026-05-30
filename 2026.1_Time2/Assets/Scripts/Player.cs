@@ -7,9 +7,14 @@ public class Player : MonoBehaviour
     [Header("Armas")]
     public GameObject[] weapons;
 
-    [Header("Outros")]
+    [Header("Speed e Dash")]
 
     public float movementSpeed = 5f;
+    public float dashSpeed = 7f;
+    public float dashDuration = 0.5f;
+    public float dashCooldown = 2.0f;
+
+    [Header("Outros")]
 
     public Rigidbody2D rb;
 
@@ -31,6 +36,7 @@ public class Player : MonoBehaviour
 
         RotateTowardsMouse();
         SelectWeapon();
+        PlayerDash();
     }
 
 
@@ -84,6 +90,39 @@ public class Player : MonoBehaviour
             }
         }
 
+    }
+
+    private bool isDashing = false;
+
+    void PlayerDash()
+    {
+        // Implementação do dash
+        if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
+        {
+            // Aumenta a velocidade temporariamente
+            StartCoroutine(DashCoroutine());
+        }
+    }
+
+    IEnumerator DashCoroutine()
+    {
+        isDashing = true;
+
+        float originalSpeed = movementSpeed;
+        movementSpeed += dashSpeed;
+        yield return new WaitForSeconds(dashDuration); // Dura dashDuration segundos
+        movementSpeed = originalSpeed; // Volta à velocidade normal
+
+
+        //Calcula o tempo do cooldown
+        float tempoRestanteDoCooldown = dashCooldown - dashDuration;
+        if (tempoRestanteDoCooldown > 0)
+        {
+            yield return new WaitForSeconds(tempoRestanteDoCooldown); // Segura o botão travado
+        }
+
+
+        isDashing = false;
     }
 
 }
