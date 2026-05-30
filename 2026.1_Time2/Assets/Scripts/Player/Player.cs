@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("Armas")]
-    public GameObject[] weapons;
+
+    [Header("Vida")]
+
+    public int maxHealth = 90;
+    private int currentHealth;
+
+    public int takenDamage = 30;
 
     [Header("Speed e Dash")]
 
@@ -13,6 +18,9 @@ public class Player : MonoBehaviour
     public float dashSpeed = 7f;
     public float dashDuration = 0.5f;
     public float dashCooldown = 2.0f;
+
+    [Header("Armas")]
+    public GameObject[] weapons;
 
     [Header("Outros")]
 
@@ -25,6 +33,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -32,6 +41,11 @@ public class Player : MonoBehaviour
         // Input dos Movimentos Verticais e Horizontais
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
+        if(currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
 
 
         RotateTowardsMouse();
@@ -47,6 +61,13 @@ public class Player : MonoBehaviour
         // Normaliza para não aumentar velocidade na diagonal
         if (move.sqrMagnitude > 1f) move = move.normalized;
         rb.MovePosition(rb.position + move * movementSpeed * Time.fixedDeltaTime);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            currentHealth -= takenDamage;
+        }
     }
 
     void RotateTowardsMouse()

@@ -5,6 +5,7 @@ using UnityEngine;
 public class AtlatlScript : MonoBehaviour
 {
     public float speed = 4.5f;
+    public float attackDamage = 10f;
 
     private Camera mainCamera;
     private Vector3 moveDirection;
@@ -37,7 +38,7 @@ public class AtlatlScript : MonoBehaviour
         
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log("Inimigo atingido! Dano: ");
+            Debug.Log("Inimigo atingido! Dano: " + attackDamage);
         }
         
     }
