@@ -1,59 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Player : MonoBehaviour
 {
-
     [Header("Vida")]
-
     public int maxHealth = 90;
     private int currentHealth;
-
     public int takenDamage = 30;
-
     [Header("Speed e Dash")]
-
     public float movementSpeed = 5f;
     public float dashSpeed = 7f;
     public float dashDuration = 0.5f;
     public float dashCooldown = 2.0f;
-
     [Header("Armas")]
     public GameObject[] weapons;
-
     [Header("Outros")]
-
     public Rigidbody2D rb;
-
     Vector2 movement;
-
     private Camera mainCamera;
-
     void Start()
     {
         mainCamera = Camera.main;
         currentHealth = maxHealth;
     }
-
     void Update()
     {
         // Input dos Movimentos Verticais e Horizontais
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
-
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Destroy(gameObject);
         }
-
-
         RotateTowardsMouse();
         SelectWeapon();
         PlayerDash();
     }
-
-
     void FixedUpdate()
     {
         // Movimentação do Player
@@ -66,35 +48,32 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            currentHealth -= takenDamage;
+            TakeDamage(takenDamage);
         }
     }
-
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+    }
     void RotateTowardsMouse()
     {
         // Pega a posição do mouse na tela e converte para coordenadas do mundo
         Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-
         // Calcula a direção
         Vector2 direction = new Vector2(
             mousePosition.x - transform.position.x,
             mousePosition.y - transform.position.y
         );
-
         // Calcula o ângulo
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // 4. Aplica a rotação no eixo Z
+        // Aplica a rotação no eixo Z
         transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
     }
-
     void SelectWeapon()
     {
-
         if (Input.GetKeyDown(KeyCode.E))
         {
             PlayerAttack bastaoScript = GetComponentInChildren<PlayerAttack>();
-
             if (bastaoScript == null || !bastaoScript.IsWeaponAttacking())
             {
                 // Ativa a próxima arma
@@ -110,40 +89,29 @@ public class Player : MonoBehaviour
                 }
             }
         }
-
     }
-
     private bool isDashing = false;
-
     void PlayerDash()
     {
-        // Implementação do dash
-        if (Input.GetKeyDown(KeyCode.Space) && !isDashing)
+        // Espaço ou L-Shift para dar dash
+        bool dashInput = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.LeftShift);
+        if (dashInput && !isDashing)
         {
-            // Aumenta a velocidade temporariamente
             StartCoroutine(DashCoroutine());
         }
     }
-
     IEnumerator DashCoroutine()
     {
         isDashing = true;
-
         float originalSpeed = movementSpeed;
         movementSpeed += dashSpeed;
-        yield return new WaitForSeconds(dashDuration); // Dura dashDuration segundos
-        movementSpeed = originalSpeed; // Volta à velocidade normal
-
-
-        //Calcula o tempo do cooldown
+        yield return new WaitForSeconds(dashDuration);
+        movementSpeed = originalSpeed;
         float tempoRestanteDoCooldown = dashCooldown - dashDuration;
         if (tempoRestanteDoCooldown > 0)
         {
-            yield return new WaitForSeconds(tempoRestanteDoCooldown); // Segura o botão travado
+            yield return new WaitForSeconds(tempoRestanteDoCooldown);
         }
-
-
         isDashing = false;
     }
-
 }
