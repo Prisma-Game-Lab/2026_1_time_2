@@ -30,9 +30,18 @@ public class WeaponThrow : MonoBehaviour
 
     void Update()
     {
+        // 1. Sistema de Arremesso
         if (Input.GetMouseButtonDown(0) && numAtual > 0 && Time.time >= proximoTempoDeArremesso)
         {
-            Instantiate(atlatl, lançamento.position, transform.rotation);
+            // referência do objeto instanciado
+            GameObject novoAtlatl = Instantiate(atlatl, lançamento.position, transform.rotation);
+
+            // passa este script para o Atlatl saber quem o criou
+            AtlatlScript scriptAtlatl = novoAtlatl.GetComponent<AtlatlScript>();
+            if (scriptAtlatl != null)
+            {
+                scriptAtlatl.ConfigurarOrigem(this);
+            }
 
             if (numAtual == numMax)
             {
@@ -43,6 +52,7 @@ public class WeaponThrow : MonoBehaviour
             proximoTempoDeArremesso = Time.time + tempoEntreArremessos;
         }
 
+        // 2. Sistema de Recarga por Tempo
         if (numAtual < numMax)
         {
             if (Time.time >= tempoParaProximaRecarga)
@@ -56,6 +66,7 @@ public class WeaponThrow : MonoBehaviour
             }
         }
 
+        // 3. Controle do Sprite
         if (meuSpriteRenderer != null)
         {
             meuSpriteRenderer.enabled = (numAtual > 0);
@@ -69,6 +80,16 @@ public class WeaponThrow : MonoBehaviour
         while (Time.time >= tempoParaProximaRecarga && numAtual < numMax)
         {
             numAtual += 1;
+            tempoParaProximaRecarga += cooldown;
+        }
+    }
+
+    public void RecuperarMunicaoDoChao()
+    {
+        if (numAtual < numMax)
+        {
+            numAtual += 1;
+
             tempoParaProximaRecarga += cooldown;
         }
     }
