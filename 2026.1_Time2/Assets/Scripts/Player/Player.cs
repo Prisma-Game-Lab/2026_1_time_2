@@ -4,20 +4,25 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Vida")]
-    public int maxHealth = 90;
+    public int maxHealth = 3;
     private int currentHealth;
-    public int takenDamage = 30;
+    public int takenDamage = 1;
+    public GameObject[] coracoes;
+
     [Header("Speed e Dash")]
     public float movementSpeed = 5f;
     public float dashSpeed = 7f;
     public float dashDuration = 0.5f;
     public float dashCooldown = 2.0f;
+
     [Header("Armas")]
     public GameObject[] weapons;
+
     [Header("Outros")]
     public Rigidbody2D rb;
     Vector2 movement;
     private Camera mainCamera;
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -54,6 +59,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        Destroy(coracoes[currentHealth]);
     }
     void RotateTowardsMouse()
     {
