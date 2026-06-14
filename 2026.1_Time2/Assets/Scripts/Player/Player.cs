@@ -37,9 +37,12 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        RotateTowardsMouse();
-        SelectWeapon();
-        PlayerDash();
+        if (Time.timeScale != 0f) // Evita que o jogador gire ou ataque quando o jogo estiver pausado
+        {
+            RotateTowardsMouse();
+            SelectWeapon();
+            PlayerDash();
+        }
     }
     void FixedUpdate()
     {
@@ -60,6 +63,10 @@ public class Player : MonoBehaviour
     {
         currentHealth -= damage;
         Destroy(coracoes[currentHealth]);
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
     void RotateTowardsMouse()
     {
