@@ -5,6 +5,12 @@ public class MenuController : MonoBehaviour
 {
     [SerializeField] private GameObject Menu;
     [SerializeField] private GameObject Config; 
+    
+    private void Start() 
+    {
+        Menu.SetActive(true);
+        Config.SetActive(false);
+    }
 
     public void StartGame()
     {
