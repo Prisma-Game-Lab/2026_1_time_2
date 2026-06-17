@@ -73,7 +73,11 @@ public class PlayerAttack : MonoBehaviour
         {
             if (other.CompareTag("Enemy"))
             {
-                Debug.Log("Inimigo atingido! Dano: " + attackDamage);
+                BossSnakeAI boss = other.GetComponent<BossSnakeAI>();
+                if (boss != null)
+                {
+                    boss.TakeDamage((int)attackDamage);
+                }
             }
         }
     }
