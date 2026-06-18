@@ -16,19 +16,19 @@ public class BossSnakeAttacks : MonoBehaviour
     public float tornadoMaxSize = 2f;
     public float tornadoMinSpeed = 1.5f;
     public float tornadoMaxSpeed = 5f;
-    public float tornadoDamage = 10f;
+    public float tornadoDamage = 0f;
 
     [Header("Ataque: Mordida")]
     public float biteDashSpeed = 20f;
     public float biteStunDuration = 2f;
-    public float biteDamage = 20f;
+    public float biteDamage = 0f;
     private bool isStunned = false;
 
     [Header("Ataque: Saindo de Tela")]
     // Quantidade de vezes que o boss atravessa varia com a vida
     // Alta vida: 3-5, Média: 4-6, Baixa: 5-7
     public float dashOutSpeed = 15f;
-    public float dashOutDamage = 25f;
+    public float dashOutDamage = 0f;
     // Offset além da borda para o boss sumir de tela
     public float offscreenOffset = 3f;
     // Tempo que o boss fica parado no ponto de entrada antes de avançar, dando tempo do player desviar
