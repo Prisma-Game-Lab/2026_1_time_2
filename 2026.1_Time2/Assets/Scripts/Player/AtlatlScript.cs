@@ -54,11 +54,10 @@ public class AtlatlScript : MonoBehaviour
         // 1. Acertou o Inimigo enquanto voava
         if (estaVoando && other.CompareTag("Enemy"))
         {
-            BossSnakeAI boss = other.GetComponent<BossSnakeAI>();
-            if (boss != null)
-            {
-                boss.TakeDamage((int)attackDamage);
-            }
+            Debug.Log("Inimigo atingido! Dano: " + attackDamage);
+            // aplicar dano no script do inimigo, ex: other.GetComponent<Enemy>().TakeDamage(attackDamage);
+            //
+            //
 
             StartCoroutine(GrudarNoInimigo(other.transform));
         }
