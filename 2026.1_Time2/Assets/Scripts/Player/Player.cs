@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     Vector2 movement;
     private Camera mainCamera;
+    public GameObject deathScreen;
 
     void Start()
     {
@@ -70,6 +71,14 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage(takenDamage);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Tornado"))
         {
             TakeDamage(takenDamage);
         }
