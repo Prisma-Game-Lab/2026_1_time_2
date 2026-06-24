@@ -486,7 +486,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: 21300000, guid: b20a794b9eb779044af2407ff03bcfec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0a5256303a131d94cac1cdc4b24a37ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -548,7 +548,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.15, y: 5.16}
+    oldSize: {x: 13.76, y: 13.33}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -611,7 +611,6 @@ MonoBehaviour:
   dashOutSpeed: 15
   dashOutDamage: 25
   offscreenOffset: 3
-  dashWarningDelay: 0.6
 --- !u!114 &597700634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1365,7 +1364,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1408340142
@@ -2154,6 +2153,22 @@ PrefabInstance:
     - target: {fileID: 3003630432460289794, guid: 6726985352d9b475c85168cdb245edb3, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6008289196910471033, guid: 6726985352d9b475c85168cdb245edb3, type: 3}
+      propertyPath: m_Size.x
+      value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6008289196910471033, guid: 6726985352d9b475c85168cdb245edb3, type: 3}
+      propertyPath: m_Size.y
+      value: 8.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 6008289196910471033, guid: 6726985352d9b475c85168cdb245edb3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 52415519, guid: 891fc664f61d6c94c8fc0d0b4af7079d, type: 3}
+    - target: {fileID: 6008289196910471033, guid: 6726985352d9b475c85168cdb245edb3, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7428911589405811253, guid: 6726985352d9b475c85168cdb245edb3, type: 3}
       propertyPath: m_LocalPosition.x
