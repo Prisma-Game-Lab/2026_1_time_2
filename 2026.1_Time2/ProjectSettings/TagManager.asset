@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
-  - Tornado
-  - Atlatl
   layers:
   - Default
   - TransparentFX

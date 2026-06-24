@@ -16,23 +16,21 @@ public class BossSnakeAttacks : MonoBehaviour
     public float tornadoMaxSize = 2f;
     public float tornadoMinSpeed = 1.5f;
     public float tornadoMaxSpeed = 5f;
-    public float tornadoDamage = 0f;
+    public float tornadoDamage = 10f;
 
     [Header("Ataque: Mordida")]
     public float biteDashSpeed = 20f;
     public float biteStunDuration = 2f;
-    public float biteDamage = 0f;
+    public float biteDamage = 20f;
     private bool isStunned = false;
 
     [Header("Ataque: Saindo de Tela")]
     // Quantidade de vezes que o boss atravessa varia com a vida
     // Alta vida: 3-5, Média: 4-6, Baixa: 5-7
     public float dashOutSpeed = 15f;
-    public float dashOutDamage = 0f;
+    public float dashOutDamage = 25f;
     // Offset além da borda para o boss sumir de tela
     public float offscreenOffset = 3f;
-    // Tempo que o boss fica parado no ponto de entrada antes de avançar, dando tempo do player desviar
-    public float dashWarningDelay = 0.6f;
 
     // Limites da arena
     private float arenaLeft = -15.05f;
@@ -42,27 +40,19 @@ public class BossSnakeAttacks : MonoBehaviour
 
     private Vector3 originPosition;
     private bool isAttacking = false;
-    private Vector2 lastDashDirection = Vector2.zero;
-    private int sameDashDirectionCount = 0;
 
     void Start()
     {
         originPosition = transform.position;
     }
 
-    // -------------------------------------------------------
-    // ATAQUE 1: TORNADO
-    // Lança tornadoCount tornados em direção ao player,
-    // com tamanhos e velocidades proporcionalmente inversos.
-    // forceMultiplier aumenta o dano conforme a vida do boss cai.
-    // -------------------------------------------------------
-    public void AttackTornado(float forceMultiplier = 1f)
+    public void AttackTornado()
     {
         if (isAttacking || tornadoPrefab == null) return;
-        StartCoroutine(TornadoCoroutine(forceMultiplier));
+        StartCoroutine(TornadoCoroutine());
     }
 
-    IEnumerator TornadoCoroutine(float forceMultiplier)
+    IEnumerator TornadoCoroutine()
     {
         isAttacking = true;
 
@@ -75,12 +65,12 @@ public class BossSnakeAttacks : MonoBehaviour
             // Tamanho aleatório
             float size = Random.Range(tornadoMinSize, tornadoMaxSize);
 
-            // Velocidade inversamente proporcional ao tamanho, escalando com a fase
+            // Velocidade inversamente proporcional ao tamanho
             float t = Mathf.InverseLerp(tornadoMinSize, tornadoMaxSize, size);
-            float speed = Mathf.Lerp(tornadoMaxSpeed, tornadoMinSpeed, t) * forceMultiplier;
+            float speed = Mathf.Lerp(tornadoMaxSpeed, tornadoMinSpeed, t);
 
-            // Direção em relação ao player
-            Vector2 direction = ((Vector2)player.position - (Vector2)spawnPos).normalized;
+            
+            Vector2 direction = (player.position - (Vector3)spawnPos).normalized;
 
             // Instancia e inicializa
             GameObject tornado = Instantiate(tornadoPrefab, spawnPos, Quaternion.identity);
@@ -89,7 +79,7 @@ public class BossSnakeAttacks : MonoBehaviour
             TornadoProjectile proj = tornado.GetComponent<TornadoProjectile>();
             if (proj != null)
             {
-                proj.Init(direction, speed, tornadoDamage * forceMultiplier);
+                proj.Init(direction, speed, tornadoDamage);
             }
 
             yield return new WaitForSeconds(0.3f);
@@ -98,25 +88,19 @@ public class BossSnakeAttacks : MonoBehaviour
         isAttacking = false;
     }
 
-    // -------------------------------------------------------
-    // ATAQUE 2: MORDIDA (bote de cobra)
-    // Boss avança em direção ao player. Se errar, fica stunado.
-    // -------------------------------------------------------
-    public void AttackBite(float forceMultiplier = 1f)
+    public void AttackBite()
     {
         if (isAttacking || isStunned) return;
-        StartCoroutine(BiteCoroutine(forceMultiplier));
+        StartCoroutine(BiteCoroutine());
     }
 
-    IEnumerator BiteCoroutine(float forceMultiplier)
+    IEnumerator BiteCoroutine()
     {
         isAttacking = true;
 
         Vector3 targetPos = player.position;
         Vector3 startPos = transform.position;
         Vector3 direction = (targetPos - startPos).normalized;
-
-        float currentBiteSpeed = biteDashSpeed * forceMultiplier;
 
         // Avança até a posição alvo
         float distanceTraveled = 0f;
@@ -126,24 +110,23 @@ public class BossSnakeAttacks : MonoBehaviour
 
         while (distanceTraveled < totalDistance)
         {
-            float step = currentBiteSpeed * Time.deltaTime;
+            float step = biteDashSpeed * Time.deltaTime;
             transform.position += direction * step;
             distanceTraveled += step;
 
-            // Verifica se acertou (via overlap)
+            // Verifica se acertou 
             Collider2D hit = Physics2D.OverlapCircle(transform.position, 0.5f);
             if (hit != null && hit.CompareTag("Player"))
             {
                 hitPlayer = true;
                 Player p = hit.GetComponent<Player>();
-                if (p != null) p.TakeDamage((int)(biteDamage * forceMultiplier));
+                if (p != null) p.TakeDamage((int)biteDamage);
                 break;
             }
 
             yield return null;
         }
 
-        // Se errou: stun
         if (!hitPlayer)
         {
             Debug.Log("Serpente errou a mordida! Stunada por " + biteStunDuration + "s");
@@ -155,18 +138,13 @@ public class BossSnakeAttacks : MonoBehaviour
         isAttacking = false;
     }
 
-    // -------------------------------------------------------
-    // ATAQUE 3: SAINDO DE TELA
-    // Boss sai pela borda, avisa com direção, e volta de outra
-    // A quantidade de passagens varia com a vida (passada por parâmetro)
-    // -------------------------------------------------------
-    public void AttackDashThrough(float healthPercent, float forceMultiplier = 1f)
+    public void AttackDashThrough(float healthPercent)
     {
         if (isAttacking || isStunned) return;
-        StartCoroutine(DashThroughCoroutine(healthPercent, forceMultiplier));
+        StartCoroutine(DashThroughCoroutine(healthPercent));
     }
 
-    IEnumerator DashThroughCoroutine(float healthPercent, float forceMultiplier)
+    IEnumerator DashThroughCoroutine(float healthPercent)
     {
         isAttacking = true;
 
@@ -177,41 +155,34 @@ public class BossSnakeAttacks : MonoBehaviour
         else { minPasses = 5; maxPasses = 7; }
 
         int passes = Random.Range(minPasses, maxPasses + 1);
-        float currentDashSpeed = dashOutSpeed * forceMultiplier;
 
         for (int i = 0; i < passes; i++)
         {
-            // Escolhe uma das 8 direções cardeais/colaterais, evitando repetir 2x seguidas
-            Vector2 enterDirection = GetNextDashDirection();
+            
+            Vector2 enterDirection = GetRandomCardinalDirection();
             Vector3 entryPoint = GetOffscreenPosition(enterDirection);
             Vector3 exitPoint = GetOffscreenPosition(-enterDirection);
 
-            // Avisa a direção (pode trocar pelo efeito visual de folhas depois)
+            // Avisa a direção 
             Debug.Log("Serpente vem de: " + enterDirection);
-
-            // Move para o ponto de entrada fora da tela
+            
             transform.position = entryPoint;
 
-            // Pequena pausa avisando de onde o ataque vem, dando tempo do player desviar
-            yield return new WaitForSeconds(dashWarningDelay);
-
-            // Atravessa até o ponto de saída
             Vector3 direction = (exitPoint - entryPoint).normalized;
             float totalDist = Vector3.Distance(entryPoint, exitPoint);
             float traveled = 0f;
 
             while (traveled < totalDist)
             {
-                float step = currentDashSpeed * Time.deltaTime;
+                float step = dashOutSpeed * Time.deltaTime;
                 transform.position += direction * step;
                 traveled += step;
 
-                // Dano ao player se passar perto
                 Collider2D hit = Physics2D.OverlapCircle(transform.position, 0.5f);
                 if (hit != null && hit.CompareTag("Player"))
                 {
                     Player p = hit.GetComponent<Player>();
-                    if (p != null) p.TakeDamage((int)(dashOutDamage * forceMultiplier));
+                    if (p != null) p.TakeDamage((int)dashOutDamage);
                 }
 
                 yield return null;
@@ -226,7 +197,6 @@ public class BossSnakeAttacks : MonoBehaviour
         isAttacking = false;
     }
 
-    // Retorna uma das 8 direções (cardeais + colaterais) aleatória
     Vector2 GetRandomCardinalDirection()
     {
         Vector2[] directions = {
@@ -239,38 +209,6 @@ public class BossSnakeAttacks : MonoBehaviour
         return directions[Random.Range(0, directions.Length)];
     }
 
-    // Escolhe a próxima direção do dash, evitando repetir a mesma
-    // direção mais de duas vezes seguidas
-    Vector2 GetNextDashDirection()
-    {
-        Vector2 direction = GetRandomCardinalDirection();
-
-        if (direction == lastDashDirection)
-        {
-            sameDashDirectionCount++;
-            // Se já repetiu 2x, força uma direção diferente
-            if (sameDashDirectionCount >= 2)
-            {
-                Vector2 newDirection;
-                do
-                {
-                    newDirection = GetRandomCardinalDirection();
-                } while (newDirection == lastDashDirection);
-
-                direction = newDirection;
-                sameDashDirectionCount = 0;
-            }
-        }
-        else
-        {
-            sameDashDirectionCount = 0;
-        }
-
-        lastDashDirection = direction;
-        return direction;
-    }
-
-    // Retorna um ponto fora da arena na direção dada
     Vector3 GetOffscreenPosition(Vector2 direction)
     {
         float centerX = (arenaLeft + arenaRight) / 2f;
