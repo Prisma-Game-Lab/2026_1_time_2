@@ -7,15 +7,6 @@ public class Player : MonoBehaviour
     public int maxHealth = 3;
     private int currentHealth;
     public int takenDamage = 1;
-
-    /* O tal do invencibility frame*/
-    public float invincibleTime = 3.0f;
-
-    private bool isInvincible = false;
-
-    private float invincibleCurrentTime = 0.0f;
-
-
     public GameObject[] coracoes;
 
     [Header("Speed e Dash")]
@@ -51,14 +42,8 @@ public class Player : MonoBehaviour
             RotateTowardsMouse();
             SelectWeapon();
             PlayerDash();
-            if(isInvincible)
-            {
-                UpdateInvencibility();
-            }
         }
-        Debug.Log("Invincible: " + isInvincible);
     }
-
     void FixedUpdate()
     {
         // Movimentação do Player
@@ -76,16 +61,12 @@ public class Player : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if (!isInvincible)
+        currentHealth -= damage;
+        Destroy(coracoes[currentHealth]);
+        if (currentHealth <= 0)
         {
-            currentHealth -= damage;
-            Destroy(coracoes[currentHealth]);
-            isInvincible = true;
-            if (currentHealth <= 0)
-            {
-                Destroy(gameObject);
-                deathScreen.SetActive(true);
-            }
+            Destroy(gameObject);
+            //DeathMenu.SetActive(true);
         }
     }
     void RotateTowardsMouse()
@@ -146,15 +127,5 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(tempoRestanteDoCooldown);
         }
         isDashing = false;
-    }
-
-    void UpdateInvencibility()
-    {
-        invincibleCurrentTime += Time.deltaTime * 1.0f; // Incrementa o tempo de invencibilidade
-        if (invincibleCurrentTime >= invincibleTime)
-        {
-            isInvincible = false;
-            invincibleCurrentTime = 0;
-        }
     }
 }
