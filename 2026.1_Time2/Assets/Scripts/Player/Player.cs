@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     Vector2 movement;
     private Camera mainCamera;
-    public GameObject deathScreen;
 
     void Start()
     {
