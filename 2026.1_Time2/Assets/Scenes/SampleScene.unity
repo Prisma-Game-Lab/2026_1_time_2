@@ -122,11 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &122582249 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 499270001979620380, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
-  m_PrefabInstance: {fileID: 1016295278}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &180230368
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +210,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -340,6 +336,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b504455b1c784c4ea039cdafc4dce31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  smoothness: 5
+  offset: {x: 0, y: 0, z: -10}
+  usarLimites: 1
+  minX: 0
+  maxX: 0
+  minY: 0
+  maxY: 5
 --- !u!1 &543927908
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,7 +597,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: b20a794b9eb779044af2407ff03bcfec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0a5256303a131d94cac1cdc4b24a37ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -643,7 +659,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.15, y: 5.16}
+    oldSize: {x: 13.76, y: 13.33}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -706,7 +722,6 @@ MonoBehaviour:
   dashOutSpeed: 15
   dashOutDamage: 25
   offscreenOffset: 3
-  dashWarningDelay: 0.6
 --- !u!114 &597700634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -731,7 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a01e2ce42a6c64b81a22cf9d8cb155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 120
+  maxHealth: 300
   delayVidaAlta: 2.5
   delayVidaMedia: 1.5
   delayVidaBaixa: 0.7
@@ -1321,10 +1336,10 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7.74, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1408340142
@@ -1379,7 +1394,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 7.74, y: 10.24}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 7.74, y: 10.24}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1561,8 +1576,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 459f3a621d2d08845a2037951cc3c76f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 150
-  lucas: {fileID: 1408340139}
+  maxHealth: 100
+  currentHealth: 0
+  lucas: {fileID: 0}
 --- !u!1 &1702505624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,12 +1641,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1788786019, guid: 891fc664f61d6c94c8fc0d0b4af7079d, type: 3}
+  m_Sprite: {fileID: -523116665, guid: 891fc664f61d6c94c8fc0d0b4af7079d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.5, y: 8.92}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1667,6 +1683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   takenDamage: 1
+  invincibleTime: 3
   coracoes:
   - {fileID: 761323493}
   - {fileID: 543927908}
@@ -1679,7 +1696,7 @@ MonoBehaviour:
   - {fileID: 180230368}
   - {fileID: 714962364}
   rb: {fileID: 1702505628}
-  deathScreen: {fileID: 122582249}
+  deathScreen: {fileID: 0}
 --- !u!50 &1702505628
 Rigidbody2D:
   serializedVersion: 4
@@ -1779,7 +1796,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 4.5, y: 8.92}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 4.5, y: 8.92}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
