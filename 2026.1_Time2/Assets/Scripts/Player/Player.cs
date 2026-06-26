@@ -49,7 +49,6 @@ public class Player : MonoBehaviour
         }
         if (Time.timeScale != 0f) // Evita que o jogador gire ou ataque quando o jogo estiver pausado
         {
-            RotateTowardsMouse();
             SelectWeapon();
             PlayerDash();
             if (isInvincible)

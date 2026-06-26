@@ -101,6 +101,7 @@ public class BossSnakeAttacks : MonoBehaviour
         Vector3 targetPos = player.position;
         Vector3 startPos = transform.position;
         Vector3 direction = (targetPos - startPos).normalized;
+        transform.up = -direction; // Orienta a serpente na direção do movimento
 
         // Avança até a posição alvo
         float distanceTraveled = 0f;
@@ -170,6 +171,7 @@ public class BossSnakeAttacks : MonoBehaviour
 
             Vector3 direction = (exitPoint - entryPoint).normalized;
             float totalDist = Vector3.Distance(entryPoint, exitPoint);
+            transform.up = -direction; // Orienta a serpente na direção do movimento
             float traveled = 0f;
 
             while (traveled < totalDist)
@@ -194,6 +196,7 @@ public class BossSnakeAttacks : MonoBehaviour
 
         // Volta para a posição original após o ataque
         transform.position = originPosition;
+        transform.rotation = Quaternion.identity;
         isAttacking = false;
     }
 

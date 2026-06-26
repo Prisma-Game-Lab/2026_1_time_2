@@ -18,8 +18,11 @@ public class WeaponThrow : MonoBehaviour
 
     private float tempoParaProximaRecarga = 0f;
 
+    private Camera mainCamera;
+
     private void Start()
     {
+        mainCamera = Camera.main;
         meuSpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -71,6 +74,11 @@ public class WeaponThrow : MonoBehaviour
         {
             meuSpriteRenderer.enabled = (numAtual > 0);
         }
+
+        if(Time.deltaTime > 0)
+        {
+            RotateTowardsMouse();
+        }
     }
 
     private void AtualizarRecargaPassiva()
@@ -92,5 +100,20 @@ public class WeaponThrow : MonoBehaviour
 
             tempoParaProximaRecarga += cooldown;
         }
+    }
+
+    void RotateTowardsMouse()
+    {
+        // Pega a posição do mouse na tela e converte para coordenadas do mundo
+        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        // Calcula a direção
+        Vector2 direction = new Vector2(
+            mousePosition.x - transform.position.x,
+            mousePosition.y - transform.position.y
+        );
+        // Calcula o ângulo
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Aplica a rotação no eixo Z
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
     }
 }
