@@ -12,9 +12,11 @@ public class PlayerAttack : MonoBehaviour
     public float rotationAngle = 60f;
     private bool isAttacking = false;
 
+    private Camera mainCamera;
+
     void Start()
     {
-          
+        mainCamera = Camera.main;
     }
 
     void Update()
@@ -22,6 +24,11 @@ public class PlayerAttack : MonoBehaviour
         if(Input.GetMouseButtonDown(0) && !isAttacking)
         {
             StartCoroutine(weaponRotation());
+        }
+
+        if(Time.deltaTime > 0)
+        {
+            RotateTowardsMouse();
         }
     }
 
@@ -81,6 +88,21 @@ public class PlayerAttack : MonoBehaviour
     public bool IsWeaponAttacking()
     {
         return isAttacking;
+    }
+
+    void RotateTowardsMouse()
+    {
+        // Pega a posição do mouse na tela e converte para coordenadas do mundo
+        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        // Calcula a direção
+        Vector2 direction = new Vector2(
+            mousePosition.x - transform.position.x,
+            mousePosition.y - transform.position.y
+        );
+        // Calcula o ângulo
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Aplica a rotação no eixo Z
+        transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
     }
 
 
