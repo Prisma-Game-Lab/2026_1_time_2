@@ -56,7 +56,6 @@ public class Player : MonoBehaviour
                 UpdateInvencibility();
             }
         }
-        Debug.Log("Invincible: " + isInvincible);
     }
 
     void FixedUpdate()
