@@ -355,7 +355,7 @@ Transform:
   m_GameObject: {fileID: 405151456}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.5, y: 15.84, z: 0.17484772}
+  m_LocalPosition: {x: 13.1, y: 17.449999, z: 0.17484772}
   m_LocalScale: {x: 36.2904, y: 3.0122, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -629,6 +629,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 125991343016229725, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: coracoes.Array.data[0]
       value: 
@@ -644,6 +648,14 @@ PrefabInstance:
     - target: {fileID: 1493418141395766661, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1493418141395766661, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735049957117266398, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4832479470592254530, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: m_LocalPosition.x
@@ -688,6 +700,14 @@ PrefabInstance:
     - target: {fileID: 5484119591838680405, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: m_SortingOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896196608397477353, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8644507550786943057, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1114,7 +1134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5941832418612301831, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1133,7 +1153,7 @@ GameObject:
   - component: {fileID: 1344447097}
   - component: {fileID: 1344447100}
   - component: {fileID: 1344447101}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: 01_VolcanoBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1429,7 +1449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2243715613333872294, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5807315081682698920, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1673,6 +1693,23 @@ MonoBehaviour:
   - {fileID: 496810300}
   - {fileID: 1616551904}
   - {fileID: 1932221579}
+  quantidadeDeRaios: 5
+  intervaloEntreRaios: 0.3
+  tempoDeAviso: 1
+  raioDoDano: 1.5
+  danoDoRaio: 1
+  raioHorizontalX: 16.8
+  raioVerticalY: -10.44
+  centroDaCratera: {x: 0.54, y: 1.99}
+  alturaDasNuvensY: 20.8
+  prefabIndicador: {fileID: 8768229799293842943, guid: 67859aa42c157fb47b773fc952c6ea95, type: 3}
+  prefabRaio: {fileID: 5125032619387891679, guid: d422b105c186e384c9e1439e642105d6, type: 3}
+  camadaDoChao:
+    serializedVersion: 2
+    m_Bits: 8
+  camadaDoPlayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &1491821598 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4832479470592254530, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
@@ -1996,7 +2033,7 @@ Transform:
   m_GameObject: {fileID: 1891337386}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.9, y: 14, z: 0.17484772}
+  m_LocalPosition: {x: -12.81, y: 15.93, z: 0.17484772}
   m_LocalScale: {x: 36.2904, y: 3.0122, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
