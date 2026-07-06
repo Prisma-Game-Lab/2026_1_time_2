@@ -11,28 +11,24 @@ public class BossSnakeAttacks : MonoBehaviour
     [Header("Ataque: Tornado")]
     public int tornadoCount = 1;
     public float tornadoSpawnRadius = 2f;
-    // Cada tornado tem tamanho e velocidade variados — maior = mais lento
     public float tornadoMinSize = 0.5f;
     public float tornadoMaxSize = 2f;
     public float tornadoMinSpeed = 1.5f;
     public float tornadoMaxSpeed = 5f;
     public float tornadoDamage = 10f;
 
-    [Header("Ataque: Mordida")]
+    [Header("Ataque: Bote")]
     public float biteDashSpeed = 20f;
-    public float biteStunDuration = 2f;
+    public float biteStunDuration = 3f;
     public float biteDamage = 20f;
-    private bool isStunned = false;
+    private int missedBitesCount = 0; 
 
-    [Header("Ataque: Saindo de Tela")]
-    // Quantidade de vezes que o boss atravessa varia com a vida
-    // Alta vida: 3-5, Média: 4-6, Baixa: 5-7
+    [Header("Ataque: Mergulho (Dash Through)")]
     public float dashOutSpeed = 15f;
     public float dashOutDamage = 25f;
-    // Offset além da borda para o boss sumir de tela
+    public float dashTiredDuration = 4f; 
     public float offscreenOffset = 3f;
 
-    // Limites da arena
     private float arenaLeft = -15.05f;
     private float arenaRight = 14.95f;
     private float arenaBottom = -10f;
@@ -40,51 +36,46 @@ public class BossSnakeAttacks : MonoBehaviour
 
     private Vector3 originPosition;
     private bool isAttacking = false;
+    private bool isStunned = false;
+
+    public bool IsAttacking() => isAttacking;
+    public bool IsStunned() => isStunned;
 
     void Start()
     {
         originPosition = transform.position;
     }
 
+
     public void AttackTornado()
     {
-        if (isAttacking || tornadoPrefab == null) return;
+        if (isAttacking || isStunned || tornadoPrefab == null) return;
         StartCoroutine(TornadoCoroutine());
     }
 
     IEnumerator TornadoCoroutine()
     {
         isAttacking = true;
-
         for (int i = 0; i < tornadoCount; i++)
         {
-            // Posição de spawn ao redor do boss
             Vector2 spawnOffset = Random.insideUnitCircle.normalized * tornadoSpawnRadius;
             Vector3 spawnPos = transform.position + (Vector3)spawnOffset;
 
-            // Tamanho aleatório
             float size = Random.Range(tornadoMinSize, tornadoMaxSize);
-
-            // Velocidade inversamente proporcional ao tamanho
             float t = Mathf.InverseLerp(tornadoMinSize, tornadoMaxSize, size);
             float speed = Mathf.Lerp(tornadoMaxSpeed, tornadoMinSpeed, t);
 
-            
-            Vector2 direction = (player.position - (Vector3)spawnPos).normalized;
+            Vector2 direction = (player.position - spawnPos).normalized;
 
-            // Instancia e inicializa
             GameObject tornado = Instantiate(tornadoPrefab, spawnPos, Quaternion.identity);
             tornado.transform.localScale = Vector3.one * size;
 
+
             TornadoProjectile proj = tornado.GetComponent<TornadoProjectile>();
-            if (proj != null)
-            {
-                proj.Init(direction, speed, tornadoDamage);
-            }
+            if (proj != null) proj.Init(direction, speed, tornadoDamage);
 
             yield return new WaitForSeconds(0.3f);
         }
-
         isAttacking = false;
     }
 
@@ -97,16 +88,13 @@ public class BossSnakeAttacks : MonoBehaviour
     IEnumerator BiteCoroutine()
     {
         isAttacking = true;
-
         Vector3 targetPos = player.position;
         Vector3 startPos = transform.position;
         Vector3 direction = (targetPos - startPos).normalized;
-        transform.up = -direction; // Orienta a serpente na direção do movimento
+        transform.up = -direction;
 
-        // Avança até a posição alvo
         float distanceTraveled = 0f;
         float totalDistance = Vector3.Distance(startPos, targetPos);
-
         bool hitPlayer = false;
 
         while (distanceTraveled < totalDistance)
@@ -115,7 +103,6 @@ public class BossSnakeAttacks : MonoBehaviour
             transform.position += direction * step;
             distanceTraveled += step;
 
-            // Verifica se acertou 
             Collider2D hit = Physics2D.OverlapCircle(transform.position, 0.5f);
             if (hit != null && hit.CompareTag("Player"))
             {
@@ -124,20 +111,28 @@ public class BossSnakeAttacks : MonoBehaviour
                 if (p != null) p.TakeDamage((int)biteDamage);
                 break;
             }
-
             yield return null;
         }
 
         if (!hitPlayer)
         {
-            Debug.Log("Serpente errou a mordida! Stunada por " + biteStunDuration + "s");
-            isStunned = true;
-            yield return new WaitForSeconds(biteStunDuration);
-            isStunned = false;
+            missedBitesCount++;
+            Debug.Log($"Serpente errou o bote! Erros acumulados: {missedBitesCount}/3");
+
+            if (missedBitesCount >= 3)
+            {
+                Debug.Log("Serpente bateu a cabeça e está DESNORTEADA!");
+                isStunned = true;
+                // TODO: Chamar Trigger do Animator para animação de Stun aqui
+                yield return new WaitForSeconds(biteStunDuration);
+                isStunned = false;
+                missedBitesCount = 0; // Reseta após sofrer o stun
+            }
         }
 
         isAttacking = false;
     }
+
 
     public void AttackDashThrough(float healthPercent)
     {
@@ -149,31 +144,30 @@ public class BossSnakeAttacks : MonoBehaviour
     {
         isAttacking = true;
 
-        // Quantidade de passagens baseada na vida
-        int minPasses, maxPasses;
-        if (healthPercent > 0.66f) { minPasses = 3; maxPasses = 5; }
-        else if (healthPercent > 0.33f) { minPasses = 4; maxPasses = 6; }
-        else { minPasses = 5; maxPasses = 7; }
+ 
+        int minPasses = 5, maxPasses = 7; 
+        if (healthPercent > 0.66f) { minPasses = 3; maxPasses = 5; }      
+        else if (healthPercent > 0.33f) { minPasses = 4; maxPasses = 6; } 
 
         int passes = Random.Range(minPasses, maxPasses + 1);
 
         for (int i = 0; i < passes; i++)
         {
-            
-            Vector2 enterDirection = GetRandomCardinalDirection();
+            Vector2 enterDirection = GetRandomAllDirections(); 
             Vector3 entryPoint = GetOffscreenPosition(enterDirection);
             Vector3 exitPoint = GetOffscreenPosition(-enterDirection);
 
-            // Avisa a direção 
-            Debug.Log("Serpente vem de: " + enterDirection);
-            
-            transform.position = entryPoint;
+            // GDD: Animação das folhas para avisar o player de onde ela vem
+            DispararAnimacaoFolhas(enterDirection);
 
+            yield return new WaitForSeconds(0.5f);
+
+            transform.position = entryPoint;
             Vector3 direction = (exitPoint - entryPoint).normalized;
             float totalDist = Vector3.Distance(entryPoint, exitPoint);
-            transform.up = -direction; // Orienta a serpente na direção do movimento
-            float traveled = 0f;
+            transform.up = -direction;
 
+            float traveled = 0f;
             while (traveled < totalDist)
             {
                 float step = dashOutSpeed * Time.deltaTime;
@@ -186,43 +180,57 @@ public class BossSnakeAttacks : MonoBehaviour
                     Player p = hit.GetComponent<Player>();
                     if (p != null) p.TakeDamage((int)dashOutDamage);
                 }
-
                 yield return null;
             }
-
-            // Pausa entre passagens
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
         }
 
-        // Volta para a posição original após o ataque
-        transform.position = originPosition;
+        
+        transform.position = originPosition; 
         transform.rotation = Quaternion.identity;
+
+        Debug.Log("Serpente terminou os mergulhos e está EXAUSTA!");
+        isStunned = true;
+
+        // TODO: Chamar Trigger do Animator para animação de Exaustão aqui
+        yield return new WaitForSeconds(dashTiredDuration);
+        isStunned = false;
+
         isAttacking = false;
     }
 
-    Vector2 GetRandomCardinalDirection()
+
+    Vector2 GetRandomAllDirections()
     {
+        
         Vector2[] directions = {
             Vector2.up, Vector2.down, Vector2.left, Vector2.right,
-            new Vector2(1, 1).normalized,
-            new Vector2(-1, 1).normalized,
-            new Vector2(1, -1).normalized,
-            new Vector2(-1, -1).normalized
+            new Vector2(1, 1).normalized, new Vector2(-1, 1).normalized,
+            new Vector2(1, -1).normalized, new Vector2(-1, -1).normalized
         };
         return directions[Random.Range(0, directions.Length)];
     }
 
-    Vector3 GetOffscreenPosition(Vector2 direction)
+    Vector3 GetOffscreenPosition(Vector2 dir)
     {
+        
         float centerX = (arenaLeft + arenaRight) / 2f;
-        float centerY = (arenaBottom + arenaTop) / 2f;
+        float centerY = (arenaTop + arenaBottom) / 2f;
 
-        float x = centerX + direction.x * ((arenaRight - arenaLeft) / 2f + offscreenOffset);
-        float y = centerY + direction.y * ((arenaTop - arenaBottom) / 2f + offscreenOffset);
+        float targetX = centerX;
+        float targetY = centerY;
+   
+        if (dir.x > 0.1f) targetX = arenaRight + offscreenOffset;
+        else if (dir.x < -0.1f) targetX = arenaLeft - offscreenOffset;
 
-        return new Vector3(x, y, 0);
+        if (dir.y > 0.1f) targetY = arenaTop + offscreenOffset;
+        else if (dir.y < -0.1f) targetY = arenaBottom - offscreenOffset;
+
+        return new Vector3(targetX, targetY, 0f);
     }
 
-    public bool IsAttacking() => isAttacking;
-    public bool IsStunned() => isStunned;
+    void DispararAnimacaoFolhas(Vector2 direcaoEntrada)
+    {
+        Debug.Log($"[VFX] Balançar árvores na direção: {direcaoEntrada}");
+    }
 }
