@@ -1,22 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class Player : MonoBehaviour
 {
     [Header("Vida")]
     public int maxHealth = 3;
     private int currentHealth;
     public int takenDamage = 1;
+    public GameObject[] coracoes;
 
-    /* O tal do invencibility frame*/
+    [Header("Invincibility")]
     public float invincibleTime = 3.0f;
-
     private bool isInvincible = false;
-
     private float invincibleCurrentTime = 0.0f;
 
-
-    public GameObject[] coracoes;
+    [Header("Piscar ao tomar dano")]
+    public float flashInterval = 0.1f;
+    private SpriteRenderer spriteRenderer;
+    private Color corOriginal;
+    private Coroutine flashCoroutine;
 
     [Header("Speed e Dash")]
     public float movementSpeed = 5f;
@@ -37,18 +40,24 @@ public class Player : MonoBehaviour
     {
         mainCamera = Camera.main;
         currentHealth = maxHealth;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+            corOriginal = spriteRenderer.color;
     }
+
     void Update()
     {
-        // Input dos Movimentos Verticais e Horizontais
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
         if (currentHealth <= 0)
         {
             Destroy(gameObject);
         }
-        if (Time.timeScale != 0f) // Evita que o jogador gire ou ataque quando o jogo estiver pausado
+
+        if (Time.timeScale != 0f)
         {
+            RotateTowardsMouse();
             SelectWeapon();
             PlayerDash();
             if (isInvincible)
@@ -60,12 +69,11 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Movimentação do Player
         Vector2 move = movement;
-        // Normaliza para não aumentar velocidade na diagonal
         if (move.sqrMagnitude > 1f) move = move.normalized;
         rb.MovePosition(rb.position + move * movementSpeed * Time.fixedDeltaTime);
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -81,34 +89,55 @@ public class Player : MonoBehaviour
             TakeDamage(takenDamage);
         }
     }
+
     public void TakeDamage(int damage)
     {
         if (!isInvincible)
         {
             currentHealth -= damage;
-            Destroy(coracoes[currentHealth]);
+            if (currentHealth >= 0 && currentHealth < coracoes.Length)
+                Destroy(coracoes[currentHealth]);
+
             isInvincible = true;
+
+            if (flashCoroutine != null) StopCoroutine(flashCoroutine);
+            flashCoroutine = StartCoroutine(FlashRed());
+
             if (currentHealth <= 0)
             {
-                Destroy(gameObject);
+                if (spriteRenderer != null) spriteRenderer.color = corOriginal;
                 deathScreen.SetActive(true);
+                Destroy(gameObject);
             }
         }
     }
+
+    IEnumerator FlashRed()
+    {
+        while (isInvincible)
+        {
+            if (spriteRenderer != null)
+                spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(flashInterval);
+            if (spriteRenderer != null)
+                spriteRenderer.color = corOriginal;
+            yield return new WaitForSeconds(flashInterval);
+        }
+        if (spriteRenderer != null)
+            spriteRenderer.color = corOriginal;
+    }
+
     void RotateTowardsMouse()
     {
-        // Pega a posição do mouse na tela e converte para coordenadas do mundo
         Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        // Calcula a direção
         Vector2 direction = new Vector2(
             mousePosition.x - transform.position.x,
             mousePosition.y - transform.position.y
         );
-        // Calcula o ângulo
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        // Aplica a rotação no eixo Z
         transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
     }
+
     void SelectWeapon()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -116,7 +145,6 @@ public class Player : MonoBehaviour
             PlayerAttack bastaoScript = GetComponentInChildren<PlayerAttack>();
             if (bastaoScript == null || !bastaoScript.IsWeaponAttacking())
             {
-                // Ativa a próxima arma
                 for (int i = 0; i < weapons.Length; i++)
                 {
                     if (weapons[i].activeSelf)
@@ -130,16 +158,17 @@ public class Player : MonoBehaviour
             }
         }
     }
+
     private bool isDashing = false;
     void PlayerDash()
     {
-        // Espaço ou L-Shift para dar dash
         bool dashInput = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.LeftShift);
         if (dashInput && !isDashing)
         {
             StartCoroutine(DashCoroutine());
         }
     }
+
     IEnumerator DashCoroutine()
     {
         isDashing = true;
@@ -157,7 +186,7 @@ public class Player : MonoBehaviour
 
     void UpdateInvencibility()
     {
-        invincibleCurrentTime += Time.deltaTime * 1.0f; // Incrementa o tempo de invencibilidade
+        invincibleCurrentTime += Time.deltaTime;
         if (invincibleCurrentTime >= invincibleTime)
         {
             isInvincible = false;
