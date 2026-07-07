@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
 
         if (Time.timeScale != 0f)
         {
-            RotateTowardsMouse();
+            //RotateTowardsMouse();
             SelectWeapon();
             PlayerDash();
             if (isInvincible)
