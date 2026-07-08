@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     private int currentHealth;
     public int takenDamage = 1;
     public GameObject[] coracoes;
+    private bool estaNaLava = false;
 
     [Header("Invincibility")]
     public float invincibleTime = 3.0f;
@@ -65,6 +66,11 @@ public class Player : MonoBehaviour
                 UpdateInvencibility();
             }
         }
+
+        if (estaNaLava)
+        {
+            TakeDamage(takenDamage);
+        }
     }
 
     void FixedUpdate()
@@ -79,6 +85,18 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             TakeDamage(takenDamage);
+        }
+        if(collision.gameObject.CompareTag("Lava"))
+        {
+            estaNaLava = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Lava"))
+        {
+            estaNaLava = false;
         }
     }
 

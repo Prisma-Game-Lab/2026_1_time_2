@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Tornado
+  - Lava
   layers:
   - Default
   - TransparentFX
@@ -41,4 +43,25 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Lava00
+    uniqueID: 3897827545
+    locked: 0
+  - name: Lava01
+    uniqueID: 1791547459
+    locked: 0
+  - name: Lava02
+    uniqueID: 1186216421
+    locked: 0
+  - name: Lava03
+    uniqueID: 541447045
+    locked: 0
+  - name: Lava04
+    uniqueID: 880527923
+    locked: 0
+  - name: Lava05
+    uniqueID: 29327129
+    locked: 0
+  - name: AcimaDaLava
+    uniqueID: 2657283849
     locked: 0
