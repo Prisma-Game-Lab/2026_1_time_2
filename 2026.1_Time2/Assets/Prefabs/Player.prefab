@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3677161791874135651}
   - component: {fileID: 3452717661023193496}
   - component: {fileID: 5995359717097395982}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MacuahuitlPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 1436436919659193409}
   - component: {fileID: 5534005184229766586}
   - component: {fileID: 7914086252745925267}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_Sprite: {fileID: -523116665, guid: 891fc664f61d6c94c8fc0d0b4af7079d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -207,11 +207,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   takenDamage: 1
-  invincibleTime: 3
   coracoes:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  invincibleTime: 3
+  flashInterval: 0.1
   movementSpeed: 6
   dashSpeed: 10
   dashDuration: 0.2
@@ -312,7 +313,7 @@ GameObject:
   - component: {fileID: 4417354784975865541}
   - component: {fileID: 6226141059120231333}
   - component: {fileID: 1697786802928697792}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +445,7 @@ GameObject:
   - component: {fileID: 3515593326806202626}
   - component: {fileID: 5854034808670773287}
   - component: {fileID: 436259246858388179}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Atlatl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8588615732659571942}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AtlatlPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

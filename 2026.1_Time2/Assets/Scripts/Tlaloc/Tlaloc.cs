@@ -26,6 +26,12 @@ public class Tlaloc : MonoBehaviour
     [SerializeField] private LayerMask camadaDoChao;
     [SerializeField] private LayerMask camadaDoPlayer;
 
+    [Header("Ataque de Porrada")]
+    public float[] rotationAngle;
+    public float attackSpeed = 5f;
+    [SerializeField] private Transform[] porradasObjs;
+    [SerializeField] private GameObject[] porradass;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,8 +50,14 @@ public class Tlaloc : MonoBehaviour
         {
             ThunderAttack();
         }
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            PorradaAttack();
+        }
     }
 
+
+    //ATAQUE DE LAVA
     IEnumerator lavaAttackAtivation(int health)
     {
         lavaAttack(health);
@@ -97,6 +109,7 @@ public class Tlaloc : MonoBehaviour
         return new List<int>(numeros);
     }
 
+    //ATAQUE DE RAIO
     void ThunderAttack()
     {
         StartCoroutine(ThunderAttackCoroutine());
@@ -170,5 +183,53 @@ public class Tlaloc : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(new Vector3(centroDaCratera.x - raioHorizontalX, alturaDasNuvensY, 0),
                         new Vector3(centroDaCratera.x + raioHorizontalX, alturaDasNuvensY, 0));
+    }
+
+    //ATAQUE DE PORRADA
+    void PorradaAttack()
+    {
+        int num = SortearNumeros(1, 0, 3)[0];
+        StartCoroutine(PorradaAttackCoroutine(rotationAngle[num], porradasObjs[num], num));
+    }
+
+    IEnumerator PorradaAttackCoroutine(float rotationAngle, Transform porrada, int numero)
+    {
+        porradass[numero].SetActive(true);
+        lavas[0].SetActive(true);
+        lavas[4].SetActive(true);
+        lavas[5].SetActive(true);
+
+        yield return new WaitForSeconds(1.0f);
+
+
+        Quaternion localOriginRotation = porrada.localRotation;
+        Quaternion endRotation = localOriginRotation * Quaternion.Euler(0, 0, rotationAngle / 2f);
+
+        float t = 0;
+
+        t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * attackSpeed;
+            porrada.localRotation = Quaternion.Slerp(localOriginRotation, endRotation, t);
+            yield return null;
+        }
+
+        t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * attackSpeed;
+            porrada.localRotation = Quaternion.Slerp(endRotation, localOriginRotation, t);
+            yield return null;
+        }
+
+        porradass[numero].SetActive(false);
+        yield return new WaitForSeconds(5.0f);
+
+        lavas[0].SetActive(false);
+        lavas[4].SetActive(false);
+        lavas[5].SetActive(false);
+
+        yield return null;
     }
 }
