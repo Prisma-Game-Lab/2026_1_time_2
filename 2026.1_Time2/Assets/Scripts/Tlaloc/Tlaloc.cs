@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tlaloc : MonoBehaviour
 {
     public int Health = 100;
-    public GameObject[] lavas;
+    public LavaController[] lavas;
 
     [Header("Configurações do Ataque de Raios")]
     [SerializeField] private int quantidadeDeRaios = 5;
@@ -31,6 +31,10 @@ public class Tlaloc : MonoBehaviour
     public float attackSpeed = 5f;
     [SerializeField] private Transform[] porradasObjs;
     [SerializeField] private GameObject[] porradass;
+
+    [Header("Configurações Visuais da Lava")]
+    [SerializeField] private float velocidadeDoFluxo = 2f;
+    [SerializeField] private float tempoDaLavaNoChao = 20f;
 
 
     // Start is called before the first frame update
@@ -62,10 +66,6 @@ public class Tlaloc : MonoBehaviour
     {
         lavaAttack(health);
         yield return new WaitForSeconds(1f);
-        foreach (GameObject lava in lavas)
-        {
-            lava.SetActive(false);
-        }
     }
 
     void lavaAttack(int vida)
@@ -74,25 +74,25 @@ public class Tlaloc : MonoBehaviour
 
         if(vida <= 100 && vida > 75)
         {
-            lavas[numerosSorteados[0]].SetActive(true);
+            StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
         else if(vida <= 75 && vida > 50)
         {
-            lavas[numerosSorteados[0]].SetActive(true);
-            lavas[numerosSorteados[1]].SetActive(true);
+            StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+            StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
         else if (vida <= 50 && vida > 25)
         {
-            lavas[numerosSorteados[0]].SetActive(true);
-            lavas[numerosSorteados[1]].SetActive(true);
-            lavas[numerosSorteados[2]].SetActive(true);
+            StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+            StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+            StartCoroutine(lavas[numerosSorteados[2]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
         else if (vida <= 25 && vida > 0)
         {
-            lavas[numerosSorteados[0]].SetActive(true);
-            lavas[numerosSorteados[1]].SetActive(true);
-            lavas[numerosSorteados[2]].SetActive(true);
-            lavas[numerosSorteados[3]].SetActive(true);
+            StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+            StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+            StartCoroutine(lavas[numerosSorteados[2]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+            StartCoroutine(lavas[numerosSorteados[3]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
     }
 
@@ -195,9 +195,9 @@ public class Tlaloc : MonoBehaviour
     IEnumerator PorradaAttackCoroutine(float rotationAngle, Transform porrada, int numero)
     {
         porradass[numero].SetActive(true);
-        lavas[0].SetActive(true);
-        lavas[4].SetActive(true);
-        lavas[5].SetActive(true);
+        StartCoroutine(lavas[0].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+        StartCoroutine(lavas[4].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+        StartCoroutine(lavas[5].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
 
         yield return new WaitForSeconds(1.0f);
 
@@ -226,10 +226,5 @@ public class Tlaloc : MonoBehaviour
         porradass[numero].SetActive(false);
         yield return new WaitForSeconds(5.0f);
 
-        lavas[0].SetActive(false);
-        lavas[4].SetActive(false);
-        lavas[5].SetActive(false);
-
-        yield return null;
     }
 }
