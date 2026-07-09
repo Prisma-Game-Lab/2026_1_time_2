@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
 public class DeathController : MonoBehaviour
 {
@@ -40,13 +41,17 @@ public class DeathController : MonoBehaviour
     {
         paineldeMorte.SetActive(false);     
         morto = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SampleScene"); //Não entendi esse  UnityEngine.SceneManagement
+
+        Scene cenaAtual = SceneManager.GetActiveScene();
+        
+        SceneManager.LoadScene(cenaAtual.name); 
+
         Time.timeScale = 1f;
     }
 
     public void voltarMenu()
     {
         Time.timeScale = 1f; 
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Menu");
     }
 }

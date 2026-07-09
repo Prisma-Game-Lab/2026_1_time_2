@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/vulcao.unity
     guid: f6bcd0a99659b874faf2bfe22aa7a834
+  - enabled: 1
+    path: Assets/Scenes/rio.unity
+    guid: c65d95b78c2a94f8c94f1b6c65fe3671
   m_configObjects: {}
