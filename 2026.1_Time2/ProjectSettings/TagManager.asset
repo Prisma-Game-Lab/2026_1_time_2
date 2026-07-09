@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Tornado
   - Lava
+  - mataCavalo
+  - atlatl
   layers:
   - Default
   - TransparentFX

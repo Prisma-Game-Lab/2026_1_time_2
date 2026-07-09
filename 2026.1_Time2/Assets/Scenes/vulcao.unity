@@ -864,8 +864,8 @@ Transform:
   m_GameObject: {fileID: 405151456}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.1, y: 17.449999, z: 0.17484772}
-  m_LocalScale: {x: 36.2904, y: 3.0122, z: 1}
+  m_LocalPosition: {x: 10.27, y: 15.58, z: 0.17484772}
+  m_LocalScale: {x: 1.2050345, y: 0.9497906, z: 0.31531453}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 308561621}
@@ -911,7 +911,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f30b14bac83744c4793f4ac6c92c981e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1018,7 +1018,7 @@ GameObject:
   - component: {fileID: 500746045}
   m_Layer: 0
   m_Name: Porrada0
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1527,6 +1527,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 125991343016229725, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: deathScreen
       value: 
@@ -1587,29 +1591,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5484119591838680405, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
-      propertyPath: m_SortingLayer
-      value: 7
+    - target: {fileID: 6856844393666740513, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5484119591838680405, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1637683447
-      objectReference: {fileID: 0}
-    - target: {fileID: 5854034808670773287, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
-      propertyPath: m_SortingLayer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5854034808670773287, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1637683447
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226141059120231333, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
-      propertyPath: m_SortingLayer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226141059120231333, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1637683447
+    - target: {fileID: 8644507550786943057, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1712,7 +1700,7 @@ GameObject:
   - component: {fileID: 855326271}
   m_Layer: 0
   m_Name: Porrada0
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1874,7 +1862,7 @@ GameObject:
   - component: {fileID: 941294407}
   m_Layer: 0
   m_Name: Porrada0
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2885,7 +2873,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3796,7 +3784,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0cf3486965c634386c2de303000818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 100
+  maxHealth: 300
+  currentHealth: 0
   lavas:
   - {fileID: 100162878}
   - {fileID: 992366644}
@@ -3804,7 +3793,7 @@ MonoBehaviour:
   - {fileID: 149441299}
   - {fileID: 1009797639}
   - {fileID: 1263174157}
-  quantidadeDeRaios: 5
+  quantidadeDeRaios: 10
   intervaloEntreRaios: 0.3
   tempoDeAviso: 1
   raioDoDano: 1.5
@@ -3834,7 +3823,7 @@ MonoBehaviour:
   - {fileID: 911692423}
   - {fileID: 1408943569}
   - {fileID: 253770837}
-  velocidadeDoFluxo: 2
+  velocidadeDoFluxo: 1
   tempoDaLavaNoChao: 5
 --- !u!70 &1471967255
 CapsuleCollider2D:
@@ -4060,8 +4049,8 @@ Transform:
   m_GameObject: {fileID: 1891337386}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.81, y: 15.93, z: 0.17484772}
-  m_LocalScale: {x: 36.2904, y: 3.0122, z: 1}
+  m_LocalPosition: {x: -12.69, y: 13.86, z: 0.17484772}
+  m_LocalScale: {x: 1.3042883, y: 1.0208346, z: 0.3389}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 308561621}
@@ -4107,7 +4096,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f30b14bac83744c4793f4ac6c92c981e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
