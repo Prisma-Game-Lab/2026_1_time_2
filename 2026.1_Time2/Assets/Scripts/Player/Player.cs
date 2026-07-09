@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -36,6 +37,14 @@ public class Player : MonoBehaviour
     Vector2 movement;
     private Camera mainCamera;
     public GameObject deathScreen;
+
+    [Header("Rosto UI")]
+    public Image rostoNaTela;
+    public Sprite rostoNormal;
+    public Sprite rostoMachucado;
+
+    private Coroutine rotinaRosto;
+
 
     void Start()
     {
@@ -113,6 +122,11 @@ public class Player : MonoBehaviour
         if (!isInvincible)
         {
             currentHealth -= damage;
+            if (rotinaRosto != null)
+            {
+                StopCoroutine(rotinaRosto);
+            }
+            rotinaRosto = StartCoroutine(EfeitoRostoDano());
             if (currentHealth >= 0 && currentHealth < coracoes.Length)
                 Destroy(coracoes[currentHealth]);
 
@@ -210,5 +224,14 @@ public class Player : MonoBehaviour
             isInvincible = false;
             invincibleCurrentTime = 0;
         }
+    }
+
+        private IEnumerator EfeitoRostoDano()
+    {
+        rostoNaTela.sprite = rostoMachucado;
+
+        yield return new WaitForSeconds(3f);
+
+        rostoNaTela.sprite = rostoNormal;
     }
 }
