@@ -30,8 +30,8 @@ public class AtlatlScript : MonoBehaviour
             moveDirection = (mousePosition - transform.position).normalized;
 
             // Rotacionar o sprite para apontar para a direção do vôo
-            //float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-            //transform.rotation = Quaternion.Euler(0, 0, angle - 90f); // Ajuste o '-90f' dependendo do seu sprite
+            float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, -angle);
         }
     }
 

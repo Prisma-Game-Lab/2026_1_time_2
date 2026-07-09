@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Tlaloc : MonoBehaviour
 {
-    public int Health = 100;
+    public int maxHealth = 300;
+    [SerializeField] private float currentHealth;
+    private bool isDead = false;
     public LavaController[] lavas;
+    private PlayerAttack script;
 
     [Header("Configurações do Ataque de Raios")]
     [SerializeField] private int quantidadeDeRaios = 5;
@@ -40,7 +44,13 @@ public class Tlaloc : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentHealth = maxHealth;
+
+        GameObject jogadorObjeto = GameObject.FindWithTag("Player");
+        script = jogadorObjeto.GetComponent<PlayerAttack>();
+
+
+        StartCoroutine(chooseAttack());
     }
 
     // Update is called once per frame
@@ -48,7 +58,7 @@ public class Tlaloc : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            StartCoroutine(lavaAttackAtivation(Health));
+            StartCoroutine(lavaAttackAtivation(currentHealth));
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -58,36 +68,94 @@ public class Tlaloc : MonoBehaviour
         {
             PorradaAttack();
         }
+
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (isDead) return;
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            isDead = true;
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        StopAllCoroutines();
+        Debug.Log("Tlaloc derrotado!");
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("atlatl"))
+        {
+            Debug.Log("Dano de Atlatl");
+            TakeDamage(5);
+        }
+        if (collision.gameObject.CompareTag("mataCavalo"))
+        {
+            if (script.isAttacking)
+            {
+                Debug.Log("Dano de mataCavalo");
+                TakeDamage(2.5f);
+            }
+        }
+    }
+
+    IEnumerator chooseAttack()
+    {
+        while (true)
+        {
+            int randomAttack = Random.Range(0, 3);
+            switch (randomAttack)
+            {
+                case 0:
+                    StartCoroutine(lavaAttackAtivation(currentHealth));
+                    break;
+                case 1:
+                    ThunderAttack();
+                    break;
+                case 2:
+                    PorradaAttack();
+                    break;
+            }
+            yield return new WaitForSeconds(5f);
+        }
     }
 
 
     //ATAQUE DE LAVA
-    IEnumerator lavaAttackAtivation(int health)
+    IEnumerator lavaAttackAtivation(float health)
     {
         lavaAttack(health);
         yield return new WaitForSeconds(1f);
     }
 
-    void lavaAttack(int vida)
+    void lavaAttack(float vida)
     {
         List<int> numerosSorteados = SortearNumeros(4, 0, 6);
 
-        if(vida <= 100 && vida > 75)
+        if(vida <= 300 && vida > 225)
         {
             StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
-        else if(vida <= 75 && vida > 50)
+        else if(vida <= 225 && vida > 150)
         {
             StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
             StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
-        else if (vida <= 50 && vida > 25)
+        else if (vida <= 150 && vida > 75)
         {
             StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
             StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
             StartCoroutine(lavas[numerosSorteados[2]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
-        else if (vida <= 25 && vida > 0)
+        else if (vida <= 75 && vida > 0)
         {
             StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
             StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
@@ -163,11 +231,19 @@ public class Tlaloc : MonoBehaviour
 
     void VerificarDanoNoPlayer(Vector2 pontoImpacto)
     {
-        Collider2D playerAtingido = Physics2D.OverlapCircle(pontoImpacto, raioDoDano, camadaDoPlayer);
+        Collider2D colisorAtingido = Physics2D.OverlapCircle(pontoImpacto, raioDoDano, camadaDoPlayer);
 
-        if (playerAtingido != null)
+        if (colisorAtingido != null)
         {
+            Player playerScript = colisorAtingido.GetComponent<Player>();
+
+            if (playerScript == null)
+            {
+                return;
+            }
+
             Debug.Log("O Player foi atingido pelo raio!");
+            playerScript.TakeDamage(danoDoRaio);
         }
     }
 
