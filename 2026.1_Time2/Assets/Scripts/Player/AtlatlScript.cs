@@ -31,7 +31,7 @@ public class AtlatlScript : MonoBehaviour
 
             // Rotacionar o sprite para apontar para a direção do vôo
             float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, -angle);
+            transform.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
     }
 

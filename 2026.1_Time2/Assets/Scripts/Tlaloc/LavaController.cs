@@ -6,6 +6,8 @@ public class LavaController : MonoBehaviour
     [Header("Configurações da Máscara")]
     [SerializeField] private Transform lavaMask;
 
+    [SerializeField] private GameObject lavaOpaca;
+
     [Tooltip("Posição da máscara onde a lava fica TOTALMENTE INVISÍVEL")]
     [SerializeField] private Vector3 posicaoEscondida;
 
@@ -25,6 +27,19 @@ public class LavaController : MonoBehaviour
     // Coroutine responsável por fazer ESTA lava escorrer e sumir
     public IEnumerator FluxoLavaCoroutine(float velocidade, float tempoAtiva)
     {
+        lavaOpaca.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        lavaOpaca.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        lavaOpaca.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        lavaOpaca.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+        lavaOpaca.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        lavaOpaca.SetActive(false);
+        yield return new WaitForSeconds(0.1f);
+
         float t = 0;
 
         // 1. ESCORRER (Aparecer)

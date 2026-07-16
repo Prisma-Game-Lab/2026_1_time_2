@@ -204,6 +204,7 @@ public class Player : MonoBehaviour
     IEnumerator DashCoroutine()
     {
         isDashing = true;
+        isInvincible = true;
         float originalSpeed = movementSpeed;
         movementSpeed += dashSpeed;
         yield return new WaitForSeconds(dashDuration);
@@ -214,6 +215,7 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(tempoRestanteDoCooldown);
         }
         isDashing = false;
+        isInvincible = false;
     }
 
     void UpdateInvencibility()
