@@ -45,6 +45,9 @@ public class Player : MonoBehaviour
 
     private Coroutine rotinaRosto;
 
+    // Efeito do choro da mulher
+    [HideInInspector] public Vector2 forcaExterna;
+
 
     void Start()
     {
@@ -86,7 +89,7 @@ public class Player : MonoBehaviour
     {
         Vector2 move = movement;
         if (move.sqrMagnitude > 1f) move = move.normalized;
-        rb.MovePosition(rb.position + move * movementSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + (move * movementSpeed + forcaExterna) * Time.fixedDeltaTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -98,6 +101,14 @@ public class Player : MonoBehaviour
         if(collision.gameObject.CompareTag("Lava"))
         {
             estaNaLava = true;
+        }
+        if (collision.gameObject.CompareTag("Laser"))
+        {
+            TakeDamage(takenDamage);
+        }
+        if (collision.gameObject.CompareTag("Piranha"))
+        {
+            TakeDamage(takenDamage);
         }
     }
 
@@ -204,7 +215,6 @@ public class Player : MonoBehaviour
     IEnumerator DashCoroutine()
     {
         isDashing = true;
-        isInvincible = true;
         float originalSpeed = movementSpeed;
         movementSpeed += dashSpeed;
         yield return new WaitForSeconds(dashDuration);
@@ -215,7 +225,6 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(tempoRestanteDoCooldown);
         }
         isDashing = false;
-        isInvincible = false;
     }
 
     void UpdateInvencibility()
