@@ -8,6 +8,7 @@ public class WeaponThrow : MonoBehaviour
     public Transform lançamento;
     public int numMax = 3;
     public int numAtual = 3;
+    public GameObject[] lancasUI;
     public float cooldown = 5.0f;
 
     private SpriteRenderer meuSpriteRenderer;
@@ -52,6 +53,7 @@ public class WeaponThrow : MonoBehaviour
             }
 
             numAtual -= 1;
+            lancasUI[numAtual].SetActive(false);
             proximoTempoDeArremesso = Time.time + tempoEntreArremessos;
         }
 
@@ -61,7 +63,7 @@ public class WeaponThrow : MonoBehaviour
             if (Time.time >= tempoParaProximaRecarga)
             {
                 numAtual += 1;
-
+                lancasUI[numAtual - 1].SetActive(true);
                 if (numAtual < numMax)
                 {
                     tempoParaProximaRecarga = Time.time + cooldown;
@@ -97,7 +99,7 @@ public class WeaponThrow : MonoBehaviour
         if (numAtual < numMax)
         {
             numAtual += 1;
-
+            lancasUI[numAtual - 1].SetActive(true);
             tempoParaProximaRecarga += cooldown;
         }
     }
