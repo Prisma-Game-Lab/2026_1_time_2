@@ -9,7 +9,8 @@ public class Tlaloc : MonoBehaviour
     [SerializeField] private float currentHealth;
     private bool isDead = false;
     public LavaController[] lavas;
-    private PlayerAttack script;
+    public PlayerAttack bastaoScript;
+    public float tempoIniciarBoss = 5f;
 
     [Header("Configurações do Ataque de Raios")]
     [SerializeField] private int quantidadeDeRaios = 5;
@@ -40,17 +41,24 @@ public class Tlaloc : MonoBehaviour
     [SerializeField] private float velocidadeDoFluxo = 2f;
     [SerializeField] private float tempoDaLavaNoChao = 20f;
 
+    [Header("Piscar ao tomar dano")]
+    public float flashInterval = 0.1f;
+    private SpriteRenderer spriteRenderer;
+    private Color corOriginal;
+
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
 
-        GameObject jogadorObjeto = GameObject.FindWithTag("Player");
-        script = jogadorObjeto.GetComponent<PlayerAttack>();
+        StartCoroutine(chooseAttack(tempoIniciarBoss));
 
-
-        StartCoroutine(chooseAttack());
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            corOriginal = spriteRenderer.color;
+        }
     }
 
     // Update is called once per frame
@@ -58,7 +66,7 @@ public class Tlaloc : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            StartCoroutine(lavaAttackAtivation(currentHealth));
+            StartCoroutine(lavaAttackAtivation(currentHealth, maxHealth));
         }
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -75,6 +83,7 @@ public class Tlaloc : MonoBehaviour
     {
         if (isDead) return;
         currentHealth -= damage;
+        StartCoroutine(FlashRed());
         if (currentHealth <= 0)
         {
             currentHealth = 0;
@@ -92,6 +101,7 @@ public class Tlaloc : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
         if (collision.gameObject.CompareTag("atlatl"))
         {
             Debug.Log("Dano de Atlatl");
@@ -99,7 +109,7 @@ public class Tlaloc : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("mataCavalo"))
         {
-            if (script.isAttacking)
+            if (bastaoScript.IsWeaponAttacking())
             {
                 Debug.Log("Dano de mataCavalo");
                 TakeDamage(2.5f);
@@ -107,15 +117,17 @@ public class Tlaloc : MonoBehaviour
         }
     }
 
-    IEnumerator chooseAttack()
+    IEnumerator chooseAttack(float tempo)
     {
+        yield return new WaitForSeconds(tempo);
+
         while (true)
         {
             int randomAttack = Random.Range(0, 3);
             switch (randomAttack)
             {
                 case 0:
-                    StartCoroutine(lavaAttackAtivation(currentHealth));
+                    StartCoroutine(lavaAttackAtivation(currentHealth, maxHealth));
                     break;
                 case 1:
                     ThunderAttack();
@@ -130,32 +142,32 @@ public class Tlaloc : MonoBehaviour
 
 
     //ATAQUE DE LAVA
-    IEnumerator lavaAttackAtivation(float health)
+    IEnumerator lavaAttackAtivation(float health, float maxHealth)
     {
-        lavaAttack(health);
+        lavaAttack(health, maxHealth);
         yield return new WaitForSeconds(1f);
     }
 
-    void lavaAttack(float vida)
+    void lavaAttack(float vida, float maxHealth)
     {
         List<int> numerosSorteados = SortearNumeros(4, 0, 6);
 
-        if(vida <= 300 && vida > 225)
+        if(vida <= maxHealth && vida > (0.75 * maxHealth))
         {
             StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
-        else if(vida <= 225 && vida > 150)
+        else if(vida <= (0.75 * maxHealth) && vida > (0.5 * maxHealth))
         {
             StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
             StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
-        else if (vida <= 150 && vida > 75)
+        else if (vida <= (0.5 * maxHealth) && vida > (0.25 * maxHealth))
         {
             StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
             StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
             StartCoroutine(lavas[numerosSorteados[2]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
         }
-        else if (vida <= 75 && vida > 0)
+        else if (vida <= (0.25 * maxHealth) && vida > 0)
         {
             StartCoroutine(lavas[numerosSorteados[0]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
             StartCoroutine(lavas[numerosSorteados[1]].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
@@ -302,5 +314,18 @@ public class Tlaloc : MonoBehaviour
         porradass[numero].SetActive(false);
         yield return new WaitForSeconds(5.0f);
 
+    }
+
+    IEnumerator FlashRed()
+    {
+        if (spriteRenderer != null)
+        {
+
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(flashInterval);
+
+            spriteRenderer.color = corOriginal;
+            yield return new WaitForSeconds(flashInterval);
+        }
     }
 }

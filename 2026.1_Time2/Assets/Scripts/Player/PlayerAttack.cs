@@ -73,18 +73,6 @@ public class PlayerAttack : MonoBehaviour
         isAttacking = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-
-        if (isAttacking)
-        {
-            if (other.CompareTag("Enemy"))
-            {
-                Debug.Log("Inimigo atingido! Dano: " + attackDamage);
-            }
-        }
-    }
-
     public bool IsWeaponAttacking()
     {
         return isAttacking;
