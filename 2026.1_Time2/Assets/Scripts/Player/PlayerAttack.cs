@@ -7,6 +7,7 @@ public class PlayerAttack : MonoBehaviour
 
     public float attackSpeed = 5f;
     public float attackDamage = 10f;
+    [SerializeField] private float attackDuration = 1.5f;
 
     [Header("Animação do Ataque")]
     public float rotationAngle = 60f;
@@ -25,8 +26,12 @@ public class PlayerAttack : MonoBehaviour
         {
             StartCoroutine(weaponRotation());
         }
+        if (Input.GetMouseButtonDown(1) && !isAttacking)
+        {
+            StartCoroutine(SpecialWeaponRotation());
+        }
 
-        if(Time.deltaTime > 0)
+        if (Time.deltaTime > 0)
         {
             RotateTowardsMouse();
         }
@@ -70,6 +75,51 @@ public class PlayerAttack : MonoBehaviour
             yield return null;
         }
 
+        isAttacking = false;
+    }
+
+    IEnumerator SpecialWeaponRotation()
+    {
+        isAttacking = true;
+
+        Quaternion localOriginRotation = transform.localRotation;
+        Quaternion startRotation = localOriginRotation * Quaternion.Euler(0, 0, rotationAngle / 2f);
+
+        float t = 0;
+
+        // Divide o tempo total
+        float windUpDuration = attackDuration * 0.15f;
+        float spinDuration = attackDuration * 0.70f;
+        float recoveryDuration = attackDuration * 0.15f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / windUpDuration;
+            transform.localRotation = Quaternion.Slerp(localOriginRotation, startRotation, t);
+            yield return null;
+        }
+
+        t = 0;
+        float totalRotationAmount = -360f * 3f;
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / spinDuration;
+
+            float currentAngle = Mathf.Lerp(0, totalRotationAmount, t);
+            transform.localRotation = startRotation * Quaternion.Euler(0, 0, currentAngle);
+            yield return null;
+        }
+
+        t = 0;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / recoveryDuration;
+            transform.localRotation = Quaternion.Slerp(startRotation, localOriginRotation, t);
+            yield return null;
+        }
+
+        transform.localRotation = localOriginRotation;
         isAttacking = false;
     }
 
