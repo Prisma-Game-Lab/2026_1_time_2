@@ -9,6 +9,8 @@ TagManager:
   - Lava
   - mataCavalo
   - atlatl
+  - Laser
+  - Piranha
   layers:
   - Default
   - TransparentFX
