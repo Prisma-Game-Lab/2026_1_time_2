@@ -281,6 +281,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
+--- !u!1 &421987193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5941832418612301831, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
+  m_PrefabInstance: {fileID: 179250928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &584775202 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3976774726617289570, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
@@ -500,8 +505,10 @@ MonoBehaviour:
   colliderDoLaser: {fileID: 1582202477}
   tempoDeChoro: 10
   "for\xE7aDoChoro": 3
+  CooldownPeixes: 1
   piranhas: {fileID: 1396144115}
   colliderPiranhas: {fileID: 1396144118}
+  peixePrefab: {fileID: 4579993369581858855, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
   player: {fileID: 1101468824}
   playerRb: {fileID: 1659509171}
   scriptDeMovimento: {fileID: 1659509170}
@@ -1103,6 +1110,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: deathScreen
+      value: 
+      objectReference: {fileID: 421987193}
+    - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: coracoes.Array.data[0]
       value: 
       objectReference: {fileID: 584775202}
@@ -1372,15 +1383,77 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!1001 &4366057550464464968
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -31.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -9.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3265815147565414024, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4579993369581858855, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_Name
+      value: Peixe
+      objectReference: {fileID: 0}
+    - target: {fileID: 8056128768852339063, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1101468824}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1817406423}
   - {fileID: 1317001992}
-  - {fileID: 119207153}
   - {fileID: 179250928}
   - {fileID: 175247021}
+  - {fileID: 119207153}
   - {fileID: 613480966}
   - {fileID: 1396144117}
   - {fileID: 873253574}
+  - {fileID: 4366057550464464968}
