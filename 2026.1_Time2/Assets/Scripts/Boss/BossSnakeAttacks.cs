@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossSnakeAttacks : MonoBehaviour
 {
-    [Header("Referências")]
+    [Header("Referï¿½ncias")]
     public Transform player;
     public GameObject tornadoPrefab;
 
@@ -121,12 +121,12 @@ public class BossSnakeAttacks : MonoBehaviour
 
             if (missedBitesCount >= 3)
             {
-                Debug.Log("Serpente bateu a cabeça e está DESNORTEADA!");
+                Debug.Log("Serpente bateu a cabeï¿½a e estï¿½ DESNORTEADA!");
                 isStunned = true;
-                // TODO: Chamar Trigger do Animator para animação de Stun aqui
+                // TODO: Chamar Trigger do Animator para animaï¿½ï¿½o de Stun aqui
                 yield return new WaitForSeconds(biteStunDuration);
                 isStunned = false;
-                missedBitesCount = 0; // Reseta após sofrer o stun
+                missedBitesCount = 0; // Reseta apï¿½s sofrer o stun
             }
         }
 
@@ -157,7 +157,7 @@ public class BossSnakeAttacks : MonoBehaviour
             Vector3 entryPoint = GetOffscreenPosition(enterDirection);
             Vector3 exitPoint = GetOffscreenPosition(-enterDirection);
 
-            // GDD: Animação das folhas para avisar o player de onde ela vem
+            // GDD: Animaï¿½ï¿½o das folhas para avisar o player de onde ela vem
             DispararAnimacaoFolhas(enterDirection);
 
             yield return new WaitForSeconds(0.5f);
@@ -189,10 +189,10 @@ public class BossSnakeAttacks : MonoBehaviour
         transform.position = originPosition; 
         transform.rotation = Quaternion.identity;
 
-        Debug.Log("Serpente terminou os mergulhos e está EXAUSTA!");
+        Debug.Log("Serpente terminou os mergulhos e estï¿½ EXAUSTA!");
         isStunned = true;
 
-        // TODO: Chamar Trigger do Animator para animação de Exaustão aqui
+        // TODO: Chamar Trigger do Animator para animaï¿½ï¿½o de Exaustï¿½o aqui
         yield return new WaitForSeconds(dashTiredDuration);
         isStunned = false;
 
@@ -231,6 +231,6 @@ public class BossSnakeAttacks : MonoBehaviour
 
     void DispararAnimacaoFolhas(Vector2 direcaoEntrada)
     {
-        Debug.Log($"[VFX] Balançar árvores na direção: {direcaoEntrada}");
+        Debug.Log($"[VFX] Balanï¿½ar ï¿½rvores na direï¿½ï¿½o: {direcaoEntrada}");
     }
 }
