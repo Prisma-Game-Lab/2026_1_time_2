@@ -43,6 +43,10 @@ public class Player : MonoBehaviour
     public Sprite rostoNormal;
     public Sprite rostoMachucado;
 
+    [Header("Configuração de Troca de Arma")]
+    public float weaponSwitchCooldown = 0.5f; // Tempo de espera entre as trocas em segundos
+    private float nextWeaponSwitchTime = 0f; // Guarda quando a próxima troca será permitida
+
     private Coroutine rotinaRosto;
 
     // Efeito do choro da mulher
@@ -183,7 +187,7 @@ public class Player : MonoBehaviour
 
     void SelectWeapon()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && Time.time >= nextWeaponSwitchTime)
         {
             PlayerAttack bastaoScript = GetComponentInChildren<PlayerAttack>();
             if (bastaoScript == null || !bastaoScript.IsWeaponAttacking())
@@ -195,6 +199,8 @@ public class Player : MonoBehaviour
                         weapons[i].SetActive(false);
                         int nextIndex = (i + 1) % weapons.Length;
                         weapons[nextIndex].SetActive(true);
+
+                        nextWeaponSwitchTime = Time.time + weaponSwitchCooldown;
                         break;
                     }
                 }

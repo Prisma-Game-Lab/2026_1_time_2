@@ -13,6 +13,11 @@ public class PlayerAttack : MonoBehaviour
     public float rotationAngle = 60f;
     public bool isAttacking = false;
 
+    [Header("Configuração de Troca de Arma")]
+    public float attackLeveCooldown = 0.5f;
+    public float attackPesadoCooldown = 1.5f;
+    private float proximoAttackCooldown = 0f;
+
     private Camera mainCamera;
 
     void Start()
@@ -22,13 +27,15 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && !isAttacking)
+        if(Input.GetMouseButtonDown(0) && !isAttacking && Time.time >= proximoAttackCooldown)
         {
             StartCoroutine(weaponRotation());
+            proximoAttackCooldown = Time.time + attackLeveCooldown;
         }
-        if (Input.GetMouseButtonDown(1) && !isAttacking)
+        if (Input.GetMouseButtonDown(1) && !isAttacking && Time.time >= proximoAttackCooldown)
         {
             StartCoroutine(SpecialWeaponRotation());
+            proximoAttackCooldown = Time.time + attackPesadoCooldown;
         }
 
         if (Time.deltaTime > 0)
