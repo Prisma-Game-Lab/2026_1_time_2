@@ -16,6 +16,7 @@ public class WeaponThrow : MonoBehaviour
     [Header("Configurações do Arremesso")]
     public float tempoEntreArremessos = 0.8f;
     private float proximoTempoDeArremesso = 0f;
+    public float tempoEntreLançaEOutra = 0.1f; // Tempo entre cada lança ao disparar todas
 
     private float tempoParaProximaRecarga = 0f;
 
@@ -37,23 +38,13 @@ public class WeaponThrow : MonoBehaviour
         // 1. Sistema de Arremesso
         if (Input.GetMouseButtonDown(0) && numAtual > 0 && Time.time >= proximoTempoDeArremesso)
         {
-            // referência do objeto instanciado
-            GameObject novoAtlatl = Instantiate(atlatl, lançamento.position, transform.rotation);
+            DispararUmaLança();
+            proximoTempoDeArremesso = Time.time + tempoEntreArremessos;
+        }
+        if(Input.GetMouseButtonDown(1) && numAtual > 0 && Time.time >= proximoTempoDeArremesso)
+        {
+            StartCoroutine(DispararTodasAsLanças());
 
-            // passa este script para o Atlatl saber quem o criou
-            AtlatlScript scriptAtlatl = novoAtlatl.GetComponent<AtlatlScript>();
-            if (scriptAtlatl != null)
-            {
-                scriptAtlatl.ConfigurarOrigem(this);
-            }
-
-            if (numAtual == numMax)
-            {
-                tempoParaProximaRecarga = Time.time + cooldown;
-            }
-
-            numAtual -= 1;
-            lancasUI[numAtual].SetActive(false);
             proximoTempoDeArremesso = Time.time + tempoEntreArremessos;
         }
 
@@ -81,6 +72,37 @@ public class WeaponThrow : MonoBehaviour
         {
             RotateTowardsMouse();
         }
+    }
+
+    IEnumerator DispararTodasAsLanças()
+    {
+        int lançasParaDisparar = numAtual;
+        for (int i = 0; i < lançasParaDisparar; i++)
+        {
+            DispararUmaLança();
+            yield return new WaitForSeconds(tempoEntreLançaEOutra); // Espera 0.1 segundos entre cada lançamento
+        }
+    }
+
+    private void DispararUmaLança()
+    {
+        // referência do objeto instanciado
+        GameObject novoAtlatl = Instantiate(atlatl, lançamento.position, transform.rotation);
+
+        // passa este script para o Atlatl saber quem o criou
+        AtlatlScript scriptAtlatl = novoAtlatl.GetComponent<AtlatlScript>();
+        if (scriptAtlatl != null)
+        {
+            scriptAtlatl.ConfigurarOrigem(this);
+        }
+
+        if (numAtual == numMax)
+        {
+            tempoParaProximaRecarga = Time.time + cooldown;
+        }
+
+        numAtual -= 1;
+        lancasUI[numAtual].SetActive(false);
     }
 
     private void AtualizarRecargaPassiva()
