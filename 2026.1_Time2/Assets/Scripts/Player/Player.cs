@@ -52,6 +52,9 @@ public class Player : MonoBehaviour
     // Efeito do choro da mulher
     [HideInInspector] public Vector2 forcaExterna;
 
+    [Header("Animação")]
+    private Animator animator;
+
 
     void Start()
     {
@@ -60,12 +63,25 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
             corOriginal = spriteRenderer.color;
+
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
+
+        //Animação do player
+        if (animator != null)
+        {
+            // Envia a direção do movimento para a Blend Tree
+            animator.SetFloat("InputX", movement.x);
+            animator.SetFloat("InputY", movement.y);
+
+            // Opcional: Se quiser controlar a velocidade da animação (parar quando o player ficar parado)
+            animator.SetFloat("Speed", movement.sqrMagnitude);
+        }
 
         if (currentHealth <= 0)
         {
