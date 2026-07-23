@@ -75,12 +75,19 @@ public class Player : MonoBehaviour
         //Animação do player
         if (animator != null)
         {
-            // Envia a direção do movimento para a Blend Tree
-            animator.SetFloat("InputX", movement.x);
-            animator.SetFloat("InputY", movement.y);
+            float speed = movement.sqrMagnitude;
 
-            // Opcional: Se quiser controlar a velocidade da animação (parar quando o player ficar parado)
-            animator.SetFloat("Speed", movement.sqrMagnitude);
+            if (speed > 0.01f)
+            {
+                // Se estiver andando, envia a nova direção para a Blend Tree
+                animator.SetFloat("InputX", movement.x);
+                animator.SetFloat("InputY", movement.y);
+                animator.speed = 1f; // Animação roda normalmente
+            }
+            else
+            {
+                animator.speed = 0f; // Congela a animação no último frame gravado
+            }
         }
 
         if (currentHealth <= 0)

@@ -48,8 +48,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackSpeed: 7
   attackDamage: 10
+  attackDuration: 1.5
   rotationAngle: 120
   isAttacking: 0
+  attackLeveCooldown: 0.7
+  attackPesadoCooldown: 3
 --- !u!50 &5995359717097395982
 Rigidbody2D:
   serializedVersion: 4
@@ -91,6 +94,7 @@ GameObject:
   - component: {fileID: 1436436919659193409}
   - component: {fileID: 5534005184229766586}
   - component: {fileID: 7914086252745925267}
+  - component: {fileID: 5862851103100262570}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -210,9 +214,9 @@ MonoBehaviour:
   maxHealth: 3
   takenDamage: 1
   coracoes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3976774726617289570}
+  - {fileID: 5471747789403362569}
+  - {fileID: 7508826131468329063}
   invincibleTime: 3
   flashInterval: 0.1
   movementSpeed: 6
@@ -227,6 +231,8 @@ MonoBehaviour:
   rostoNaTela: {fileID: 1414619318205600544}
   rostoNormal: {fileID: 21300000, guid: 1a9d6f363ae0c46828049d7bb7022f62, type: 3}
   rostoMachucado: {fileID: 21300000, guid: 93be077e80cc44eb595adb638f56f364, type: 3}
+  weaponSwitchCooldown: 0.5
+  forcaExterna: {x: 0, y: 0}
 --- !u!58 &5534005184229766586
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -307,6 +313,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.44114, y: 5.218397}
   m_EdgeRadius: 0
+--- !u!95 &5862851103100262570
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1493418141395766661}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8c424aafbe578234bb152f45df1a28fe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2735049957117266398
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +725,7 @@ MonoBehaviour:
   - {fileID: 1140329950019905265}
   cooldown: 3
   tempoEntreArremessos: 0.8
+  "tempoEntreLan\xE7aEOutra": 0.1
 --- !u!1 &8644507550786943057
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,9 +964,24 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8103242271658906246, guid: c05c86dde7c614ee6b1a9019bb789d47, type: 3}
   m_PrefabInstance: {fileID: 6796728140831036149}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3976774726617289570 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7593776715900699031, guid: c05c86dde7c614ee6b1a9019bb789d47, type: 3}
+  m_PrefabInstance: {fileID: 6796728140831036149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5471747789403362569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1566506808230021116, guid: c05c86dde7c614ee6b1a9019bb789d47, type: 3}
+  m_PrefabInstance: {fileID: 6796728140831036149}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5917018766599786980 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 887117919566332689, guid: c05c86dde7c614ee6b1a9019bb789d47, type: 3}
+  m_PrefabInstance: {fileID: 6796728140831036149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7508826131468329063 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3919927927830327954, guid: c05c86dde7c614ee6b1a9019bb789d47, type: 3}
   m_PrefabInstance: {fileID: 6796728140831036149}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &9214520586932202151 stripped

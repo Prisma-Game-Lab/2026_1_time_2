@@ -11,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
     [Header("Animação do Ataque")]
     public float rotationAngle = 60f;
     public bool isAttacking = false;
+    public bool isHardAttack = false;
 
     [Header("Configuração de Troca de Arma")]
     public float attackLeveCooldown = 0.5f;
@@ -112,7 +113,7 @@ public class PlayerAttack : MonoBehaviour
     IEnumerator SpecialWeaponRotation()
     {
         isAttacking = true;
-        inimigosAtingidos.Clear();
+        isHardAttack = true;
 
         Quaternion localOriginRotation = transform.localRotation;
         Quaternion startRotation = localOriginRotation * Quaternion.Euler(0, 0, rotationAngle / 2f);
@@ -160,11 +161,17 @@ public class PlayerAttack : MonoBehaviour
         }
 
         isAttacking = false;
+        isHardAttack = false;
     }
 
     public bool IsWeaponAttacking()
     {
         return isAttacking;
+    }
+
+    public bool IsWeaponHardAttacking()
+    {
+        return isHardAttack;
     }
 
     void RotateTowardsMouse()
