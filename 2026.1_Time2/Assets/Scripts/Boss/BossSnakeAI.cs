@@ -57,7 +57,8 @@ public class BossSnakeAI : MonoBehaviour
         StartCoroutine(AttackLoop());
     }
 
-    public void TakeDamage(int damage)
+    // somDeAcerto é opcional: cada arma passa o clip dela (ou null se não tiver som próprio)
+    public void TakeDamage(int damage, AudioClip somDeAcerto = null)
     {
         if (isDead) return;
         currentHealth -= damage;
@@ -66,6 +67,9 @@ public class BossSnakeAI : MonoBehaviour
         {
             if (hitFlashCoroutine != null) StopCoroutine(hitFlashCoroutine);
             hitFlashCoroutine = StartCoroutine(FlashHit());
+
+            if (somDeAcerto != null && AudioManager.Instance != null)
+                AudioManager.Instance.PlaySFX(somDeAcerto);
         }
 
         if (currentHealth <= 0)
@@ -97,6 +101,8 @@ public class BossSnakeAI : MonoBehaviour
         StopAllCoroutines();
         attacks.StopAllCoroutines();
 
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySerpenteMorte();
         if (spriteRenderers != null)
         {
             for (int i = 0; i < spriteRenderers.Length; i++)

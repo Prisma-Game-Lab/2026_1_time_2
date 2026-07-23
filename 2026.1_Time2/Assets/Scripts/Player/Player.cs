@@ -153,6 +153,10 @@ public class Player : MonoBehaviour
         if (!isInvincible)
         {
             currentHealth -= damage;
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayPlayerDano();
+
             if (rotinaRosto != null)
             {
                 StopCoroutine(rotinaRosto);

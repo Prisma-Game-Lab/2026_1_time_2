@@ -49,14 +49,15 @@ public class PlayerAttack : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!isAttacking) return;
-        if (inimigosAtingidos.Contains(other)) return; // já bateu nesse inimigo nesse golpe
+        if (inimigosAtingidos.Contains(other)) return;
 
         if (other.CompareTag("Enemy"))
         {
             BossSnakeAI boss = other.GetComponentInParent<BossSnakeAI>();
             if (boss != null)
             {
-                boss.TakeDamage((int)attackDamage);
+                AudioClip som = AudioManager.Instance != null ? AudioManager.Instance.somMacuahuitlAcerto : null;
+                boss.TakeDamage((int)attackDamage, som);
                 inimigosAtingidos.Add(other);
             }
         }
@@ -97,6 +98,12 @@ public class PlayerAttack : MonoBehaviour
             t += Time.deltaTime * attackSpeed;
             transform.localRotation = Quaternion.Slerp(endRotation, localOriginRotation, t);
             yield return null;
+        }
+
+        if (inimigosAtingidos.Count == 0)
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayMacuahuitlErro();
         }
 
         isAttacking = false;
@@ -145,6 +152,13 @@ public class PlayerAttack : MonoBehaviour
         }
 
         transform.localRotation = localOriginRotation;
+
+        if (inimigosAtingidos.Count == 0)
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayMacuahuitlErro();
+        }
+
         isAttacking = false;
     }
 

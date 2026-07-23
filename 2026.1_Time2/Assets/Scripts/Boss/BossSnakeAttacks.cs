@@ -93,6 +93,9 @@ public class BossSnakeAttacks : MonoBehaviour
         Vector3 direction = (targetPos - startPos).normalized;
         transform.up = -direction;
 
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySerpenteAviso();
+
         float distanceTraveled = 0f;
         float totalDistance = Vector3.Distance(startPos, targetPos);
         bool hitPlayer = false;
@@ -231,6 +234,8 @@ public class BossSnakeAttacks : MonoBehaviour
 
     void DispararAnimacaoFolhas(Vector2 direcaoEntrada)
     {
-        Debug.Log($"[VFX] Balan�ar �rvores na dire��o: {direcaoEntrada}");
+        Debug.Log($"[VFX] Balançar árvores na direção: {direcaoEntrada}");
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySerpenteAviso();
     }
 }

@@ -8,14 +8,12 @@ public class AtlatlScript : MonoBehaviour
     public float attackDamage = 10f;
     public float tempoGrudado = 1.5f;
     public float tempoNoChao = 8.0f;
-
     private Vector3 moveDirection;
     private bool estaVoando = true;
     private bool noChao = false;
     private Rigidbody2D rb;
     private Collider2D meuCollider;
     private WeaponThrow armaOrigem;
-
     private Transform inimigoAlvo;
     private Vector3 offsetGrudado;
 
@@ -23,21 +21,19 @@ public class AtlatlScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         meuCollider = GetComponent<Collider2D>();
-
-        // Garante que a física não vai brigar com o movimento manual do script
         if (rb != null)
         {
             rb.gravityScale = 0f;
             rb.bodyType = RigidbodyType2D.Kinematic;
         }
-
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayAtlatlVoando();
         Camera mainCamera = Camera.main;
         if (mainCamera != null)
         {
             Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0;
             moveDirection = (mousePosition - transform.position).normalized;
-
             float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
@@ -60,15 +56,17 @@ public class AtlatlScript : MonoBehaviour
     {
         if (estaVoando && other.CompareTag("Enemy"))
         {
+            estaVoando = false;
+
             BossSnakeAI boss = other.GetComponentInParent<BossSnakeAI>();
             if (boss != null)
             {
-                boss.TakeDamage((int)attackDamage);
+                AudioClip som = AudioManager.Instance != null ? AudioManager.Instance.somAtlatlAcerto : null;
+                boss.TakeDamage((int)attackDamage, som);
             }
 
             StartCoroutine(GrudarNoInimigo(other.transform));
         }
-
         if (noChao && other.CompareTag("Player"))
         {
             ColetarPeloPlayer();
@@ -80,9 +78,7 @@ public class AtlatlScript : MonoBehaviour
         estaVoando = false;
         inimigoAlvo = inimigo;
         offsetGrudado = transform.position - inimigo.position; // guarda a posição relativa no momento do impacto
-
         if (rb != null) rb.velocity = Vector2.zero;
-
         float tempoDecorrido = 0f;
         while (tempoDecorrido < tempoGrudado)
         {
@@ -95,7 +91,6 @@ public class AtlatlScript : MonoBehaviour
             tempoDecorrido += Time.deltaTime;
             yield return null;
         }
-
         inimigoAlvo = null;
         CairNoChao();
     }
