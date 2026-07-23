@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro; // remove essa linha se estiver usando Text legado
 
 [RequireComponent(typeof(BossSnakeAttacks))]
 public class BossSnakeAI : MonoBehaviour
@@ -21,17 +23,37 @@ public class BossSnakeAI : MonoBehaviour
     public float forcaVidaMedia = 1.3f;
     public float forcaVidaBaixa = 1.6f;
 
+    [Header("Feedback de Hit")]
+    public Color corHit = Color.red;
+    public float duracaoFlashHit = 0.1f;
+    private SpriteRenderer[] spriteRenderers;
+    private Color[] coresOriginais;
+    private Coroutine hitFlashCoroutine;
+
+    [Header("Tela de Vitória")]
+    public GameObject textoVitoria; // arraste o GameObject de UI com o texto "Vitória!" aqui
+    public float delayAntesDoMenu = 5f;
+    public string nomeCenaMenu = "Menu"; // ajusta pro nome exato da sua cena de menu
+
     private BossSnakeAttacks attacks;
     private bool isDead = false;
-
     private int consecutiveTornados = 0;
     private int consecutiveBites = 0;
-    private int mergulhoCooldown = 0; 
+    private int mergulhoCooldown = 0;
 
     void Start()
     {
         currentHealth = maxHealth;
         attacks = GetComponent<BossSnakeAttacks>();
+
+        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+        coresOriginais = new Color[spriteRenderers.Length];
+        for (int i = 0; i < spriteRenderers.Length; i++)
+            coresOriginais[i] = spriteRenderers[i].color;
+
+        if (textoVitoria != null)
+            textoVitoria.SetActive(false);
+
         StartCoroutine(AttackLoop());
     }
 
@@ -39,6 +61,13 @@ public class BossSnakeAI : MonoBehaviour
     {
         if (isDead) return;
         currentHealth -= damage;
+
+        if (!attacks.IsStunned())
+        {
+            if (hitFlashCoroutine != null) StopCoroutine(hitFlashCoroutine);
+            hitFlashCoroutine = StartCoroutine(FlashHit());
+        }
+
         if (currentHealth <= 0)
         {
             currentHealth = 0;
@@ -47,11 +76,50 @@ public class BossSnakeAI : MonoBehaviour
         }
     }
 
+    IEnumerator FlashHit()
+    {
+        if (spriteRenderers == null || spriteRenderers.Length == 0) yield break;
+
+        for (int i = 0; i < spriteRenderers.Length; i++)
+            spriteRenderers[i].color = corHit;
+
+        yield return new WaitForSeconds(duracaoFlashHit);
+
+        if (!attacks.IsStunned())
+        {
+            for (int i = 0; i < spriteRenderers.Length; i++)
+                spriteRenderers[i].color = coresOriginais[i];
+        }
+    }
+
     void Die()
     {
         StopAllCoroutines();
+        attacks.StopAllCoroutines();
+
+        if (spriteRenderers != null)
+        {
+            for (int i = 0; i < spriteRenderers.Length; i++)
+                spriteRenderers[i].enabled = false;
+        }
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D col in colliders)
+            col.enabled = false;
+
         Debug.Log("Serpente derrotada!");
+        StartCoroutine(VitoriaCoroutine());
+    }
+
+    IEnumerator VitoriaCoroutine()
+    {
+        if (textoVitoria != null)
+            textoVitoria.SetActive(true);
+
+        yield return new WaitForSeconds(delayAntesDoMenu);
+
         Destroy(gameObject);
+        SceneManager.LoadScene(nomeCenaMenu);
     }
 
     float GetHealthPercent()
@@ -70,22 +138,15 @@ public class BossSnakeAI : MonoBehaviour
     AttackType GetNextAttack()
     {
         List<AttackType> validAttacks = new List<AttackType>();
-
         if (consecutiveTornados < 2)
             validAttacks.Add(AttackType.Tornado);
-
         if (consecutiveBites < 3)
             validAttacks.Add(AttackType.Bite);
-
         if (mergulhoCooldown <= 0)
             validAttacks.Add(AttackType.DashThrough);
-
         if (validAttacks.Count == 0) validAttacks.Add(AttackType.Bite);
 
-    
         AttackType chosenAttack = validAttacks[Random.Range(0, validAttacks.Count)];
-
-
         if (chosenAttack == AttackType.Tornado)
         {
             consecutiveTornados++;
@@ -102,22 +163,18 @@ public class BossSnakeAI : MonoBehaviour
         {
             consecutiveTornados = 0;
             consecutiveBites = 0;
-            mergulhoCooldown = 2; 
+            mergulhoCooldown = 2;
         }
-
         return chosenAttack;
     }
 
     IEnumerator AttackLoop()
     {
         yield return new WaitForSeconds(1f);
-
         while (!isDead)
         {
             yield return new WaitUntil(() => !attacks.IsAttacking() && !attacks.IsStunned());
-
             AttackType proximoAtaque = GetNextAttack();
-
             switch (proximoAtaque)
             {
                 case AttackType.Tornado:
@@ -130,7 +187,6 @@ public class BossSnakeAI : MonoBehaviour
                     attacks.AttackDashThrough(GetHealthPercent());
                     break;
             }
-
             yield return new WaitUntil(() => !attacks.IsAttacking());
             yield return new WaitForSeconds(GetCurrentDelay());
         }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-
     public float attackSpeed = 5f;
     public float attackDamage = 10f;
     [SerializeField] private float attackDuration = 1.5f;
@@ -20,6 +19,9 @@ public class PlayerAttack : MonoBehaviour
 
     private Camera mainCamera;
 
+    // Evita bater múltiplas vezes no mesmo inimigo num único golpe
+    private HashSet<Collider2D> inimigosAtingidos = new HashSet<Collider2D>();
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -27,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0) && !isAttacking && Time.time >= proximoAttackCooldown)
+        if (Input.GetMouseButtonDown(0) && !isAttacking && Time.time >= proximoAttackCooldown)
         {
             StartCoroutine(weaponRotation());
             proximoAttackCooldown = Time.time + attackLeveCooldown;
@@ -44,11 +46,26 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!isAttacking) return;
+        if (inimigosAtingidos.Contains(other)) return; // já bateu nesse inimigo nesse golpe
+
+        if (other.CompareTag("Enemy"))
+        {
+            BossSnakeAI boss = other.GetComponentInParent<BossSnakeAI>();
+            if (boss != null)
+            {
+                boss.TakeDamage((int)attackDamage);
+                inimigosAtingidos.Add(other);
+            }
+        }
+    }
 
     IEnumerator weaponRotation()
     {
-
         isAttacking = true;
+        inimigosAtingidos.Clear();
 
         //Calcula as rotações de início e fim do ataque
 
@@ -59,7 +76,7 @@ public class PlayerAttack : MonoBehaviour
         //Faz a rotação do ataque funcionar, primeiro indo um pouco para um lado, depois para o outro e depois voltando para a posição original
         float t = 0;
 
-        while(t < 1f)
+        while (t < 1f)
         {
             t += Time.deltaTime * attackSpeed;
             transform.localRotation = Quaternion.Slerp(localOriginRotation, startRotation, t);
@@ -88,6 +105,7 @@ public class PlayerAttack : MonoBehaviour
     IEnumerator SpecialWeaponRotation()
     {
         isAttacking = true;
+        inimigosAtingidos.Clear();
 
         Quaternion localOriginRotation = transform.localRotation;
         Quaternion startRotation = localOriginRotation * Quaternion.Euler(0, 0, rotationAngle / 2f);
@@ -149,6 +167,4 @@ public class PlayerAttack : MonoBehaviour
         // Aplica a rotação no eixo Z
         transform.rotation = Quaternion.Euler(0, 0, angle - 90f);
     }
-
-
 }
