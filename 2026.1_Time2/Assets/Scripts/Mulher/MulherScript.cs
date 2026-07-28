@@ -8,6 +8,7 @@ public class MulherScript : MonoBehaviour
     [SerializeField] private float currentHealth;
     private bool isDead = false;
     private bool canMove = true;
+    public float tempoIniciarBoss = 2.0f;
 
     [Header("Configurações do Ataque Laser")]
     [SerializeField] private int quantidadeDeLasers = 3;
@@ -36,6 +37,8 @@ public class MulherScript : MonoBehaviour
     
     void Start()
     {
+        StartCoroutine(ChooseAttack(tempoIniciarBoss));
+        
         currentHealth = maxHealth;
         pivotLaser.SetActive(false);
         piranhas.SetActive(false);
@@ -112,8 +115,10 @@ public class MulherScript : MonoBehaviour
         }
     }
 
-    IEnumerator ChooseAttack()
+    IEnumerator ChooseAttack(float delay)
     {
+        yield return new WaitForSeconds(delay);
+
         while (player != null)
         {
             int randomAttack = Random.Range(0, 3);

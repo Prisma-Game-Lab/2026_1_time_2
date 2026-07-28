@@ -1439,6 +1439,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Peixe
       objectReference: {fileID: 0}
+    - target: {fileID: 4579993369581858855, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+      propertyPath: m_TagString
+      value: Peixe
+      objectReference: {fileID: 0}
     - target: {fileID: 8056128768852339063, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
       propertyPath: player
       value: 
