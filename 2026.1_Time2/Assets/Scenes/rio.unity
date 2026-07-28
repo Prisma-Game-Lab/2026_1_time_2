@@ -276,6 +276,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6248272381941540650, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1450,9 +1454,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 1817406423}
   - {fileID: 1317001992}
+  - {fileID: 119207153}
   - {fileID: 179250928}
   - {fileID: 175247021}
-  - {fileID: 119207153}
   - {fileID: 613480966}
   - {fileID: 1396144117}
   - {fileID: 873253574}

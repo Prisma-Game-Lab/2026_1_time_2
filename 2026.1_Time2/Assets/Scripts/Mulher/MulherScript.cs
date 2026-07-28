@@ -114,7 +114,7 @@ public class MulherScript : MonoBehaviour
 
     IEnumerator ChooseAttack()
     {
-        while (true)
+        while (player != null)
         {
             int randomAttack = Random.Range(0, 3);
             switch (randomAttack)

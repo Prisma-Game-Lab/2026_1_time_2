@@ -46,6 +46,9 @@ public class Tlaloc : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color corOriginal;
 
+    [Header("Referência ao Player")]
+    [SerializeField] private Transform player;
+
 
     // Start is called before the first frame update
     void Start()
@@ -121,7 +124,7 @@ public class Tlaloc : MonoBehaviour
     {
         yield return new WaitForSeconds(tempo);
 
-        while (true)
+        while (player != null)
         {
             int randomAttack = Random.Range(0, 3);
             switch (randomAttack)
