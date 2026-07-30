@@ -97,7 +97,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
 --- !u!212 &2395338653693226904
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -165,11 +165,11 @@ MonoBehaviour:
   speed: 0
   damage: 0
   lifetime: 15
-  variacoesTornado:
+  framesAnimacao:
   - {fileID: 184971750, guid: 52892986fbee12c47931c7fe5f70246f, type: 3}
   - {fileID: -1952931107, guid: 52892986fbee12c47931c7fe5f70246f, type: 3}
   - {fileID: 87362033, guid: 52892986fbee12c47931c7fe5f70246f, type: 3}
-  velocidadeRotacao: 180
+  tempoEntreFrames: 0.25
   multiplicadorHitbox: 0.5
 --- !u!1 &4209578168745650165
 GameObject:

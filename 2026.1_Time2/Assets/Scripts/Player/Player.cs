@@ -51,6 +51,9 @@ public class Player : MonoBehaviour
 
     // Efeito do choro da mulher
     [HideInInspector] public Vector2 forcaExterna;
+    [HideInInspector] public bool isStunned = false;
+    [HideInInspector] public float tempoStunAtual = 0f;
+    [HideInInspector] public float tempoStun = 1f;
 
     [Header("Animação")]
     private Animator animator;
@@ -69,8 +72,21 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        if (!isStunned)
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
+        }
+        else
+        {
+            movement = Vector2.zero;
+            tempoStunAtual += Time.deltaTime;
+            if (tempoStunAtual >= tempoStun)
+            {
+                isStunned = false;
+                tempoStunAtual = 0f;
+            }
+        }
 
         //Animação do player
         if (animator != null)
@@ -136,6 +152,11 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Piranha"))
         {
             TakeDamage(takenDamage);
+        }
+        if (collision.gameObject.CompareTag("Peixe"))
+        {
+            isStunned = true;
+            tempoStunAtual = 0f;
         }
     }
 

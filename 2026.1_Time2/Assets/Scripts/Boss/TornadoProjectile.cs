@@ -9,9 +9,9 @@ public class TornadoProjectile : MonoBehaviour
     [HideInInspector] public float damage;
     public float lifetime = 3f;
 
-    [Header("Visual")]
-    public Sprite[] variacoesTornado; // arraste os 3 sprites fatiados aqui
-    public float velocidadeRotacao = 180f; // graus por segundo, dá a sensação de giro
+    [Header("Visual - Animação")]
+    public Sprite[] framesAnimacao; // arraste os 3 frames fatiados aqui, na ordem
+    public float tempoEntreFrames = 0.1f; // controla a velocidade do "giro"
 
     [Header("Hitbox")]
     [Range(0.1f, 1f)]
@@ -38,33 +38,40 @@ public class TornadoProjectile : MonoBehaviour
         speed = spd;
         damage = dmg;
 
-        // Escolhe uma das 3 variações aleatoriamente
-        if (variacoesTornado != null && variacoesTornado.Length > 0)
+        if (framesAnimacao != null && framesAnimacao.Length > 0)
         {
-            spriteRenderer.sprite = variacoesTornado[Random.Range(0, variacoesTornado.Length)];
+            spriteRenderer.sprite = framesAnimacao[0];
+            AjustarHitboxAoSprite();
+            StartCoroutine(AnimarFrames());
         }
 
-        AjustarHitboxAoSprite();
-
         Destroy(gameObject, lifetime);
+    }
+
+    IEnumerator AnimarFrames()
+    {
+        int indiceAtual = 0;
+        while (true)
+        {
+            spriteRenderer.sprite = framesAnimacao[indiceAtual];
+            AjustarHitboxAoSprite();
+            indiceAtual = (indiceAtual + 1) % framesAnimacao.Length;
+            yield return new WaitForSeconds(tempoEntreFrames);
+        }
     }
 
     void AjustarHitboxAoSprite()
     {
         if (circleCollider == null || spriteRenderer == null || spriteRenderer.sprite == null) return;
 
-        // Pega o raio real do sprite (considerando a escala do objeto) e aplica o multiplicador
-        float raioBase = spriteRenderer.sprite.bounds.extents.x; // extents já é metade da largura, em unidades locais
+        float raioBase = spriteRenderer.sprite.bounds.extents.x;
         circleCollider.radius = raioBase * multiplicadorHitbox;
-
-        // Centraliza o collider verticalmente no "corpo" do funil, não no topo largo do tornado
         circleCollider.offset = new Vector2(0f, spriteRenderer.sprite.bounds.center.y * 0.3f);
     }
 
     void Update()
     {
         transform.position += (Vector3)(moveDirection * speed * Time.deltaTime);
-        transform.Rotate(0f, 0f, velocidadeRotacao * Time.deltaTime);
         Ricochet();
     }
 
