@@ -11,6 +11,7 @@ public class Tlaloc : MonoBehaviour
     public LavaController[] lavas;
     public PlayerAttack bastaoScript;
     public float tempoIniciarBoss = 5f;
+    [SerializeField] private Transform playerTransform;
 
     [Header("Configurações do Ataque de Raios")]
     [SerializeField] private int quantidadeDeRaios = 5;
@@ -18,6 +19,7 @@ public class Tlaloc : MonoBehaviour
     [SerializeField] private float tempoDeAviso = 1.0f;
     [SerializeField] private float raioDoDano = 1.5f;
     [SerializeField] private int danoDoRaio = 1;
+    private int contadorGeralDeRaios = 0;
 
     [Header("Limites do Topo do Vulcão")]
     [SerializeField] private float raioHorizontalX;
@@ -40,17 +42,29 @@ public class Tlaloc : MonoBehaviour
     [Header("Configurações Visuais da Lava")]
     [SerializeField] private float velocidadeDoFluxo = 2f;
     [SerializeField] private float tempoDaLavaNoChao = 20f;
+    private bool isLavaActive = false;
 
     [Header("Piscar ao tomar dano")]
     public float flashInterval = 0.1f;
     private SpriteRenderer spriteRenderer;
     private Color corOriginal;
 
+    [Header("Tlaloquinhos")]
+    [SerializeField] private GameObject tlaloquinho;
+    [SerializeField] private Transform[] tlaloquinhoSpawnPoints;
+    public int quantidadeTlaloquinhos = 5;
+    private int tlaloquinhosVivos = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+
+        if (playerTransform == null)
+        {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null) playerTransform = p.transform;
+        }
 
         StartCoroutine(chooseAttack(tempoIniciarBoss));
 
@@ -59,6 +73,7 @@ public class Tlaloc : MonoBehaviour
         {
             corOriginal = spriteRenderer.color;
         }
+
     }
 
     // Update is called once per frame
@@ -144,8 +159,13 @@ public class Tlaloc : MonoBehaviour
     //ATAQUE DE LAVA
     IEnumerator lavaAttackAtivation(float health, float maxHealth)
     {
+        if (isLavaActive) yield break; //Se a lava já estiver ativa, não inicia outro ataque de lava
+
+        isLavaActive = true;
         lavaAttack(health, maxHealth);
-        yield return new WaitForSeconds(1f);
+
+        yield return new WaitForSeconds(tempoDaLavaNoChao + 1f);
+        isLavaActive = false;
     }
 
     void lavaAttack(float vida, float maxHealth)
@@ -197,14 +217,62 @@ public class Tlaloc : MonoBehaviour
 
     IEnumerator ThunderAttackCoroutine()
     {
-        for (int i = 0; i < quantidadeDeRaios; i++)
+        SpawnarTlaloquinhos();
+        contadorGeralDeRaios = 0;
+
+        while (tlaloquinhosVivos > 0)
         {
-            Vector2 pontoNoChao = SortearPontoNaElipse();
+            for (int i = 0; i < quantidadeDeRaios; i++)
+            {
+                if (tlaloquinhosVivos <= 0) break;
 
-            StartCoroutine(SpawnarRaioIndividual(pontoNoChao));
+                contadorGeralDeRaios++;
+                Vector2 pontoNoChao;
 
-            yield return new WaitForSeconds(intervaloEntreRaios);
+                // A cada 5 raios disparados, o raio cai exatamente onde o Player está no momento
+                if (contadorGeralDeRaios % 5 == 0 && playerTransform != null)
+                {
+                    pontoNoChao = playerTransform.position;
+                }
+                else
+                {
+                    pontoNoChao = SortearPontoNaElipse();
+                }
+
+                StartCoroutine(SpawnarRaioIndividual(pontoNoChao));
+                yield return new WaitForSeconds(intervaloEntreRaios);
+            }
+
+            yield return new WaitForSeconds(1.0f);
         }
+    }
+
+    void SpawnarTlaloquinhos()
+    {
+        tlaloquinhosVivos = 0;
+
+        for (int i = 0; i < quantidadeTlaloquinhos; i++)
+        {
+            int spawnIndex = Random.Range(0, tlaloquinhoSpawnPoints.Length);
+            Transform spawnPoint = tlaloquinhoSpawnPoints[spawnIndex];
+
+            GameObject tlaloquinhoInstance = Instantiate(tlaloquinho, spawnPoint.position, Quaternion.identity);
+
+            // Passa a referência do Tlaloc para o script do Tlaloquinho
+            Tlaloque scriptMinion = tlaloquinhoInstance.GetComponent<Tlaloque>();
+            if (scriptMinion != null)
+            {
+                scriptMinion.SetBossReference(this);
+            }
+
+            tlaloquinhosVivos++;
+        }
+    }
+
+    public void NotificarMorteTlaloquinho()
+    {
+        tlaloquinhosVivos--;
+        if (tlaloquinhosVivos < 0) tlaloquinhosVivos = 0;
     }
 
     Vector2 SortearPontoNaElipse()
@@ -283,9 +351,11 @@ public class Tlaloc : MonoBehaviour
     IEnumerator PorradaAttackCoroutine(float rotationAngle, Transform porrada, int numero)
     {
         porradass[numero].SetActive(true);
-        StartCoroutine(lavas[0].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
-        StartCoroutine(lavas[4].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
-        StartCoroutine(lavas[5].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+
+        if (!isLavaActive)
+        {
+            StartCoroutine(GarantirFluxoLavaEspecial());
+        }
 
         yield return new WaitForSeconds(1.0f);
 
@@ -314,6 +384,17 @@ public class Tlaloc : MonoBehaviour
         porradass[numero].SetActive(false);
         yield return new WaitForSeconds(5.0f);
 
+    }
+
+    IEnumerator GarantirFluxoLavaEspecial()
+    {
+        isLavaActive = true;
+        StartCoroutine(lavas[0].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+        StartCoroutine(lavas[4].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+        StartCoroutine(lavas[5].FluxoLavaCoroutine(velocidadeDoFluxo, tempoDaLavaNoChao));
+
+        yield return new WaitForSeconds(tempoDaLavaNoChao + 1f);
+        isLavaActive = false;
     }
 
     IEnumerator FlashRed()
