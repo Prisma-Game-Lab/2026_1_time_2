@@ -285,11 +285,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
---- !u!1 &421987193 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5941832418612301831, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
-  m_PrefabInstance: {fileID: 179250928}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &584775202 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3976774726617289570, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
@@ -500,6 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 300
   currentHealth: 300
+  tempoIniciarBoss: 2
   quantidadeDeLasers: 3
   tempoDeAvisoLaser: 1
   intervaloEntreLasers: 2
@@ -638,6 +634,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5471747789403362569, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
   m_PrefabInstance: {fileID: 1817406423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1230951661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 499270001979620380, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
+  m_PrefabInstance: {fileID: 179250928}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1317001987
 GameObject:
@@ -1116,7 +1117,7 @@ PrefabInstance:
     - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: deathScreen
       value: 
-      objectReference: {fileID: 421987193}
+      objectReference: {fileID: 1230951661}
     - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: coracoes.Array.data[0]
       value: 

@@ -48,4 +48,10 @@ public class PauseManager : MonoBehaviour
         Time.timeScale = 1f; 
         UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
     }
+
+    public void voltarMundo()
+    {
+        Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("RoadMap");
+    }
 }

@@ -54,4 +54,10 @@ public class DeathController : MonoBehaviour
         Time.timeScale = 1f; 
         SceneManager.LoadScene("Menu");
     }
+
+    public void voltarMundo()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("RoadMap");
+    }
 }
