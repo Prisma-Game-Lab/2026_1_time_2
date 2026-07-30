@@ -136,7 +136,7 @@ public class Tlaloc : MonoBehaviour
     {
         yield return new WaitForSeconds(tempo);
 
-        while (player != null)
+        while (playerTransform != null)
         {
             int randomAttack = Random.Range(0, 3);
             switch (randomAttack)
