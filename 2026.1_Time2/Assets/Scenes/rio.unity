@@ -383,8 +383,8 @@ Transform:
   m_GameObject: {fileID: 747269085}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 13, y: -3.3, z: 0}
+  m_LocalScale: {x: 1.5666, y: 1.5666, z: 1.5666}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1582202476}
@@ -404,6 +404,7 @@ GameObject:
   - component: {fileID: 873253571}
   - component: {fileID: 873253570}
   - component: {fileID: 873253569}
+  - component: {fileID: 873253575}
   m_Layer: 0
   m_Name: Mulher
   m_TagString: Enemy
@@ -443,8 +444,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.14181639, y: -1.8180505}
-  m_Size: {x: 8.95746, y: 2.870375}
+  m_Offset: {x: -0.89213616, y: -2.182968}
+  m_Size: {x: 41.676548, y: 8.952105}
   m_Direction: 1
 --- !u!70 &873253570
 CapsuleCollider2D:
@@ -478,8 +479,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.9992858, y: 0.34114203}
-  m_Size: {x: 4.7749977, y: 7.7833467}
+  m_Offset: {x: -7.290245, y: -0.63190633}
+  m_Size: {x: 18.032797, y: 20.587057}
   m_Direction: 0
 --- !u!114 &873253571
 MonoBehaviour:
@@ -505,13 +506,14 @@ MonoBehaviour:
   colliderDoLaser: {fileID: 1582202477}
   tempoDeChoro: 10
   "for\xE7aDoChoro": 3
-  CooldownPeixes: 1
+  CooldownPeixes: 2
   piranhas: {fileID: 1396144115}
   colliderPiranhas: {fileID: 1396144118}
   peixePrefab: {fileID: 4579993369581858855, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
   player: {fileID: 1101468824}
   playerRb: {fileID: 1659509171}
   scriptDeMovimento: {fileID: 1659509170}
+  flashInterval: 0.1
 --- !u!61 &873253572
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -548,7 +550,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.25, y: 8.09}
+    oldSize: {x: 49.615913, y: 35.08}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -598,7 +600,7 @@ SpriteRenderer:
   m_SortingLayerID: -1637683447
   m_SortingLayer: 7
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 1f4d8012df9af45b18f937c0cc4cb7ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5b367e3b440114e8a9432f938e737c06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -618,13 +620,48 @@ Transform:
   m_GameObject: {fileID: 873253568}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.27, y: 5.9, z: 0}
-  m_LocalScale: {x: 0.80823517, y: 0.80823517, z: 0.80823517}
+  m_LocalPosition: {x: -5.39, y: 5.72, z: 0}
+  m_LocalScale: {x: 0.5004831, y: 0.5004831, z: 0.5004831}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 747269086}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &873253575
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873253568}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 10.338637, y: -0.24326281}
+  m_Size: {x: 19.208174, y: 24.316677}
+  m_Direction: 0
 --- !u!4 &1101468824 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4832479470592254530, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}

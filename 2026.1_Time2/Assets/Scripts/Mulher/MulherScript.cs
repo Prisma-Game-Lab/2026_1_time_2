@@ -28,13 +28,16 @@ public class MulherScript : MonoBehaviour
     [SerializeField] private Collider2D colliderPiranhas;
     [SerializeField] private GameObject peixePrefab;
 
-
-
     [Header("Configurações do player")]
     [SerializeField] private Transform player;
     [SerializeField] private Rigidbody2D playerRb;
     [SerializeField] private Player scriptDeMovimento;
     
+    [Header("Piscar ao tomar dano")]
+    public float flashInterval = 0.1f;
+    private SpriteRenderer spriteRenderer;
+    private Color corOriginal;
+
     void Start()
     {
         StartCoroutine(ChooseAttack(tempoIniciarBoss));
@@ -43,6 +46,12 @@ public class MulherScript : MonoBehaviour
         pivotLaser.SetActive(false);
         piranhas.SetActive(false);
         if(colliderDoLaser != null) colliderDoLaser.enabled = false;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+        {
+            corOriginal = spriteRenderer.color;
+        }
     }
     
     void Update()
@@ -80,6 +89,7 @@ public class MulherScript : MonoBehaviour
     {
         if (isDead) return;
         currentHealth -= damage;
+        StartCoroutine(FlashRed());
         if (currentHealth <= 0)
         {
             currentHealth = 0;
@@ -133,7 +143,7 @@ public class MulherScript : MonoBehaviour
                 case 2:
                     break;
             }
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(10f);
         }
     }
 
@@ -204,11 +214,24 @@ public class MulherScript : MonoBehaviour
     //Função para spawnar peixes durante o ataque do choro
     void SpawnarPeixes ()
     {
-        var spawnPos = new Vector3(-10f, Random.Range(-20f, 20f), 0f);
+        var spawnPos = new Vector3(-10f, Random.Range(-15f, 15f), 0f);
 
         //Peguei do código do diogo
         GameObject peixe = Instantiate(peixePrefab, spawnPos, Quaternion.identity);
 
         peixe.GetComponent<FishScript>().SetPlayer(player, playerRb);
+    }
+
+    IEnumerator FlashRed()
+    {
+        if (spriteRenderer != null)
+        {
+
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(flashInterval);
+
+            spriteRenderer.color = corOriginal;
+            yield return new WaitForSeconds(flashInterval);
+        }
     }
 }
