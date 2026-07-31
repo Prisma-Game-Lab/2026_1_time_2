@@ -497,6 +497,7 @@ MonoBehaviour:
   maxHealth: 200
   currentHealth: 200
   tempoIniciarBoss: 2
+  bastaoScript: {fileID: 2096844101}
   quantidadeDeLasers: 3
   tempoDeAvisoLaser: 1
   intervaloEntreLasers: 2
@@ -1425,6 +1426,17 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &2096844101 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3452717661023193496, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 1817406423}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c353f66db5807db48881e1aabe0b026b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4366057550464464968
 PrefabInstance:
   m_ObjectHideFlags: 0

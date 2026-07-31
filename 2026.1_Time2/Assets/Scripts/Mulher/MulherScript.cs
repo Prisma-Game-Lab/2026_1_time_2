@@ -10,6 +10,8 @@ public class MulherScript : MonoBehaviour
     private bool canMove = true;
     public float tempoIniciarBoss = 2.0f;
 
+    public PlayerAttack bastaoScript;
+
     [Header("Configurações do Ataque Laser")]
     [SerializeField] private int quantidadeDeLasers = 3;
     [SerializeField] private float tempoDeAvisoLaser = 1.0f;
@@ -115,9 +117,8 @@ public class MulherScript : MonoBehaviour
         
         if (collision.gameObject.CompareTag("mataCavalo"))
         {
-            PlayerAttack script = collision.gameObject.GetComponent<PlayerAttack>();
 
-            if (script != null && script.isAttacking)
+            if (bastaoScript.IsWeaponAttacking())
             {
                 Debug.Log("Dano de mataCavalo");
                 TakeDamage(2.5f);
