@@ -77,14 +77,14 @@ public class AtlatlScript : MonoBehaviour
     {
         estaVoando = false;
         inimigoAlvo = inimigo;
-        offsetGrudado = transform.position - inimigo.position; // guarda a posição relativa no momento do impacto
+        offsetGrudado = transform.position - inimigo.position;
         if (rb != null) rb.velocity = Vector2.zero;
+
         float tempoDecorrido = 0f;
         while (tempoDecorrido < tempoGrudado)
         {
             if (inimigoAlvo == null)
             {
-                // O inimigo foi destruído antes do tempo acabar - lança cai onde está
                 break;
             }
             transform.position = inimigoAlvo.position + offsetGrudado;

@@ -57,7 +57,7 @@ public class BossSnakeAI : MonoBehaviour
         StartCoroutine(AttackLoop());
     }
 
-    // somDeAcerto é opcional: cada arma passa o clip dela (ou null se não tiver som próprio)
+  
     public void TakeDamage(int damage, AudioClip somDeAcerto = null)
     {
         if (isDead) return;
