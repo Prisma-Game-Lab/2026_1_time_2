@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro; // remove essa linha se estiver usando Text legado
+using TMPro; 
 
 [RequireComponent(typeof(BossSnakeAttacks))]
 public class BossSnakeAI : MonoBehaviour
@@ -26,14 +26,14 @@ public class BossSnakeAI : MonoBehaviour
     [Header("Feedback de Hit")]
     public Color corHit = Color.red;
     public float duracaoFlashHit = 0.1f;
-    private SpriteRenderer[] spriteRenderers;
-    private Color[] coresOriginais;
+    private SpriteRenderer spriteRenderer;
+    private Color corOriginal;
     private Coroutine hitFlashCoroutine;
 
     [Header("Tela de Vitória")]
-    public GameObject textoVitoria; // arraste o GameObject de UI com o texto "Vitória!" aqui
+    public GameObject textoVitoria;
     public float delayAntesDoMenu = 5f;
-    public string nomeCenaMenu = "Menu"; // ajusta pro nome exato da sua cena de menu
+    public string nomeCenaMenu = "Menu";
 
     private BossSnakeAttacks attacks;
     private bool isDead = false;
@@ -46,10 +46,9 @@ public class BossSnakeAI : MonoBehaviour
         currentHealth = maxHealth;
         attacks = GetComponent<BossSnakeAttacks>();
 
-        spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-        coresOriginais = new Color[spriteRenderers.Length];
-        for (int i = 0; i < spriteRenderers.Length; i++)
-            coresOriginais[i] = spriteRenderers[i].color;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+            corOriginal = spriteRenderer.color;
 
         if (textoVitoria != null)
             textoVitoria.SetActive(false);
@@ -57,7 +56,6 @@ public class BossSnakeAI : MonoBehaviour
         StartCoroutine(AttackLoop());
     }
 
-  
     public void TakeDamage(int damage, AudioClip somDeAcerto = null)
     {
         if (isDead) return;
@@ -82,18 +80,13 @@ public class BossSnakeAI : MonoBehaviour
 
     IEnumerator FlashHit()
     {
-        if (spriteRenderers == null || spriteRenderers.Length == 0) yield break;
+        if (spriteRenderer == null) yield break;
 
-        for (int i = 0; i < spriteRenderers.Length; i++)
-            spriteRenderers[i].color = corHit;
-
+        spriteRenderer.color = corHit;
         yield return new WaitForSeconds(duracaoFlashHit);
 
         if (!attacks.IsStunned())
-        {
-            for (int i = 0; i < spriteRenderers.Length; i++)
-                spriteRenderers[i].color = coresOriginais[i];
-        }
+            spriteRenderer.color = corOriginal;
     }
 
     void Die()
@@ -103,11 +96,9 @@ public class BossSnakeAI : MonoBehaviour
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySerpenteMorte();
-        if (spriteRenderers != null)
-        {
-            for (int i = 0; i < spriteRenderers.Length; i++)
-                spriteRenderers[i].enabled = false;
-        }
+
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = false;
 
         Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
         foreach (Collider2D col in colliders)

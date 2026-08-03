@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class BossSnakeAttacks : MonoBehaviour
 {
-    [Header("Refer�ncias")]
     public Transform player;
     public GameObject tornadoPrefab;
 
-    [Header("Ataque: Tornado")]
     public int tornadoCount = 1;
     public float tornadoSpawnRadius = 2f;
     public float tornadoMinSize = 0.5f;
@@ -17,17 +15,23 @@ public class BossSnakeAttacks : MonoBehaviour
     public float tornadoMaxSpeed = 5f;
     public float tornadoDamage = 10f;
 
-    [Header("Ataque: Bote")]
     public float biteDashSpeed = 20f;
     public float biteStunDuration = 3f;
     public float biteDamage = 20f;
-    private int missedBitesCount = 0; 
+    private int missedBitesCount = 0;
 
-    [Header("Ataque: Mergulho (Dash Through)")]
     public float dashOutSpeed = 15f;
     public float dashOutDamage = 25f;
-    public float dashTiredDuration = 4f; 
+    public float dashTiredDuration = 4f;
     public float offscreenOffset = 3f;
+
+    public Animator animator;
+
+    public Color corStun = Color.red;
+    public float velocidadePiscada = 0.15f;
+    private SpriteRenderer spriteRenderer;
+    private Color corOriginal;
+    private Coroutine stunBlinkCoroutine;
 
     private float arenaLeft = -15.05f;
     private float arenaRight = 14.95f;
@@ -44,8 +48,17 @@ public class BossSnakeAttacks : MonoBehaviour
     void Start()
     {
         originPosition = transform.position;
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer != null)
+            corOriginal = spriteRenderer.color;
     }
 
+    void SetEstadoAnimacao(int estado)
+    {
+        if (animator != null)
+            animator.SetInteger("estadoBoss", estado);
+    }
 
     public void AttackTornado()
     {
@@ -56,6 +69,8 @@ public class BossSnakeAttacks : MonoBehaviour
     IEnumerator TornadoCoroutine()
     {
         isAttacking = true;
+        SetEstadoAnimacao(1);
+
         for (int i = 0; i < tornadoCount; i++)
         {
             Vector2 spawnOffset = Random.insideUnitCircle.normalized * tornadoSpawnRadius;
@@ -70,12 +85,13 @@ public class BossSnakeAttacks : MonoBehaviour
             GameObject tornado = Instantiate(tornadoPrefab, spawnPos, Quaternion.identity);
             tornado.transform.localScale = Vector3.one * size;
 
-
             TornadoProjectile proj = tornado.GetComponent<TornadoProjectile>();
             if (proj != null) proj.Init(direction, speed, tornadoDamage);
 
             yield return new WaitForSeconds(0.3f);
         }
+
+        SetEstadoAnimacao(0);
         isAttacking = false;
     }
 
@@ -88,6 +104,8 @@ public class BossSnakeAttacks : MonoBehaviour
     IEnumerator BiteCoroutine()
     {
         isAttacking = true;
+        SetEstadoAnimacao(2);
+
         Vector3 targetPos = player.position;
         Vector3 startPos = transform.position;
         Vector3 direction = (targetPos - startPos).normalized;
@@ -124,18 +142,22 @@ public class BossSnakeAttacks : MonoBehaviour
 
             if (missedBitesCount >= 3)
             {
-                Debug.Log("Serpente bateu a cabe�a e est� DESNORTEADA!");
+                Debug.Log("Serpente bateu a cabeça e está DESNORTEADA!");
                 isStunned = true;
-                // TODO: Chamar Trigger do Animator para anima��o de Stun aqui
+                IniciarStunVisual();
+                SetEstadoAnimacao(0);
                 yield return new WaitForSeconds(biteStunDuration);
                 isStunned = false;
-                missedBitesCount = 0; // Reseta ap�s sofrer o stun
+                PararStunVisual();
+                missedBitesCount = 0;
+                isAttacking = false;
+                yield break;
             }
         }
 
+        SetEstadoAnimacao(0);
         isAttacking = false;
     }
-
 
     public void AttackDashThrough(float healthPercent)
     {
@@ -146,21 +168,20 @@ public class BossSnakeAttacks : MonoBehaviour
     IEnumerator DashThroughCoroutine(float healthPercent)
     {
         isAttacking = true;
+        SetEstadoAnimacao(2);
 
- 
-        int minPasses = 5, maxPasses = 7; 
-        if (healthPercent > 0.66f) { minPasses = 3; maxPasses = 5; }      
-        else if (healthPercent > 0.33f) { minPasses = 4; maxPasses = 6; } 
+        int minPasses = 5, maxPasses = 7;
+        if (healthPercent > 0.66f) { minPasses = 3; maxPasses = 5; }
+        else if (healthPercent > 0.33f) { minPasses = 4; maxPasses = 6; }
 
         int passes = Random.Range(minPasses, maxPasses + 1);
 
         for (int i = 0; i < passes; i++)
         {
-            Vector2 enterDirection = GetRandomAllDirections(); 
+            Vector2 enterDirection = GetRandomAllDirections();
             Vector3 entryPoint = GetOffscreenPosition(enterDirection);
             Vector3 exitPoint = GetOffscreenPosition(-enterDirection);
 
-            // GDD: Anima��o das folhas para avisar o player de onde ela vem
             DispararAnimacaoFolhas(enterDirection);
 
             yield return new WaitForSeconds(0.5f);
@@ -188,24 +209,23 @@ public class BossSnakeAttacks : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
 
-        
-        transform.position = originPosition; 
+        transform.position = originPosition;
         transform.rotation = Quaternion.identity;
 
-        Debug.Log("Serpente terminou os mergulhos e est� EXAUSTA!");
+        Debug.Log("Serpente terminou os mergulhos e está EXAUSTA!");
         isStunned = true;
+        IniciarStunVisual();
+        SetEstadoAnimacao(0);
 
-        // TODO: Chamar Trigger do Animator para anima��o de Exaust�o aqui
         yield return new WaitForSeconds(dashTiredDuration);
         isStunned = false;
+        PararStunVisual();
 
         isAttacking = false;
     }
 
-
     Vector2 GetRandomAllDirections()
     {
-        
         Vector2[] directions = {
             Vector2.up, Vector2.down, Vector2.left, Vector2.right,
             new Vector2(1, 1).normalized, new Vector2(-1, 1).normalized,
@@ -216,13 +236,12 @@ public class BossSnakeAttacks : MonoBehaviour
 
     Vector3 GetOffscreenPosition(Vector2 dir)
     {
-        
         float centerX = (arenaLeft + arenaRight) / 2f;
         float centerY = (arenaTop + arenaBottom) / 2f;
 
         float targetX = centerX;
         float targetY = centerY;
-   
+
         if (dir.x > 0.1f) targetX = arenaRight + offscreenOffset;
         else if (dir.x < -0.1f) targetX = arenaLeft - offscreenOffset;
 
@@ -237,5 +256,34 @@ public class BossSnakeAttacks : MonoBehaviour
         Debug.Log($"[VFX] Balançar árvores na direção: {direcaoEntrada}");
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySerpenteAviso();
+    }
+
+    void IniciarStunVisual()
+    {
+        if (stunBlinkCoroutine != null)
+            StopCoroutine(stunBlinkCoroutine);
+        stunBlinkCoroutine = StartCoroutine(BlinkVermelho());
+    }
+
+    void PararStunVisual()
+    {
+        if (stunBlinkCoroutine != null)
+        {
+            StopCoroutine(stunBlinkCoroutine);
+            stunBlinkCoroutine = null;
+        }
+        if (spriteRenderer != null)
+            spriteRenderer.color = corOriginal;
+    }
+
+    IEnumerator BlinkVermelho()
+    {
+        while (true)
+        {
+            if (spriteRenderer != null) spriteRenderer.color = corStun;
+            yield return new WaitForSeconds(velocidadePiscada);
+            if (spriteRenderer != null) spriteRenderer.color = corOriginal;
+            yield return new WaitForSeconds(velocidadePiscada);
+        }
     }
 }
