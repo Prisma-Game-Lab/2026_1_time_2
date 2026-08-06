@@ -4584,8 +4584,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.30228344, y: 1.1576715}
-  m_Size: {x: 13.160514, y: 7.0705557}
+  m_Offset: {x: 0.30228335, y: 0.25970274}
+  m_Size: {x: 13.1605215, y: 4.560763}
   m_Direction: 1
 --- !u!70 &1471967256
 CapsuleCollider2D:
@@ -4619,8 +4619,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2209114, y: -1.321211}
-  m_Size: {x: 7.6870627, y: 12.13725}
+  m_Offset: {x: 0.2209114, y: -2.3607812}
+  m_Size: {x: 7.6870627, y: 10.058106}
   m_Direction: 0
 --- !u!4 &1491821598 stripped
 Transform:
