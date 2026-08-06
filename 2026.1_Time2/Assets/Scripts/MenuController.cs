@@ -8,6 +8,9 @@ public class MenuController : MonoBehaviour
     
     private void Start() 
     {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseSerpente);
+
         Menu.SetActive(true);
         Config.SetActive(false);
     }

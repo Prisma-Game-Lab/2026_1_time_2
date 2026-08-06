@@ -43,6 +43,9 @@ public class BossSnakeAI : MonoBehaviour
 
     void Start()
     {
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseSerpente);
+
         currentHealth = maxHealth;
         attacks = GetComponent<BossSnakeAttacks>();
 

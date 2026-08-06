@@ -4,8 +4,11 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    [Header("Audio Source")]
+    [Header("Audio Source - SFX")]
     public AudioSource sfxSource;
+
+    [Header("Audio Source - Música")]
+    public AudioSource musicaSource;
 
     [Header("Sons - Player")]
     public AudioClip somPlayerDano;
@@ -21,6 +24,11 @@ public class AudioManager : MonoBehaviour
     [Header("Sons - Serpente")]
     public AudioClip somSerpenteAviso;
     public AudioClip somSerpenteMorte;
+
+    [Header("Músicas das Fases")]
+    public AudioClip musicaFaseSerpente;
+    public AudioClip musicaFaseTlaloc;
+    public AudioClip musicaMenu;
 
     void Awake()
     {
@@ -40,6 +48,22 @@ public class AudioManager : MonoBehaviour
     {
         if (clip == null || sfxSource == null) return;
         sfxSource.PlayOneShot(clip);
+    }
+
+    public void TocarMusica(AudioClip clip, bool loop = true)
+    {
+        if (clip == null || musicaSource == null) return;
+        if (musicaSource.clip == clip && musicaSource.isPlaying) return;
+
+        musicaSource.clip = clip;
+        musicaSource.loop = loop;
+        musicaSource.Play();
+    }
+
+    public void PararMusica()
+    {
+        if (musicaSource != null)
+            musicaSource.Stop();
     }
 
     public void PlayPlayerDano() => PlaySFX(somPlayerDano);
