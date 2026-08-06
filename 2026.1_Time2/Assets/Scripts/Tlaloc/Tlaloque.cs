@@ -17,7 +17,6 @@ public class Tlaloque : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // 1. Busca o Player pela Tag se não tiver sido configurado no Inspector
         if (player == null)
         {
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -27,27 +26,26 @@ public class Tlaloque : MonoBehaviour
             }
         }
 
-        // 2. Busca o script do bastão/arma na cena
-        if (bastaoScript == null)
+        BuscarReferenciaBastao();
+    }
+
+    private void BuscarReferenciaBastao()
+    {
+        if (bastaoScript != null) return;
+
+        GameObject bastaoObj = GameObject.FindGameObjectWithTag("mataCavalo");
+        if (bastaoObj != null)
         {
-            // Tenta achar o componente PlayerAttack no objeto com tag "mataCavalo" ou na cena
-            GameObject bastaoObj = GameObject.FindGameObjectWithTag("mataCavalo");
-            if (bastaoObj != null)
-            {
-                bastaoScript = bastaoObj.GetComponent<PlayerAttack>();
-
-                // Se o script estiver no objeto Pai do colisor
-                if (bastaoScript == null)
-                {
-                    bastaoScript = bastaoObj.GetComponentInParent<PlayerAttack>();
-                }
-            }
-
-            // Caso não encontre pela tag, busca em qualquer lugar da cena
+            bastaoScript = bastaoObj.GetComponent<PlayerAttack>();
             if (bastaoScript == null)
             {
-                bastaoScript = FindObjectOfType<PlayerAttack>();
+                bastaoScript = bastaoObj.GetComponentInParent<PlayerAttack>();
             }
+        }
+
+        if (bastaoScript == null)
+        {
+            bastaoScript = FindObjectOfType<PlayerAttack>();
         }
     }
 
@@ -75,24 +73,32 @@ public class Tlaloque : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Se colidiu com a arma
         if (collision.gameObject.CompareTag("mataCavalo"))
         {
-            // Valida se temos a referência do script da arma
-            if (bastaoScript != null && bastaoScript.IsWeaponAttacking())
+            if (bastaoScript == null)
             {
-                if (isKnockbacked) return;
+                BuscarReferenciaBastao();
+            }
 
-                // Se for ataque pesado: notifica o boss e destrói
+            if (bastaoScript == null)
+            {
+                Debug.LogWarning("O Tlaloque colidiu com a arma, mas não encontrou o script PlayerAttack na cena!");
+                return;
+            }
+
+            if (bastaoScript.IsWeaponAttacking())
+            {
                 if (bastaoScript.IsWeaponHardAttacking())
                 {
                     Die();
                     return;
                 }
 
-                // Se for ataque leve: aplica knockback
-                Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
-                StartCoroutine(ApplyKnockbackRoutine(knockbackDirection, knockbackForce));
+                if (!isKnockbacked)
+                {
+                    Vector2 knockbackDirection = (transform.position - collision.transform.position).normalized;
+                    StartCoroutine(ApplyKnockbackRoutine(knockbackDirection, knockbackForce));
+                }
             }
         }
     }

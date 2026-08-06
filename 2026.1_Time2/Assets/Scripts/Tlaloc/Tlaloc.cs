@@ -20,6 +20,7 @@ public class Tlaloc : MonoBehaviour
     [SerializeField] private float raioDoDano = 1.5f;
     [SerializeField] private int danoDoRaio = 1;
     private int contadorGeralDeRaios = 0;
+    private bool isThunderActive = false;
 
     [Header("Limites do Topo do Vulcão")]
     [SerializeField] private float raioHorizontalX;
@@ -54,6 +55,7 @@ public class Tlaloc : MonoBehaviour
     [SerializeField] private Transform[] tlaloquinhoSpawnPoints;
     public int quantidadeTlaloquinhos = 5;
     private int tlaloquinhosVivos = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -212,11 +214,20 @@ public class Tlaloc : MonoBehaviour
     //ATAQUE DE RAIO
     void ThunderAttack()
     {
+        if (isThunderActive)
+        {
+            Debug.Log("Ataque de raio bloqueado: Já existe uma tempestade de raios ativa!");
+            return;
+        }
+
         StartCoroutine(ThunderAttackCoroutine());
     }
 
     IEnumerator ThunderAttackCoroutine()
     {
+        isThunderActive = true;
+
+        // Invoca a primeira leva de Tlaloquinhos
         SpawnarTlaloquinhos();
         contadorGeralDeRaios = 0;
 
@@ -229,7 +240,7 @@ public class Tlaloc : MonoBehaviour
                 contadorGeralDeRaios++;
                 Vector2 pontoNoChao;
 
-                // A cada 5 raios disparados, o raio cai exatamente onde o Player está no momento
+                // A cada 5 raios disparados, o raio cai exatamente onde o Player está
                 if (contadorGeralDeRaios % 5 == 0 && playerTransform != null)
                 {
                     pontoNoChao = playerTransform.position;
@@ -243,8 +254,11 @@ public class Tlaloc : MonoBehaviour
                 yield return new WaitForSeconds(intervaloEntreRaios);
             }
 
+            // Intervalo de descanso entre cada onda de raios
             yield return new WaitForSeconds(1.0f);
         }
+
+        isThunderActive = false;
     }
 
     void SpawnarTlaloquinhos()
@@ -258,7 +272,6 @@ public class Tlaloc : MonoBehaviour
 
             GameObject tlaloquinhoInstance = Instantiate(tlaloquinho, spawnPoint.position, Quaternion.identity);
 
-            // Passa a referência do Tlaloc para o script do Tlaloquinho
             Tlaloque scriptMinion = tlaloquinhoInstance.GetComponent<Tlaloque>();
             if (scriptMinion != null)
             {
