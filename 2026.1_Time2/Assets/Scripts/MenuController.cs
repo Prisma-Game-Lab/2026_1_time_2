@@ -5,6 +5,7 @@ public class MenuController : MonoBehaviour
 {
     [SerializeField] private GameObject Menu;
     [SerializeField] private GameObject Config; 
+    [SerializeField] private GameObject Controles;
     
     private void Start() 
     {
@@ -13,6 +14,7 @@ public class MenuController : MonoBehaviour
 
         Menu.SetActive(true);
         Config.SetActive(false);
+        Controles.SetActive(false);
     }
 
     public void StartGame()
@@ -35,5 +37,16 @@ public class MenuController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenControls()
+    {
+        Config.SetActive(false);
+        Controles.SetActive(true);
+    }
+    public void BackToSettings()
+    {
+        Controles.SetActive(false);
+        Config.SetActive(true);
     }
 }
