@@ -56,11 +56,16 @@ public class Tlaloc : MonoBehaviour
     public int quantidadeTlaloquinhos = 5;
     private int tlaloquinhosVivos = 0;
 
+    [Header("Animação")]
+    [SerializeField] private Animator animator;
+
 
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+
+        if(animator == null) animator = GetComponent<Animator>();
 
         if (playerTransform == null)
         {
@@ -363,6 +368,14 @@ public class Tlaloc : MonoBehaviour
 
     IEnumerator PorradaAttackCoroutine(float rotationAngle, Transform porrada, int numero)
     {
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Tlaloc_Porrada");
+        }
+
+        yield return new WaitForSeconds(0.5f);
+
         porradass[numero].SetActive(true);
 
         if (!isLavaActive)
@@ -386,6 +399,8 @@ public class Tlaloc : MonoBehaviour
             yield return null;
         }
 
+        porradass[numero].SetActive(false);
+
         t = 0;
         while (t < 1f)
         {
@@ -394,7 +409,6 @@ public class Tlaloc : MonoBehaviour
             yield return null;
         }
 
-        porradass[numero].SetActive(false);
         yield return new WaitForSeconds(5.0f);
 
     }
