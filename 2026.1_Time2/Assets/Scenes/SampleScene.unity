@@ -768,7 +768,7 @@ MonoBehaviour:
   dashTiredDuration: 4
   offscreenOffset: 22
   animator: {fileID: 597700637}
-  corStun: {r: 1, g: 0, b: 0, a: 1}
+  corStun: {r: 1, g: 0.98885125, b: 0, a: 1}
   velocidadePiscada: 0.15
   bossCollider: {fileID: 597700636}
   pontosVoando:

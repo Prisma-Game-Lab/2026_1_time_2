@@ -511,6 +511,16 @@ MonoBehaviour:
   piranhas: {fileID: 1396144115}
   colliderPiranhas: {fileID: 1396144118}
   peixePrefab: {fileID: 4579993369581858855, guid: b2dbdeb6d172b4b5aa71cdf37b429286, type: 3}
+  piruetaVelocidadeGiro: 720
+  piruetaTempoGiro: 1
+  piruetaVelocidadeAvanco: 12
+  piruetaDano: 2
+  piruetaRaioColisao: 0.7
+  piruetaDistanciaMaxima: 20
+  arenaLeft: -52.59726
+  arenaRight: 48.79378
+  arenaBottom: -16.49043
+  arenaTop: 27.64462
   player: {fileID: 1101468824}
   playerRb: {fileID: 1659509171}
   scriptDeMovimento: {fileID: 1659509170}
@@ -1324,7 +1334,7 @@ Transform:
   m_GameObject: {fileID: 2082695345}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.3, y: 8.6, z: 0.043}
+  m_LocalPosition: {x: -5.3, y: 8.49, z: 0.043}
   m_LocalScale: {x: 3.1710527, y: 3.1398308, z: 2.8909228}
   m_ConstrainProportionsScale: 0
   m_Children: []
