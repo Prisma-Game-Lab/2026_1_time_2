@@ -30,8 +30,16 @@ public class AudioManager : MonoBehaviour
     public AudioClip musicaFaseTlaloc;
     public AudioClip musicaMenu;
 
+    [Header("Sons - Boss Tlaloc")]
+    public AudioClip somTlalocLava;
+    public AudioClip somTlalocRaio;
+    public AudioClip somTlalocPorrada;
+    public AudioClip somTlalocMorte;
+    public AudioClip somTlaloqueMorte;
+
     void Awake()
     {
+
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -73,4 +81,9 @@ public class AudioManager : MonoBehaviour
     public void PlayMacuahuitlAcerto() => PlaySFX(somMacuahuitlAcerto);
     public void PlaySerpenteAviso() => PlaySFX(somSerpenteAviso);
     public void PlaySerpenteMorte() => PlaySFX(somSerpenteMorte);
+    public void PlayTlalocLava() => PlaySFX(somTlalocLava);
+    public void PlayTlalocRaio() => PlaySFX(somTlalocRaio);
+    public void PlayTlalocPorrada() => PlaySFX(somTlalocPorrada);
+    public void PlayTlalocMorte() => PlaySFX(somTlalocMorte);
+    public void PlayTlaloqueMorte() => PlaySFX(somTlaloqueMorte);
 }

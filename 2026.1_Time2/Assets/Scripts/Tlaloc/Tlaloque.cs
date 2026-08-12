@@ -105,6 +105,11 @@ public class Tlaloque : MonoBehaviour
 
     private void Die()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayTlaloqueMorte();
+        }
+
         if (tlalocBoss != null)
         {
             tlalocBoss.NotificarMorteTlaloquinho();

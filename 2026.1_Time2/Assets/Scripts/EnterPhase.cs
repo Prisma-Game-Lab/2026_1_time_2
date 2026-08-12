@@ -8,6 +8,16 @@ public class EnterPhase : MonoBehaviour
     public string nome;
     private bool playerEstaNoPortal = false;
 
+    [SerializeField] private GameObject space;
+
+    void Start()
+    {
+        if (AudioManager.Instance != null && AudioManager.Instance.musicaMenu != null)
+        {
+            AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaMenu);
+        }
+    }
+
     void Update()
     {
         if (playerEstaNoPortal && Input.GetKeyDown(KeyCode.Space))
@@ -21,6 +31,7 @@ public class EnterPhase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerEstaNoPortal = true;
+            if (space != null) space.SetActive(true);
         }
     }
 
@@ -29,6 +40,7 @@ public class EnterPhase : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             playerEstaNoPortal = false;
+            if (space != null) space.SetActive(false);
         }
     }
 }
