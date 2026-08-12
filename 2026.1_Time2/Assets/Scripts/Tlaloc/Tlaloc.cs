@@ -81,6 +81,11 @@ public class Tlaloc : MonoBehaviour
             corOriginal = spriteRenderer.color;
         }
 
+        if (AudioManager.Instance != null && AudioManager.Instance.musicaFaseTlaloc != null)
+        {
+            AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseTlaloc);
+        }
+
     }
 
     // Update is called once per frame
@@ -117,6 +122,7 @@ public class Tlaloc : MonoBehaviour
     void Die()
     {
         StopAllCoroutines();
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayTlalocMorte();
         Debug.Log("Tlaloc derrotado!");
         Destroy(gameObject);
     }
@@ -177,6 +183,8 @@ public class Tlaloc : MonoBehaviour
 
     void lavaAttack(float vida, float maxHealth)
     {
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayTlalocLava();
+
         List<int> numerosSorteados = SortearNumeros(4, 0, 6);
 
         if(vida <= maxHealth && vida > (0.75 * maxHealth))
@@ -311,6 +319,8 @@ public class Tlaloc : MonoBehaviour
         // O aviso
         GameObject indicador = Instantiate(prefabIndicador, pontoImpactoChao, Quaternion.identity);
 
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayTlalocRaio();
+
         yield return new WaitForSeconds(tempoDeAviso);
         Destroy(indicador);
 
@@ -368,6 +378,8 @@ public class Tlaloc : MonoBehaviour
 
     IEnumerator PorradaAttackCoroutine(float rotationAngle, Transform porrada, int numero)
     {
+
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayTlalocPorrada();
 
         if (animator != null)
         {

@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: SampleScene
+  space: {fileID: 0}
 --- !u!1 &207987895
 GameObject:
   m_ObjectHideFlags: 0
@@ -828,6 +829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: rio
+  space: {fileID: 0}
 --- !u!212 &1317672255
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1388,6 +1390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nome: vulcao
+  space: {fileID: 0}
 --- !u!212 &1978581752
 SpriteRenderer:
   m_ObjectHideFlags: 0
