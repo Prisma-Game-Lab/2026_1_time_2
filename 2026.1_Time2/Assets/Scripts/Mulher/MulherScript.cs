@@ -54,8 +54,13 @@ public class MulherScript : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color corOriginal;
 
+    [Header("Animação")]
+    public Animator anim;
+
     void Start()
     {
+        anim = GetComponent<Animator>();
+
         StartCoroutine(ChooseAttack(tempoIniciarBoss));
 
         currentHealth = maxHealth;
@@ -147,6 +152,8 @@ public class MulherScript : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
+        Debug.Log("Iniciando ataques da Mulher");
+        
         while (player != null)
         {
             int randomAttack = Random.Range(0, 3);
@@ -168,6 +175,7 @@ public class MulherScript : MonoBehaviour
 
     IEnumerator LaserAttack()
     {
+        anim.SetTrigger("AttackLaser");
         canMove = false;
         for (int i = 0; i < quantidadeDeLasers; i++)
         {
