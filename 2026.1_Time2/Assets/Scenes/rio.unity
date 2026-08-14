@@ -383,7 +383,7 @@ Transform:
   m_GameObject: {fileID: 747269085}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13, y: -3.3, z: 0}
+  m_LocalPosition: {x: 11.6, y: 4.4, z: 0}
   m_LocalScale: {x: 1.5666, y: 1.5666, z: 1.5666}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -445,8 +445,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.312313, y: -2.497402}
-  m_Size: {x: 36.025097, y: 9.581384}
+  m_Offset: {x: -7.1149573, y: -5.8309913}
+  m_Size: {x: 26.419977, y: 6.0783625}
   m_Direction: 1
 --- !u!70 &873253570
 CapsuleCollider2D:
@@ -480,8 +480,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -10.066649, y: -1.1229318}
-  m_Size: {x: 12.279899, y: 19.605022}
+  m_Offset: {x: -10.546234, y: -6.1642523}
+  m_Size: {x: 11.320773, y: 11.320773}
   m_Direction: 0
 --- !u!114 &873253571
 MonoBehaviour:
@@ -526,7 +526,8 @@ MonoBehaviour:
   playerRb: {fileID: 1659509171}
   scriptDeMovimento: {fileID: 1659509170}
   flashInterval: 0.1
-  anim: {fileID: 0}
+  animMulher: {fileID: 873253576}
+  animLaser: {fileID: 1582202478}
 --- !u!61 &873253572
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -613,7 +614,7 @@ SpriteRenderer:
   m_SortingLayerID: -1637683447
   m_SortingLayer: 7
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 583db6cd021884420935322b6785fc88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bfa6a194e282349cbba0e96cd98ddbc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -635,7 +636,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.77, y: 2.02, z: 0}
   m_LocalScale: {x: 0.5004831, y: 0.5004831, z: 0.5004831}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 747269086}
   m_Father: {fileID: 0}
@@ -672,8 +673,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 10.969978, y: -4.364147}
-  m_Size: {x: 9.528029, y: 13.923842}
+  m_Offset: {x: 0.91276574, y: -7.014064}
+  m_Size: {x: 7.041975, y: 9.867037}
   m_Direction: 0
 --- !u!95 &873253576
 Animator:
@@ -1010,6 +1011,7 @@ GameObject:
   - component: {fileID: 1582202476}
   - component: {fileID: 1582202475}
   - component: {fileID: 1582202477}
+  - component: {fileID: 1582202478}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Laser
@@ -1058,12 +1060,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4a142f982e748413faa437f8f2ed257c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 4.52, y: 6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1078,8 +1080,8 @@ Transform:
   m_GameObject: {fileID: 1582202474}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2, y: -23.2, z: 0}
-  m_LocalScale: {x: 6.9899826, y: 47.981213, z: 1}
+  m_LocalPosition: {x: 11.8, y: 1.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 747269086}
@@ -1120,8 +1122,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 35.96, y: 8.884648}
+    newSize: {x: 4.52, y: 6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1129,6 +1131,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!95 &1582202478
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582202474}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 457e9870d2ee24257b76c4b89edfbc65, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1659509170 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}

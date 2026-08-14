@@ -55,11 +55,12 @@ public class MulherScript : MonoBehaviour
     private Color corOriginal;
 
     [Header("Animação")]
-    public Animator anim;
+    public Animator animMulher;
+    public Animator animLaser;
 
     void Start()
     {
-        anim = GetComponent<Animator>();
+        animMulher = GetComponent<Animator>();
 
         StartCoroutine(ChooseAttack(tempoIniciarBoss));
 
@@ -175,10 +176,11 @@ public class MulherScript : MonoBehaviour
 
     IEnumerator LaserAttack()
     {
-        anim.SetTrigger("AttackLaser");
         canMove = false;
         for (int i = 0; i < quantidadeDeLasers; i++)
         {
+            animMulher.SetTrigger("AttackLaser");
+            animLaser.SetTrigger("LaserPreparando");
             pivotLaser.SetActive(true);
             yield return new WaitForSeconds(tempoDeAvisoLaser - 0.5f);
             laserAtualLockado = true;
@@ -196,12 +198,14 @@ public class MulherScript : MonoBehaviour
             pivotLaser.SetActive(false);
             yield return new WaitForSeconds(intervaloEntreLasers);
         }
+        animMulher.SetTrigger("AttackEnd");
         canMove = true;
         yield return new WaitForSeconds(5.0f);
     }
 
     IEnumerator ChoroAttack()
     {
+        animMulher.SetTrigger("AttackChoroPreparando");
         canMove = false;
         transform.position = new Vector3(-15f, 0f, 0f);
         float tempoDecorrido = 0f;
@@ -231,7 +235,7 @@ public class MulherScript : MonoBehaviour
         {
             scriptDeMovimento.forcaExterna = Vector2.zero;
         }
-
+        animMulher.SetTrigger("AttackChoroParando");
         piranhas.SetActive(false);
         canMove = true;
     }
