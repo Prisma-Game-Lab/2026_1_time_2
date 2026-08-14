@@ -37,6 +37,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip somTlalocMorte;
     public AudioClip somTlaloqueMorte;
 
+    [Header("Sons - UI / Menu")]
+    public AudioClip somCliqueBotao;
+
     void Awake()
     {
 
@@ -74,6 +77,24 @@ public class AudioManager : MonoBehaviour
             musicaSource.Stop();
     }
 
+    // Métodos de Controle de Volume
+    public void SetVolumeGeral(float volume)
+    {
+        AudioListener.volume = volume;
+    }
+
+    public void SetVolumeMusica(float volume)
+    {
+        if (musicaSource != null)
+            musicaSource.volume = volume;
+    }
+
+    public void SetVolumeSFX(float volume)
+    {
+        if (sfxSource != null)
+            sfxSource.volume = volume;
+    }
+
     public void PlayPlayerDano() => PlaySFX(somPlayerDano);
     public void PlayAtlatlVoando() => PlaySFX(somAtlatlVoando);
     public void PlayAtlatlAcerto() => PlaySFX(somAtlatlAcerto);
@@ -86,4 +107,6 @@ public class AudioManager : MonoBehaviour
     public void PlayTlalocPorrada() => PlaySFX(somTlalocPorrada);
     public void PlayTlalocMorte() => PlaySFX(somTlalocMorte);
     public void PlayTlaloqueMorte() => PlaySFX(somTlaloqueMorte);
+
+    public void PlayCliqueBotao() => PlaySFX(somCliqueBotao);
 }
