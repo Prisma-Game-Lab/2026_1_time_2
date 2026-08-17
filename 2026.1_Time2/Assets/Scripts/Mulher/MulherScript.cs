@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class MulherScript : MonoBehaviour
@@ -31,12 +32,11 @@ public class MulherScript : MonoBehaviour
     [SerializeField] private GameObject peixePrefab;
 
     [Header("Configurações do Ataque Pirueta")]
-    [SerializeField] private float piruetaVelocidadeGiro = 720f;
-    [SerializeField] private float piruetaTempoGiro = 1f;
-    [SerializeField] private float piruetaVelocidadeAvanco = 12f;
-    [SerializeField] private float piruetaDano = 2f;
-    [SerializeField] private float piruetaRaioColisao = 0.7f;
-    [SerializeField] private float piruetaDistanciaMaxima = 20f;
+    [SerializeField] private float tempoDePirueta = 5.0f;
+    [SerializeField] private Collider2D colliderPirueta;
+    [SerializeField] private Collider2D[] collidersParaDesativar;
+    private bool forcarHitboxDesligada = false;
+    private Collider2D[] collidersDoCorpo;
 
     [Header("Limites da Arena")]
     public float arenaLeft = -15.05f;
@@ -60,20 +60,22 @@ public class MulherScript : MonoBehaviour
 
     void Start()
     {
+        //startCoroutine(ChooseAttack(tempoIniciarBoss));
         animMulher = GetComponent<Animator>();
-
-        StartCoroutine(ChooseAttack(tempoIniciarBoss));
-
         currentHealth = maxHealth;
         pivotLaser.SetActive(false);
         piranhas.SetActive(false);
         if (colliderDoLaser != null) colliderDoLaser.enabled = false;
+        if (colliderPirueta != null) colliderPirueta.enabled = false;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null)
-        {
-            corOriginal = spriteRenderer.color;
-        }
+        if (spriteRenderer != null) corOriginal = spriteRenderer.color;
+
+        collidersDoCorpo = GetComponentsInChildren<Collider2D>(true)
+            .Where(c => c != colliderPirueta
+                    && c != colliderDoLaser
+                    && c != colliderPiranhas)
+            .ToArray();
     }
 
     void Update()
@@ -102,6 +104,14 @@ public class MulherScript : MonoBehaviour
         {
             Move();
         }
+
+        if (forcarHitboxDesligada)
+        {
+            foreach (Collider2D collider in collidersParaDesativar)
+            {
+                if (collider != null) collider.enabled = false;
+            }
+        }
     }
 
     public void Move()
@@ -113,7 +123,7 @@ public class MulherScript : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        if (isDead) return;
+        if (isDead || forcarHitboxDesligada) return;
         currentHealth -= damage;
         StartCoroutine(FlashRed());
         if (currentHealth <= 0)
@@ -196,9 +206,9 @@ public class MulherScript : MonoBehaviour
 
             laserAtualLockado = false;
             pivotLaser.SetActive(false);
+            animMulher.SetTrigger("AttackLaserParando");
             yield return new WaitForSeconds(intervaloEntreLasers);
         }
-        animMulher.SetTrigger("AttackEnd");
         canMove = true;
         yield return new WaitForSeconds(5.0f);
     }
@@ -235,9 +245,9 @@ public class MulherScript : MonoBehaviour
         {
             scriptDeMovimento.forcaExterna = Vector2.zero;
         }
-        animMulher.SetTrigger("AttackChoroParando");
         piranhas.SetActive(false);
         canMove = true;
+        animMulher.SetTrigger("AttackChoroParando");
     }
 
     void SpawnarPeixes()
@@ -251,57 +261,39 @@ public class MulherScript : MonoBehaviour
 
     IEnumerator PiruetaAttack()
     {
+        // Preparo Giro
         canMove = false;
+        animMulher.SetTrigger("AttackGiroPreparando");
+        yield return new WaitForSeconds(1.0f);
 
-        Vector3 direcao = (player.position - transform.position).normalized;
-
-        float tempoGiro = 0f;
-        while (tempoGiro < piruetaTempoGiro)
-        {
-            transform.Rotate(0f, 0f, piruetaVelocidadeGiro * Time.deltaTime);
-            tempoGiro += Time.deltaTime;
-            yield return null;
-        }
-
-        Vector3 pontoPartida = transform.position;
-        Vector3 pontoDestinoBruto = pontoPartida + direcao * piruetaDistanciaMaxima;
-
-        Vector3 pontoDestino = new Vector3(
-            Mathf.Clamp(pontoDestinoBruto.x, arenaLeft, arenaRight),
-            Mathf.Clamp(pontoDestinoBruto.y, arenaBottom, arenaTop),
-            0f
-        );
-
-        float distanciaPercorrida = 0f;
-        float distanciaTotal = Vector3.Distance(pontoPartida, pontoDestino);
-        bool acertouPlayer = false;
-
-        while (distanciaPercorrida < distanciaTotal)
-        {
-            float passo = piruetaVelocidadeAvanco * Time.deltaTime;
-            transform.position += direcao * passo;
-            distanciaPercorrida += passo;
-            transform.Rotate(0f, 0f, piruetaVelocidadeGiro * Time.deltaTime);
-
-            Vector3 posClamped = new Vector3(
-                Mathf.Clamp(transform.position.x, arenaLeft, arenaRight),
-                Mathf.Clamp(transform.position.y, arenaBottom, arenaTop),
-                0f
-            );
-            transform.position = posClamped;
-
-            Collider2D hit = Physics2D.OverlapCircle(transform.position, piruetaRaioColisao);
-            if (hit != null && hit.CompareTag("Player") && !acertouPlayer)
-            {
-                acertouPlayer = true;
-                Player p = hit.GetComponent<Player>();
-                if (p != null) p.TakeDamage((int)piruetaDano);
-            }
-            yield return null;
-        }
-
-        transform.rotation = Quaternion.identity;
+        // Giro
         canMove = true;
+        forcarHitboxDesligada = true; 
+        AlterarCollidersMulher(false); 
+        
+        colliderPirueta.enabled = true;
+        yield return new WaitForSeconds(tempoDePirueta);
+
+        // Fim do Giro
+        animMulher.SetTrigger("AttackGiroParando");
+        canMove = false;
+        yield return new WaitForSeconds(1.0f);
+        colliderPirueta.enabled = false;
+        forcarHitboxDesligada = false;         
+        canMove = true;
+        AlterarCollidersMulher(true);
+    }
+    void AlterarCollidersMulher(bool estado)
+    {
+        Debug.Log("Alterando estado dos colliders do corpo para: " + estado);
+        foreach (Collider2D col in collidersDoCorpo)
+        {
+            if (col != null)
+            {
+                col.enabled = estado;
+                Debug.Log("Collider " + col.name + " alterado para: " + estado);
+            }
+        }
     }
 
     IEnumerator FlashRed()
