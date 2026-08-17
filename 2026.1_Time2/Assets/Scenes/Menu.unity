@@ -1380,6 +1380,9 @@ MonoBehaviour:
   Menu: {fileID: 217788866}
   Config: {fileID: 8292104}
   Controles: {fileID: 828978331}
+  sliderGeral: {fileID: 1790972672}
+  sliderMusica: {fileID: 129014476}
+  sliderSFX: {fileID: 1260812211}
 --- !u!4 &826958855
 Transform:
   m_ObjectHideFlags: 0
@@ -2571,6 +2574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 1396486384}
   musicaSource: {fileID: 1396486383}
+  somCliqueBotao: {fileID: 8300000, guid: 19e64001a3e0d2444887c0869349734d, type: 3}
   somPlayerDano: {fileID: 8300000, guid: 1c933822582fa8844b894c2f280fedd7, type: 3}
   somAtlatlVoando: {fileID: 8300000, guid: 19e64001a3e0d2444887c0869349734d, type: 3}
   somAtlatlAcerto: {fileID: 8300000, guid: 8fb2b94dac0f2e544993166f693202b4, type: 3}
@@ -2581,12 +2585,28 @@ MonoBehaviour:
   musicaFaseSerpente: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaFaseTlaloc: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaMenu: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
+<<<<<<< Updated upstream
   somTlalocLava: {fileID: 8300000, guid: be62b4e9ef557834a80b2bcdc7393a14, type: 3}
   somTlalocRaio: {fileID: 8300000, guid: a3b3269a44323814abb7f439c9b890aa, type: 3}
   somTlalocPorrada: {fileID: 8300000, guid: 3aad6e7c1f7146b4980c452faaeb149c, type: 3}
   somTlalocMorte: {fileID: 8300000, guid: fff1fb3436e3a544fac9e7cde30d11ca, type: 3}
   somTlaloqueMorte: {fileID: 8300000, guid: 5f805776e07b39147a4354bab64c4728, type: 3}
+=======
+<<<<<<< Updated upstream
+  somTlalocLava: {fileID: 0}
+  somTlalocRaio: {fileID: 0}
+  somTlalocPorrada: {fileID: 0}
+  somTlalocMorte: {fileID: 0}
+  somTlaloqueMorte: {fileID: 0}
+>>>>>>> Stashed changes
   somCliqueBotao: {fileID: 8300000, guid: 19e64001a3e0d2444887c0869349734d, type: 3}
+=======
+  somTlalocLava: {fileID: 8300000, guid: be62b4e9ef557834a80b2bcdc7393a14, type: 3}
+  somTlalocRaio: {fileID: 8300000, guid: a3b3269a44323814abb7f439c9b890aa, type: 3}
+  somTlalocPorrada: {fileID: 8300000, guid: 3aad6e7c1f7146b4980c452faaeb149c, type: 3}
+  somTlalocMorte: {fileID: 8300000, guid: fff1fb3436e3a544fac9e7cde30d11ca, type: 3}
+  somTlaloqueMorte: {fileID: 8300000, guid: 5f805776e07b39147a4354bab64c4728, type: 3}
+>>>>>>> Stashed changes
 --- !u!4 &1396486386
 Transform:
   m_ObjectHideFlags: 0
