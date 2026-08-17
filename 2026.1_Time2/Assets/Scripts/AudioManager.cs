@@ -25,9 +25,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip somSerpenteAviso;
     public AudioClip somSerpenteMorte;
 
+    [Header("Sons - Mulher")]
+    public AudioClip somMulherGrito;
+    public AudioClip somMulherMorte;
+
     [Header("Músicas das Fases")]
     public AudioClip musicaFaseSerpente;
     public AudioClip musicaFaseTlaloc;
+    public AudioClip musicaFaseMulher;
     public AudioClip musicaMenu;
 
     [Header("Sons - Boss Tlaloc")]
@@ -42,7 +47,6 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -65,7 +69,6 @@ public class AudioManager : MonoBehaviour
     {
         if (clip == null || musicaSource == null) return;
         if (musicaSource.clip == clip && musicaSource.isPlaying) return;
-
         musicaSource.clip = clip;
         musicaSource.loop = loop;
         musicaSource.Play();
@@ -77,7 +80,6 @@ public class AudioManager : MonoBehaviour
             musicaSource.Stop();
     }
 
-    // Métodos de Controle de Volume
     public void SetVolumeGeral(float volume)
     {
         AudioListener.volume = volume;
@@ -102,11 +104,12 @@ public class AudioManager : MonoBehaviour
     public void PlayMacuahuitlAcerto() => PlaySFX(somMacuahuitlAcerto);
     public void PlaySerpenteAviso() => PlaySFX(somSerpenteAviso);
     public void PlaySerpenteMorte() => PlaySFX(somSerpenteMorte);
+    public void PlayMulherGrito() => PlaySFX(somMulherGrito);
+    public void PlayMulherMorte() => PlaySFX(somMulherMorte);
     public void PlayTlalocLava() => PlaySFX(somTlalocLava);
     public void PlayTlalocRaio() => PlaySFX(somTlalocRaio);
     public void PlayTlalocPorrada() => PlaySFX(somTlalocPorrada);
     public void PlayTlalocMorte() => PlaySFX(somTlalocMorte);
     public void PlayTlaloqueMorte() => PlaySFX(somTlaloqueMorte);
-
     public void PlayCliqueBotao() => PlaySFX(somCliqueBotao);
 }

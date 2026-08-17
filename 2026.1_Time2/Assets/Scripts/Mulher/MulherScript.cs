@@ -76,6 +76,9 @@ public class MulherScript : MonoBehaviour
                     && c != colliderDoLaser
                     && c != colliderPiranhas)
             .ToArray();
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseMulher);
     }
 
     void Update()
@@ -137,6 +140,10 @@ public class MulherScript : MonoBehaviour
     void Die()
     {
         StopAllCoroutines();
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayMulherMorte();
+
         Debug.Log("Mulher derrotada!");
         Destroy(gameObject);
     }
@@ -164,7 +171,7 @@ public class MulherScript : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         Debug.Log("Iniciando ataques da Mulher");
-        
+
         while (player != null)
         {
             int randomAttack = Random.Range(0, 3);
@@ -218,6 +225,10 @@ public class MulherScript : MonoBehaviour
         animMulher.SetTrigger("AttackChoroPreparando");
         canMove = false;
         transform.position = new Vector3(-15f, 0f, 0f);
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayMulherGrito();
+
         float tempoDecorrido = 0f;
         float tempoParaSpawnarPeixes = 0f;
 
@@ -261,28 +272,26 @@ public class MulherScript : MonoBehaviour
 
     IEnumerator PiruetaAttack()
     {
-        // Preparo Giro
         canMove = false;
         animMulher.SetTrigger("AttackGiroPreparando");
         yield return new WaitForSeconds(1.0f);
 
-        // Giro
         canMove = true;
-        forcarHitboxDesligada = true; 
-        AlterarCollidersMulher(false); 
-        
+        forcarHitboxDesligada = true;
+        AlterarCollidersMulher(false);
+
         colliderPirueta.enabled = true;
         yield return new WaitForSeconds(tempoDePirueta);
 
-        // Fim do Giro
         animMulher.SetTrigger("AttackGiroParando");
         canMove = false;
         yield return new WaitForSeconds(1.0f);
         colliderPirueta.enabled = false;
-        forcarHitboxDesligada = false;         
+        forcarHitboxDesligada = false;
         canMove = true;
         AlterarCollidersMulher(true);
     }
+
     void AlterarCollidersMulher(bool estado)
     {
         Debug.Log("Alterando estado dos colliders do corpo para: " + estado);
