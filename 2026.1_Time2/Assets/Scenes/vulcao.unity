@@ -1275,11 +1275,12 @@ MonoBehaviour:
   musicaFaseSerpente: {fileID: 0}
   musicaFaseTlaloc: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaMenu: {fileID: 0}
-  somTlalocLava: {fileID: 0}
-  somTlalocRaio: {fileID: 0}
-  somTlalocPorrada: {fileID: 0}
+  somTlalocLava: {fileID: 8300000, guid: be62b4e9ef557834a80b2bcdc7393a14, type: 3}
+  somTlalocRaio: {fileID: 8300000, guid: a3b3269a44323814abb7f439c9b890aa, type: 3}
+  somTlalocPorrada: {fileID: 8300000, guid: 3aad6e7c1f7146b4980c452faaeb149c, type: 3}
   somTlalocMorte: {fileID: 8300000, guid: fff1fb3436e3a544fac9e7cde30d11ca, type: 3}
   somTlaloqueMorte: {fileID: 8300000, guid: 5f805776e07b39147a4354bab64c4728, type: 3}
+  somCliqueBotao: {fileID: 0}
 --- !u!4 &453897317
 Transform:
   m_ObjectHideFlags: 0
