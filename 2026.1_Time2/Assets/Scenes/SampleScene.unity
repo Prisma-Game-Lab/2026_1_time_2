@@ -1851,7 +1851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a01e2ce42a6c64b81a22cf9d8cb155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 250
+  maxHealth: 200
   delayVidaAlta: 2.5
   delayVidaMedia: 1.5
   delayVidaBaixa: 0.7
@@ -2707,6 +2707,12 @@ MonoBehaviour:
   musicaFaseSerpente: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaFaseTlaloc: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaMenu: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
+  somTlalocLava: {fileID: 0}
+  somTlalocRaio: {fileID: 0}
+  somTlalocPorrada: {fileID: 0}
+  somTlalocMorte: {fileID: 0}
+  somTlaloqueMorte: {fileID: 0}
+  somCliqueBotao: {fileID: 0}
 --- !u!4 &703371822
 Transform:
   m_ObjectHideFlags: 0
