@@ -51,7 +51,7 @@ public class MulherScript : MonoBehaviour
 
     [Header("Piscar ao tomar dano")]
     public float flashInterval = 0.1f;
-    private SpriteRenderer spriteRenderer;
+   [SerializeField] private SpriteRenderer spriteRenderer;
     private Color corOriginal;
 
     [Header("Animação")]
@@ -60,15 +60,14 @@ public class MulherScript : MonoBehaviour
 
     void Start()
     {
-        //startCoroutine(ChooseAttack(tempoIniciarBoss));
-        animMulher = GetComponent<Animator>();
+        //StartCoroutine(ChooseAttack(tempoIniciarBoss));
+
         currentHealth = maxHealth;
         pivotLaser.SetActive(false);
         piranhas.SetActive(false);
         if (colliderDoLaser != null) colliderDoLaser.enabled = false;
         if (colliderPirueta != null) colliderPirueta.enabled = false;
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null) corOriginal = spriteRenderer.color;
 
         collidersDoCorpo = GetComponentsInChildren<Collider2D>(true)
@@ -110,9 +109,9 @@ public class MulherScript : MonoBehaviour
 
         if (forcarHitboxDesligada)
         {
-            foreach (Collider2D collider in collidersParaDesativar)
+            foreach (Collider2D col in collidersDoCorpo)
             {
-                if (collider != null) collider.enabled = false;
+                if (col != null) col.enabled = false;
             }
         }
     }

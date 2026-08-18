@@ -8,23 +8,25 @@ public class IntroController : MonoBehaviour
     [SerializeField] private GameObject[] imagensParadas;
     [SerializeField] private GameObject introPanel;
     [SerializeField] private float velocidadePanel;
-    // Start is called before the first frame update
+    
     void Start()
     {
         StartCoroutine(moverImagem(imagensParadas, velocidadePanel));
     }
 
-    // Update is called once per frame
     void Update()
     {
     }
 
     IEnumerator moverImagem(GameObject[] imagens, float velocidade)
     {
-        yield return new WaitForSeconds(2.0f);
-
         for (int i = 0; i < imagens.Length; i++)
         {
+            while (!Input.GetMouseButtonDown(0))
+            {
+                yield return null; 
+            }
+
             Vector3 posInicial = imagemIntro.transform.position;
             Vector3 posFinal = imagens[i].transform.position;
             
@@ -53,8 +55,13 @@ public class IntroController : MonoBehaviour
             imagemIntro.transform.position = posFinal;
             imagemIntro.transform.localScale = escalaFinal;
 
-            Debug.Log("Imagem " + i + " chegou ao destino de forma fluida.");
-            yield return new WaitForSeconds(2.0f);
+            Debug.Log("Imagem " + i + " chegou ao destino. Aguardando clique do jogador...");
+            
+            while (!Input.GetMouseButtonDown(0))
+            {
+                yield return null; 
+            }
         }
+        Debug.Log("Todas as imagens foram passadas!");
     }
 }
