@@ -5,12 +5,9 @@ using UnityEngine.SceneManagement;
 public class RoadMapManager : MonoBehaviour
 {
     [Header("Bandeiras (Sprite Renderers)")]
-    [SerializeField] private SpriteRenderer bandeiraSerpente;
-    [SerializeField] private SpriteRenderer bandeiraMulher;
-    [SerializeField] private SpriteRenderer bandeiraTlaloc;
-
-    [Header("Configuração de Cor")]
-    [SerializeField] private Color corDourada = new Color(1f, 0.84f, 0f, 1f);
+    [SerializeField] private GameObject bandeiraSerpente;
+    [SerializeField] private GameObject bandeiraMulher;
+    [SerializeField] private GameObject bandeiraTlaloc;
 
     [Header("Cutscene Final")]
     [SerializeField] private string nomeCenaCutsceneFinal = "CutsceneFinal";
@@ -29,13 +26,13 @@ public class RoadMapManager : MonoBehaviour
     void AtualizarBandeiras()
     {
         if (bandeiraSerpente != null && Progresso.serpenteDerrotada)
-            bandeiraSerpente.color = corDourada;
+            bandeiraSerpente.SetActive(false);
 
         if (bandeiraMulher != null && Progresso.mulherDerrotada)
-            bandeiraMulher.color = corDourada;
+            bandeiraMulher.SetActive(false);
 
         if (bandeiraTlaloc != null && Progresso.tlalocDerrotado)
-            bandeiraTlaloc.color = corDourada;
+            bandeiraTlaloc.SetActive(false);
     }
 
     IEnumerator IniciarCutsceneFinal()
