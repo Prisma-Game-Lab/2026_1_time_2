@@ -57,7 +57,24 @@ public class AudioManager : MonoBehaviour
 
         if (sfxSource == null)
             sfxSource = GetComponent<AudioSource>();
+
+        CarregarVolumes();
     }
+
+    private void CarregarVolumes()
+    {
+        float volGeral = PlayerPrefs.GetFloat("VolGeral", 1f);
+        float volMusica = PlayerPrefs.GetFloat("VolMusica", 1f);
+        float volSFX = PlayerPrefs.GetFloat("VolSFX", 1f);
+
+        AudioListener.volume = volGeral;
+        if (musicaSource != null) musicaSource.volume = volMusica;
+        if (sfxSource != null) sfxSource.volume = volSFX;
+    }
+
+    public float GetVolumeGeral() => PlayerPrefs.GetFloat("VolGeral", 1f);
+    public float GetVolumeMusica() => PlayerPrefs.GetFloat("VolMusica", 1f);
+    public float GetVolumeSFX() => PlayerPrefs.GetFloat("VolSFX", 1f);
 
     public void PlaySFX(AudioClip clip)
     {
@@ -83,18 +100,26 @@ public class AudioManager : MonoBehaviour
     public void SetVolumeGeral(float volume)
     {
         AudioListener.volume = volume;
+        PlayerPrefs.SetFloat("VolGeral", volume);
+        PlayerPrefs.Save();
     }
 
     public void SetVolumeMusica(float volume)
     {
         if (musicaSource != null)
             musicaSource.volume = volume;
+
+        PlayerPrefs.SetFloat("VolMusica", volume);
+        PlayerPrefs.Save();
     }
 
     public void SetVolumeSFX(float volume)
     {
         if (sfxSource != null)
             sfxSource.volume = volume;
+
+        PlayerPrefs.SetFloat("VolSFX", volume);
+        PlayerPrefs.Save();
     }
 
     public void PlayPlayerDano() => PlaySFX(somPlayerDano);

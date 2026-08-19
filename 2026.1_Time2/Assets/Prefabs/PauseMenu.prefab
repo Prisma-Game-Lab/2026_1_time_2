@@ -168,7 +168,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1785267051087206334}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
         m_MethodName: MudarVolumeSFX
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -761,7 +761,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1785267051087206334}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
         m_MethodName: MudarVolumeMusica
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1432,6 +1432,9 @@ MonoBehaviour:
   painelDePause: {fileID: 6066985866424217895}
   Config: {fileID: 8805077297598872733}
   Controles: {fileID: 8204526965774854169}
+  sliderGeral: {fileID: 3235088049418522072}
+  sliderMusica: {fileID: 6887613453683148611}
+  sliderSFX: {fileID: 7842960424179269026}
 --- !u!1 &4026835742181260533
 GameObject:
   m_ObjectHideFlags: 0
@@ -2714,7 +2717,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1785267051087206334}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
         m_MethodName: MudarVolumeGeral
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2836,7 +2839,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00018310547, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0.00024414062, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8975263753301529029
