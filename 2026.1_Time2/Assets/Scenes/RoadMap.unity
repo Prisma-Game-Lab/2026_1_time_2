@@ -1809,13 +1809,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 3235088049418522072, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3235088049418522072, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
-      value: 0
+    - target: {fileID: 3753909823663691827, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -119
       objectReference: {fileID: 0}
     - target: {fileID: 5807315081682698920, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1857,24 +1853,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6887613453683148611, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
+    - target: {fileID: 7525431181436822243, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -27.399986
       objectReference: {fileID: 0}
-    - target: {fileID: 6887613453683148611, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7842960424179269026, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7842960424179269026, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
-      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
-      value: 0
+    - target: {fileID: 8104855129416422963, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -72.399994
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8994009934630919203, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}

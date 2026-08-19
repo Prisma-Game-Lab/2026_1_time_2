@@ -2581,14 +2581,14 @@ MonoBehaviour:
   somMacuahuitlAcerto: {fileID: 8300000, guid: f630d2be20f0608468ed6fe1d46ea16a, type: 3}
   somSerpenteAviso: {fileID: 8300000, guid: 22ff0228d26b2a44a9f7481dd9cd1100, type: 3}
   somSerpenteMorte: {fileID: 8300000, guid: 3f3a9a19085f98641a8f491bd875d3c3, type: 3}
-  somMulherGrito: {fileID: 0}
-  somMulherMorte: {fileID: 0}
+  somMulherGrito: {fileID: 8300000, guid: 8c36f44af735f8a469d9bbeb7057d04d, type: 3}
+  somMulherMorte: {fileID: 8300000, guid: df9407ce87ae02845b014558d8183f3b, type: 3}
   musicaFaseSerpente: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaFaseTlaloc: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaFaseMulher: {fileID: 0}
   musicaMenu: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   somTlalocLava: {fileID: 8300000, guid: be62b4e9ef557834a80b2bcdc7393a14, type: 3}
-  somTlalocRaio: {fileID: 8300000, guid: a3b3269a44323814abb7f439c9b890aa, type: 3}
+  somTlalocRaio: {fileID: 8300000, guid: 41ab7ec18f7e1fb4fa656ea059efe881, type: 3}
   somTlalocPorrada: {fileID: 8300000, guid: 3aad6e7c1f7146b4980c452faaeb149c, type: 3}
   somTlalocMorte: {fileID: 8300000, guid: fff1fb3436e3a544fac9e7cde30d11ca, type: 3}
   somTlaloqueMorte: {fileID: 8300000, guid: 5f805776e07b39147a4354bab64c4728, type: 3}
