@@ -1380,6 +1380,9 @@ MonoBehaviour:
   Menu: {fileID: 217788866}
   Config: {fileID: 8292104}
   Controles: {fileID: 828978331}
+  sliderGeral: {fileID: 1790972672}
+  sliderMusica: {fileID: 129014476}
+  sliderSFX: {fileID: 1260812211}
 --- !u!4 &826958855
 Transform:
   m_ObjectHideFlags: 0
@@ -2578,8 +2581,11 @@ MonoBehaviour:
   somMacuahuitlAcerto: {fileID: 8300000, guid: f630d2be20f0608468ed6fe1d46ea16a, type: 3}
   somSerpenteAviso: {fileID: 8300000, guid: 22ff0228d26b2a44a9f7481dd9cd1100, type: 3}
   somSerpenteMorte: {fileID: 8300000, guid: 3f3a9a19085f98641a8f491bd875d3c3, type: 3}
+  somMulherGrito: {fileID: 0}
+  somMulherMorte: {fileID: 0}
   musicaFaseSerpente: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaFaseTlaloc: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
+  musicaFaseMulher: {fileID: 0}
   musicaMenu: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   somTlalocLava: {fileID: 8300000, guid: be62b4e9ef557834a80b2bcdc7393a14, type: 3}
   somTlalocRaio: {fileID: 8300000, guid: a3b3269a44323814abb7f439c9b890aa, type: 3}

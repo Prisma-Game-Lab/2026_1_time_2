@@ -1,16 +1,28 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
     [SerializeField] private GameObject Menu;
     [SerializeField] private GameObject Config; 
     [SerializeField] private GameObject Controles;
-    
+
+    [Header("Sliders de Volume")]
+    [SerializeField] private Slider sliderGeral;
+    [SerializeField] private Slider sliderMusica;
+    [SerializeField] private Slider sliderSFX;
+
     private void Start() 
     {
         if (AudioManager.Instance != null)
+        {
             AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseSerpente);
+
+            if (sliderGeral != null) sliderGeral.value = AudioManager.Instance.GetVolumeGeral();
+            if (sliderMusica != null) sliderMusica.value = AudioManager.Instance.GetVolumeMusica();
+            if (sliderSFX != null) sliderSFX.value = AudioManager.Instance.GetVolumeSFX();
+        }
 
         Menu.SetActive(true);
         Config.SetActive(false);
