@@ -66,7 +66,7 @@ public class MulherScript : MonoBehaviour
 
     void Start()
     {
-        //StartCoroutine(ChooseAttack(tempoIniciarBoss));
+        StartCoroutine(ChooseAttack(tempoIniciarBoss));
 
         currentHealth = maxHealth;
         pivotLaser.SetActive(false);
@@ -166,6 +166,8 @@ public class MulherScript : MonoBehaviour
 
     IEnumerator VitoriaCoroutine()
     {
+        Progresso.mulherDerrotada = true;
+
         if (textoVitoria != null)
             textoVitoria.SetActive(true);
 

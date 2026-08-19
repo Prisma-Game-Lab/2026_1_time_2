@@ -100,6 +100,7 @@ public class Tlaloc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.P))
         {
             StartCoroutine(lavaAttackAtivation(currentHealth, maxHealth));
@@ -112,7 +113,7 @@ public class Tlaloc : MonoBehaviour
         {
             PorradaAttack();
         }
-
+        */
     }
 
     public void TakeDamage(float damage)
@@ -146,6 +147,8 @@ public class Tlaloc : MonoBehaviour
 
     IEnumerator VitoriaCoroutine()
     {
+        Progresso.tlalocDerrotado = true;
+
         if (textoVitoria != null)
             textoVitoria.SetActive(true);
 
