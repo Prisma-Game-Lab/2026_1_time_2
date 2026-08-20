@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Tlaloc : MonoBehaviour
 {
@@ -59,6 +60,11 @@ public class Tlaloc : MonoBehaviour
     [Header("Animação")]
     [SerializeField] private Animator animator;
 
+    [Header("Tela de Vitória")]
+    public GameObject textoVitoria;
+    public float delayAntesDoMenu = 5f;
+    public string nomeCenaMenu = "Menu";
+
 
     // Start is called before the first frame update
     void Start()
@@ -86,11 +92,15 @@ public class Tlaloc : MonoBehaviour
             AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseTlaloc);
         }
 
+        if (textoVitoria != null)
+            textoVitoria.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.P))
         {
             StartCoroutine(lavaAttackAtivation(currentHealth, maxHealth));
@@ -103,7 +113,7 @@ public class Tlaloc : MonoBehaviour
         {
             PorradaAttack();
         }
-
+        */
     }
 
     public void TakeDamage(float damage)
@@ -124,7 +134,28 @@ public class Tlaloc : MonoBehaviour
         StopAllCoroutines();
         if (AudioManager.Instance != null) AudioManager.Instance.PlayTlalocMorte();
         Debug.Log("Tlaloc derrotado!");
+
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = false;
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D col in colliders)
+            col.enabled = false;
+
+        StartCoroutine(VitoriaCoroutine());
+    }
+
+    IEnumerator VitoriaCoroutine()
+    {
+        Progresso.tlalocDerrotado = true;
+
+        if (textoVitoria != null)
+            textoVitoria.SetActive(true);
+
+        yield return new WaitForSeconds(delayAntesDoMenu);
+
         Destroy(gameObject);
+        SceneManager.LoadScene(nomeCenaMenu);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

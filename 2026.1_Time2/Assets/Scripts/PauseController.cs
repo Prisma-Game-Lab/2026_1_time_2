@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseManager : MonoBehaviour
 {
@@ -11,11 +12,23 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private GameObject Config;
     [SerializeField] private GameObject Controles;
 
+    [Header("Sliders de Volume")]
+    [SerializeField] private Slider sliderGeral;
+    [SerializeField] private Slider sliderMusica;
+    [SerializeField] private Slider sliderSFX;
+
     private bool jogoPausado = false;
 
     private void Start()
     {
         painelDePause.SetActive(false);
+
+        if (AudioManager.Instance != null)
+        {
+            if (sliderGeral != null) sliderGeral.value = AudioManager.Instance.GetVolumeGeral();
+            if (sliderMusica != null) sliderMusica.value = AudioManager.Instance.GetVolumeMusica();
+            if (sliderSFX != null) sliderSFX.value = AudioManager.Instance.GetVolumeSFX();
+        }
     }
 
     void Update()
@@ -45,6 +58,8 @@ public class PauseManager : MonoBehaviour
     {
         TocarSomBotao();
         painelDePause.SetActive(false);
+        Config.SetActive(false);
+        Controles.SetActive(false);
         Time.timeScale = 1f;           
         jogoPausado = false;
     }

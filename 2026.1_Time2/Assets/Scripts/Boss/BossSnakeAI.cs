@@ -113,6 +113,8 @@ public class BossSnakeAI : MonoBehaviour
 
     IEnumerator VitoriaCoroutine()
     {
+        Progresso.serpenteDerrotada = true;
+
         if (textoVitoria != null)
             textoVitoria.SetActive(true);
 
@@ -191,4 +193,5 @@ public class BossSnakeAI : MonoBehaviour
             yield return new WaitForSeconds(GetCurrentDelay());
         }
     }
+
 }
