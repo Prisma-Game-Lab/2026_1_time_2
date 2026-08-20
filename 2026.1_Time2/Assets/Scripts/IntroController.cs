@@ -14,7 +14,6 @@ public class IntroController : MonoBehaviour
     private bool pularSinal = false;
     private bool avancarSinal = false;
 
-
     void Start()
     {
         StartCoroutine(moverImagem(imagensParadas, velocidadePanel));
@@ -28,6 +27,12 @@ public class IntroController : MonoBehaviour
     public void AvancarImagem()
     {
         avancarSinal = true;
+    }
+
+    public void TrocarImagemFinal()
+    {
+        if (imagemIntro2 != null) imagemIntro2.SetActive(true);
+        if (imagemIntro != null) imagemIntro.SetActive(false);
     }
 
     IEnumerator moverImagem(GameObject[] imagens, float velocidade)
@@ -73,15 +78,14 @@ public class IntroController : MonoBehaviour
             
             emTransicao = false;
             yield return null; 
-
         }
 
-        while (!Input.GetMouseButtonDown(0))
+        while(!Input.GetMouseButtonDown(0))
         {
             yield return null; 
         }
-
-        imagemIntro2.SetActive(true);
-        imagemIntro.SetActive(false);
+        
+        if (imagemIntro2 != null) imagemIntro2.SetActive(true);
+        if (imagemIntro != null)  imagemIntro.SetActive(false);
     }
 }

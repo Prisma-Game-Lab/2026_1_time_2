@@ -438,7 +438,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1159187301}
-  - component: {fileID: 1159187300}
   - component: {fileID: 1159187302}
   m_Layer: 0
   m_Name: IntroController
@@ -447,29 +446,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1159187300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1159187299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17869d0402e264e2c83429f104f0d657, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imagemIntro: {fileID: 1509078769}
-  imagemIntro2: {fileID: 1492421330}
-  imagensParadas:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  introPanel: {fileID: 0}
-  velocidadePanel: 10
-  emTransicao: 0
 --- !u!4 &1159187301
 Transform:
   m_ObjectHideFlags: 0
@@ -494,18 +470,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1159187299}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 979b76d0b0d2b445f9b9b8ff9fc03a25, type: 3}
+  m_Script: {fileID: 11500000, guid: b2029cbf1261e4fe4b372a26e0a7ac1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1708912062}
   falas:
   - texto: E foi assim que O Semeador da Discordia garantiu seu total poder sobre
-      todo o povo.
-  - texto: "Enquanto voce continuou sua vida \u2026servindo ao ultimo sol.\n"
+      todo o povo
+  - texto: "Enquanto voce continuou sua vida\u2026.servindo ao ultimo sol"
   velocidadeTexto: 0.05
-  canvas: {fileID: 0}
-  introScript: {fileID: 1159187300}
   proximaCena: Menu
+  imagem1: {fileID: 1509078769}
+  imagem2: {fileID: 1492421330}
 --- !u!1 &1492421330
 GameObject:
   m_ObjectHideFlags: 0
