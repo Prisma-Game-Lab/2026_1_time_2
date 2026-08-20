@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-
 [System.Serializable]
 public struct LinhaDialogo
 {
@@ -19,28 +18,40 @@ public class Dialogo : MonoBehaviour
     public float velocidadeTexto;
     [SerializeField] public GameObject canvas;
     [SerializeField] public IntroController introScript; 
-    [SerializeField] public string proximaCena;
-    
     private int index;
-    private bool primeiroDialogo = true; 
+    private bool esperandoPrimeiroMovimento = true; 
 
     void Start()
     {
         textComponent.text = string.Empty;
         index = 0; 
+        
+        StartCoroutine(DigitaFala());     
     }
 
     void Update()
     {
-        if (primeiroDialogo)
-        {
-            primeiroDialogo = false; 
-            StartCoroutine(DigitaFala());     
-        }
         if (Input.GetMouseButtonDown(0))
         {
             bool digitando = (textComponent.text != falas[index].texto); 
             bool transicao = (introScript != null && introScript.emTransicao); 
+
+            if (esperandoPrimeiroMovimento)
+            {
+                esperandoPrimeiroMovimento = false;
+                if (digitando)
+                {
+                    StopAllCoroutines();
+                    textComponent.text = falas[index].texto;
+                }
+                else
+                {
+                    ProximaFala();
+                    if (introScript != null) introScript.AvancarImagem();
+                }
+                
+                return; 
+            }
 
             if (digitando && transicao)
             {
@@ -84,7 +95,7 @@ public class Dialogo : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene(proximaCena);
+            SceneManager.LoadScene("RoadMap");
         }
     }
 }
