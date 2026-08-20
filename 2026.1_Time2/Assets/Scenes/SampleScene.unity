@@ -1722,7 +1722,7 @@ MonoBehaviour:
   corHit: {r: 1, g: 0, b: 0, a: 1}
   duracaoFlashHit: 0.1
   textoVitoria: {fileID: 2454259986102131228}
-  delayAntesDoMenu: 5
+  delayAntesDoMenu: 1
   nomeCenaMenu: RoadMap
 --- !u!60 &597700636
 PolygonCollider2D:

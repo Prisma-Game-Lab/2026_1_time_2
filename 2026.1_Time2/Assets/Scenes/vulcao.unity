@@ -4504,7 +4504,7 @@ MonoBehaviour:
   - {fileID: 1009797639}
   - {fileID: 1263174157}
   bastaoScript: {fileID: 432939056}
-  tempoIniciarBoss: 5
+  tempoIniciarBoss: 1
   playerTransform: {fileID: 1491821598}
   quantidadeDeRaios: 7
   intervaloEntreRaios: 0.3

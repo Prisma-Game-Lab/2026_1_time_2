@@ -1131,7 +1131,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 200
   currentHealth: 200
-  tempoIniciarBoss: 2
+  tempoIniciarBoss: 3
   bastaoScript: {fileID: 2096844101}
   quantidadeDeLasers: 3
   tempoDeAvisoLaser: 1
@@ -1165,7 +1165,7 @@ MonoBehaviour:
   animMulher: {fileID: 1180638449}
   animLaser: {fileID: 1582202478}
   textoVitoria: {fileID: 1817406424}
-  delayAntesDoMenu: 5
+  delayAntesDoMenu: 1
   nomeCenaMenu: RoadMap
 --- !u!61 &873253572
 BoxCollider2D:
