@@ -5,31 +5,46 @@ using UnityEngine;
 public class IntroController : MonoBehaviour
 {
     [SerializeField] private GameObject imagemIntro;
+    [SerializeField] private GameObject imagemIntro2;
     [SerializeField] private GameObject[] imagensParadas;
     [SerializeField] private GameObject introPanel;
     [SerializeField] private float velocidadePanel;
-    
+
+    public bool emTransicao = false; 
+    private bool pularSinal = false;
+    private bool avancarSinal = false;
+
+
     void Start()
     {
         StartCoroutine(moverImagem(imagensParadas, velocidadePanel));
     }
 
-    void Update()
+    public void PularTransicao()
     {
+        pularSinal = true;
+    }
+
+    public void AvancarImagem()
+    {
+        avancarSinal = true;
     }
 
     IEnumerator moverImagem(GameObject[] imagens, float velocidade)
     {
         for (int i = 0; i < imagens.Length; i++)
         {
-            while (!Input.GetMouseButtonDown(0))
+            avancarSinal = false;
+            while (!avancarSinal)
             {
                 yield return null; 
             }
 
+            emTransicao = true;
+            pularSinal = false; 
+
             Vector3 posInicial = imagemIntro.transform.position;
             Vector3 posFinal = imagens[i].transform.position;
-            
             Vector3 escalaInicial = imagemIntro.transform.localScale;
             Vector3 escalaFinal = imagens[i].transform.localScale;
 
@@ -41,8 +56,9 @@ public class IntroController : MonoBehaviour
             {
                 while (tempoDecorrido < tempoDeViagem)
                 {
+                    if (pularSinal) break; 
+
                     tempoDecorrido += Time.deltaTime;
-                    
                     float progresso = tempoDecorrido / tempoDeViagem;
 
                     imagemIntro.transform.position = Vector3.Lerp(posInicial, posFinal, progresso);
@@ -54,14 +70,18 @@ public class IntroController : MonoBehaviour
 
             imagemIntro.transform.position = posFinal;
             imagemIntro.transform.localScale = escalaFinal;
-
-            Debug.Log("Imagem " + i + " chegou ao destino. Aguardando clique do jogador...");
             
-            while (!Input.GetMouseButtonDown(0))
-            {
-                yield return null; 
-            }
+            emTransicao = false;
+            yield return null; 
+
         }
-        Debug.Log("Todas as imagens foram passadas!");
+
+        while (!Input.GetMouseButtonDown(0))
+        {
+            yield return null; 
+        }
+
+        imagemIntro2.SetActive(true);
+        imagemIntro.SetActive(false);
     }
 }

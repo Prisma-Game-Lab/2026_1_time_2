@@ -6,6 +6,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] private GameObject Menu;
     [SerializeField] private GameObject Config; 
     [SerializeField] private GameObject Controles;
+    private bool primeiroPlay = true;
     
     private void Start() 
     {
@@ -20,7 +21,15 @@ public class MenuController : MonoBehaviour
     public void StartGame()
     {
         TocarSomBotao();
-        SceneManager.LoadScene("RoadMap");
+        if (primeiroPlay)
+        {
+            primeiroPlay = false;
+            SceneManager.LoadScene("IntroInicial");
+        }
+        else
+        {
+            SceneManager.LoadScene("RoadMap");
+        }
     }
 
     public void OpenSettings()

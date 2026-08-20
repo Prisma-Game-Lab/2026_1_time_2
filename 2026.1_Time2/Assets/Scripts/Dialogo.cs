@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 [System.Serializable]
 public struct LinhaDialogo
@@ -16,30 +18,49 @@ public class Dialogo : MonoBehaviour
     public LinhaDialogo[] falas;
     public float velocidadeTexto;
     [SerializeField] public GameObject canvas;
+    [SerializeField] public IntroController introScript; 
+    [SerializeField] public string proximaCena;
     
     private int index;
+    private bool primeiroDialogo = true; 
 
     void Start()
     {
         textComponent.text = string.Empty;
         index = 0; 
-        StartCoroutine(DigitaFala()); 
     }
 
     void Update()
     {
+        if (primeiroDialogo)
+        {
+            primeiroDialogo = false; 
+            StartCoroutine(DigitaFala());     
+        }
         if (Input.GetMouseButtonDown(0))
         {
-            if (textComponent.text == falas[index].texto)
-            {
-                ProximaFala();
-                //proximaImagem();
-            }
+            bool digitando = (textComponent.text != falas[index].texto); 
+            bool transicao = (introScript != null && introScript.emTransicao); 
 
-            else
+            if (digitando && transicao)
             {
                 StopAllCoroutines();
                 textComponent.text = falas[index].texto;
+                introScript.PularTransicao();
+            }
+            else if (!digitando && transicao)
+            {
+                introScript.PularTransicao();
+            }
+            else if (digitando && !transicao)
+            {
+                StopAllCoroutines();
+                textComponent.text = falas[index].texto;
+            }
+            else 
+            {
+                ProximaFala();
+                if (introScript != null) introScript.AvancarImagem();
             }
         }
     }
@@ -63,7 +84,7 @@ public class Dialogo : MonoBehaviour
         }
         else
         {
-            //proximaCena();
+            SceneManager.LoadScene(proximaCena);
         }
     }
 }
