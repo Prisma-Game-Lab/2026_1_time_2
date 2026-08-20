@@ -17,6 +17,7 @@ public class DeathController : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.R))
         {
             if (morto)
@@ -28,6 +29,7 @@ public class DeathController : MonoBehaviour
                 matar();
             }
         }
+        */
     }
 
     public void matar()
