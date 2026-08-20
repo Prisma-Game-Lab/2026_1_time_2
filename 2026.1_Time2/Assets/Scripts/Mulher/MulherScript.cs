@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MulherScript : MonoBehaviour
 {
@@ -58,9 +59,14 @@ public class MulherScript : MonoBehaviour
     public Animator animMulher;
     public Animator animLaser;
 
+    [Header("Tela de Vitória")]
+    public GameObject textoVitoria;
+    public float delayAntesDoMenu = 5f;
+    public string nomeCenaMenu = "Menu";
+
     void Start()
     {
-        //StartCoroutine(ChooseAttack(tempoIniciarBoss));
+        StartCoroutine(ChooseAttack(tempoIniciarBoss));
 
         currentHealth = maxHealth;
         pivotLaser.SetActive(false);
@@ -78,6 +84,9 @@ public class MulherScript : MonoBehaviour
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseMulher);
+
+        if (textoVitoria != null)
+            textoVitoria.SetActive(false);
     }
 
     void Update()
@@ -140,11 +149,32 @@ public class MulherScript : MonoBehaviour
     {
         StopAllCoroutines();
 
+        if (spriteRenderer != null)
+            spriteRenderer.enabled = false;
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D col in colliders)
+            col.enabled = false;
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayMulherMorte();
 
         Debug.Log("Mulher derrotada!");
+
+        StartCoroutine(VitoriaCoroutine());
+    }
+
+    IEnumerator VitoriaCoroutine()
+    {
+        Progresso.mulherDerrotada = true;
+
+        if (textoVitoria != null)
+            textoVitoria.SetActive(true);
+
+        yield return new WaitForSeconds(delayAntesDoMenu);
+
         Destroy(gameObject);
+        SceneManager.LoadScene(nomeCenaMenu);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
