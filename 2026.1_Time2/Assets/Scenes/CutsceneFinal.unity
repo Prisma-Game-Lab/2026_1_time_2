@@ -477,7 +477,8 @@ MonoBehaviour:
   falas:
   - texto: E foi assim que O Semeador da Discordia garantiu seu total poder sobre
       todo o povo
-  - texto: "Enquanto voce continuou sua vida\u2026.servindo ao ultimo sol"
+  - texto: Enquanto voce continuou sua vida
+  - texto: "\u2026.servindo ao ultimo sol"
   velocidadeTexto: 0.05
   proximaCena: Menu
   imagem1: {fileID: 1509078769}

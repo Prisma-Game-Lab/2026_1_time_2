@@ -1027,7 +1027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 829794478}
   falas:
-  - texto: Ha muitos anos atras, haviam quatro deuses conhecidos como sois.
+  - texto: Ha muitos anos, haviam quatro deuses conhecidos como sois.
   - texto: O Semeador da Discordia
   - texto: A Senhora de Jade
   - texto: A Serpente Plumada
@@ -1042,11 +1042,10 @@ MonoBehaviour:
       sois
 
 '
-  - texto: E, como mandando, voce prosseguiu com a missao
+  - texto: E, como mandado, voce prosseguiu com a missao
   velocidadeTexto: 0.05
   canvas: {fileID: 0}
   introScript: {fileID: 1159187300}
-  proximaCena: RoadMap
 --- !u!1 &1468715648
 GameObject:
   m_ObjectHideFlags: 0
