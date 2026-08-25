@@ -1688,6 +1688,8 @@ MonoBehaviour:
   - {x: -2.111724, y: -10.66338}
   - {x: -2.001451, y: -10.66338}
   - {x: -1.494196, y: -10.68543}
+  avisoAtaquePrefab: {fileID: 6565592416177054307, guid: 844534b8dbb3bb74780447e162f850aa, type: 3}
+  tempoAviso: 0.6
 --- !u!114 &597700634
 MonoBehaviour:
   m_ObjectHideFlags: 0

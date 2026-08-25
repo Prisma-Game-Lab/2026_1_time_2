@@ -64,6 +64,10 @@ public class BossSnakeAttacks : MonoBehaviour
     public bool IsAttacking() => isAttacking;
     public bool IsStunned() => isStunned;
 
+    [Header("Aviso Visual de Ataque")]
+    public GameObject avisoAtaquePrefab;
+    public float tempoAviso = 0.6f;
+
     void Start()
     {
         originPosition = transform.position;
@@ -240,10 +244,23 @@ public class BossSnakeAttacks : MonoBehaviour
             Vector2 enterDirection = GetRandomAllDirections();
             Vector3 entryPoint = GetOffscreenPosition(enterDirection);
             Vector3 exitPoint = GetOffscreenPosition(-enterDirection);
+            Vector3 avisoPos = GetBordaArenaPosition(enterDirection);
+
+            if (avisoAtaquePrefab != null)
+            {
+                Vector3 direcaoAtaque = (exitPoint - entryPoint).normalized;
+                float angulo = Mathf.Atan2(direcaoAtaque.y, direcaoAtaque.x) * Mathf.Rad2Deg;
+
+                Quaternion rotacaoAviso = Quaternion.Euler(0, 0, angulo + 180f);
+
+                // Instancia o aviso
+                GameObject aviso = Instantiate(avisoAtaquePrefab, avisoPos, rotacaoAviso);
+                Destroy(aviso, tempoAviso);
+            }
 
             DispararAnimacaoFolhas(enterDirection);
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(tempoAviso);
 
             transform.position = entryPoint;
             Vector3 direction = (exitPoint - entryPoint).normalized;
@@ -282,6 +299,20 @@ public class BossSnakeAttacks : MonoBehaviour
         PararStunVisual();
 
         isAttacking = false;
+    }
+
+    Vector3 GetBordaArenaPosition(Vector2 dir)
+    {
+        float targetX = (arenaLeft + arenaRight) / 2f;
+        float targetY = (arenaTop + arenaBottom) / 2f;
+
+        if (dir.x > 0.1f) targetX = arenaRight - 1.5f;
+        else if (dir.x < -0.1f) targetX = arenaLeft + 1.5f;
+
+        if (dir.y > 0.1f) targetY = arenaTop - 1.5f;
+        else if (dir.y < -0.1f) targetY = arenaBottom + 1.5f;
+
+        return new Vector3(targetX, targetY, 0f);
     }
 
     Vector2 GetRandomAllDirections()
