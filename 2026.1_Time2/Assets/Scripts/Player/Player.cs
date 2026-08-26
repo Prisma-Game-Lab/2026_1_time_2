@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
     [Header("Animação")]
     private Animator animator;
 
+    [SerializeField] private PauseManager pauseManager;
+
 
     void Start()
     {
@@ -93,7 +95,7 @@ public class Player : MonoBehaviour
         {
             float speed = movement.sqrMagnitude;
 
-            if (speed > 0.01f)
+            if (speed > 0.01f && !pauseManager.IsJogoPausado())
             {
                 // Se estiver andando, envia a nova direção para a Blend Tree
                 animator.SetFloat("InputX", movement.x);

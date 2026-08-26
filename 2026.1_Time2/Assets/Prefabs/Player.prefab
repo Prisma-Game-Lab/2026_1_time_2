@@ -237,6 +237,7 @@ MonoBehaviour:
   isStunned: 0
   tempoStunAtual: 0
   tempoStun: 1
+  pauseManager: {fileID: 0}
 --- !u!58 &5534005184229766586
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -721,6 +722,7 @@ GameObject:
   - component: {fileID: 5837822753609358630}
   - component: {fileID: 1111726622216750871}
   - component: {fileID: 8466786730276511511}
+  - component: {fileID: 2269322336279850982}
   m_Layer: 5
   m_Name: FundoVitoria
   m_TagString: Untagged
@@ -786,6 +788,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2269322336279850982
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5427062442784452165}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7896196608397477353
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,11 +15,14 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Slider sliderMusica;
     [SerializeField] private Slider sliderSFX;
 
-    private void Start() 
+    private void Start()
     {
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseSerpente);
+            AudioManager.Instance.TocarMusicaComIntro(
+                AudioManager.Instance.musicaMenuIntro,
+                AudioManager.Instance.musicaMenuLoop
+            );
 
             if (sliderGeral != null) sliderGeral.value = AudioManager.Instance.GetVolumeGeral();
             if (sliderMusica != null) sliderMusica.value = AudioManager.Instance.GetVolumeMusica();

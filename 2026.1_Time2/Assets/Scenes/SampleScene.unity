@@ -1724,7 +1724,9 @@ MonoBehaviour:
   corHit: {r: 1, g: 0, b: 0, a: 1}
   duracaoFlashHit: 0.1
   textoVitoria: {fileID: 2454259986102131228}
-  delayAntesDoMenu: 1
+  canvasGroupVitoria: {fileID: 2454259986102131230}
+  duracaoFade: 1.5
+  delayAntesDoMenu: 2
   nomeCenaMenu: RoadMap
 --- !u!60 &597700636
 PolygonCollider2D:
@@ -2431,6 +2433,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+--- !u!114 &695107104 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1785267051087206334, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+  m_PrefabInstance: {fileID: 695107103}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a63b4d80d86446a7b9ab687f3f2102e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &769912864
 GameObject:
   m_ObjectHideFlags: 0
@@ -3321,6 +3334,10 @@ PrefabInstance:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 1134440589}
+    - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: pauseManager
+      value: 
+      objectReference: {fileID: 695107104}
     - target: {fileID: 1493418141395766661, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3433,6 +3450,11 @@ PrefabInstance:
 --- !u!1 &2454259986102131228 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5427062442784452165, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 2454259986102131227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &2454259986102131230 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 2269322336279850982, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
   m_PrefabInstance: {fileID: 2454259986102131227}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3155170139930973591

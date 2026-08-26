@@ -167,6 +167,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1785267051087206334, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: sliderSFX
+      value: 
+      objectReference: {fileID: 505510783}
+    - target: {fileID: 1785267051087206334, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: sliderGeral
+      value: 
+      objectReference: {fileID: 689681578}
+    - target: {fileID: 1785267051087206334, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: sliderMusica
+      value: 
+      objectReference: {fileID: 1824005927}
     - target: {fileID: 2243715613333872294, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
       propertyPath: m_Name
       value: PauseMenu
@@ -272,19 +284,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathMenu
       objectReference: {fileID: 0}
-    - target: {fileID: 5941832418612301831, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6248272381941540650, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
+--- !u!114 &211840186 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1785267051087206334, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+  m_PrefabInstance: {fileID: 175247021}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a63b4d80d86446a7b9ab687f3f2102e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &298646154
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +406,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &505510783 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1209048197326351794, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+  m_PrefabInstance: {fileID: 175247021}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &514232433
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +914,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &689681578 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3820902703395464152, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+  m_PrefabInstance: {fileID: 175247021}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &747269085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,6 +1202,8 @@ MonoBehaviour:
   animMulher: {fileID: 1180638449}
   animLaser: {fileID: 1582202478}
   textoVitoria: {fileID: 1817406424}
+  canvasGroupVitoria: {fileID: 1817406425}
+  duracaoFade: 1.5
   delayAntesDoMenu: 1
   nomeCenaMenu: RoadMap
 --- !u!61 &873253572
@@ -2944,6 +2983,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1230951661}
     - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: pauseManager
+      value: 
+      objectReference: {fileID: 211840186}
+    - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: coracoes.Array.data[0]
       value: 
       objectReference: {fileID: 584775202}
@@ -3092,6 +3135,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5427062442784452165, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
   m_PrefabInstance: {fileID: 1817406423}
   m_PrefabAsset: {fileID: 0}
+--- !u!225 &1817406425 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 2269322336279850982, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 1817406423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1824005927 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3149092021325767465, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+  m_PrefabInstance: {fileID: 175247021}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1974114435
 GameObject:
   m_ObjectHideFlags: 0

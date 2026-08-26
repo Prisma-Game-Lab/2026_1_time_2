@@ -3,12 +3,17 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
+    private float volumeGeral = 0.5f;
 
     [Header("Audio Source - SFX")]
     public AudioSource sfxSource;
 
     [Header("Audio Source - Música")]
     public AudioSource musicaSource;
+    public AudioClip musicaMenuIntro;
+    public AudioClip musicaMenuLoop;
+
+    private Coroutine rotinaMusica;
 
     [Header("Sons - Player")]
     public AudioClip somPlayerDano;
@@ -63,18 +68,45 @@ public class AudioManager : MonoBehaviour
 
     private void CarregarVolumes()
     {
-        float volGeral = PlayerPrefs.GetFloat("VolGeral", 1f);
-        float volMusica = PlayerPrefs.GetFloat("VolMusica", 1f);
-        float volSFX = PlayerPrefs.GetFloat("VolSFX", 1f);
+        float volGeral = PlayerPrefs.GetFloat("VolGeral", volumeGeral);
+        float volMusica = PlayerPrefs.GetFloat("VolMusica", volumeGeral);
+        float volSFX = PlayerPrefs.GetFloat("VolSFX", volumeGeral);
 
         AudioListener.volume = volGeral;
         if (musicaSource != null) musicaSource.volume = volMusica;
         if (sfxSource != null) sfxSource.volume = volSFX;
     }
 
-    public float GetVolumeGeral() => PlayerPrefs.GetFloat("VolGeral", 1f);
-    public float GetVolumeMusica() => PlayerPrefs.GetFloat("VolMusica", 1f);
-    public float GetVolumeSFX() => PlayerPrefs.GetFloat("VolSFX", 1f);
+    public void TocarMusicaComIntro(AudioClip introClip, AudioClip loopClip)
+    {
+        if (musicaSource == null || introClip == null) return;
+
+        if (rotinaMusica != null)
+            StopCoroutine(rotinaMusica);
+
+        PararMusica();
+        rotinaMusica = StartCoroutine(RotinaTocarIntroELoop(introClip, loopClip));
+    }
+
+    private System.Collections.IEnumerator RotinaTocarIntroELoop(AudioClip intro, AudioClip loop)
+    {
+        musicaSource.clip = intro;
+        musicaSource.loop = false;
+        musicaSource.Play();
+
+        yield return new WaitForSeconds(intro.length);
+
+        if (loop != null)
+        {
+            musicaSource.clip = loop;
+            musicaSource.loop = true;
+            musicaSource.Play();
+        }
+    }
+
+    public float GetVolumeGeral() => PlayerPrefs.GetFloat("VolGeral", volumeGeral);
+    public float GetVolumeMusica() => PlayerPrefs.GetFloat("VolMusica", volumeGeral);
+    public float GetVolumeSFX() => PlayerPrefs.GetFloat("VolSFX", volumeGeral);
 
     public void PlaySFX(AudioClip clip)
     {

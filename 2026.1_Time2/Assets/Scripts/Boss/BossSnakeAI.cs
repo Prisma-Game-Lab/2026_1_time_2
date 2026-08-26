@@ -31,9 +31,11 @@ public class BossSnakeAI : MonoBehaviour
     private Coroutine hitFlashCoroutine;
 
     [Header("Tela de Vitória")]
-    public GameObject textoVitoria;
-    public float delayAntesDoMenu = 5f;
-    public string nomeCenaMenu = "Menu";
+    [SerializeField] private GameObject textoVitoria;
+    [SerializeField] private CanvasGroup canvasGroupVitoria;
+    [SerializeField] private float duracaoFade = 1.5f;
+    [SerializeField] private float delayAntesDoMenu = 2.0f;
+    [SerializeField] private string nomeCenaMenu = "Menu";
 
     private BossSnakeAttacks attacks;
     private bool isDead = false;
@@ -113,14 +115,30 @@ public class BossSnakeAI : MonoBehaviour
 
     IEnumerator VitoriaCoroutine()
     {
-        Progresso.serpenteDerrotada = true;
-
         if (textoVitoria != null)
+        {
             textoVitoria.SetActive(true);
+
+            if (canvasGroupVitoria != null)
+            {
+                canvasGroupVitoria.alpha = 0f;
+
+                float tempoPassado = 0f;
+                while (tempoPassado < duracaoFade)
+                {
+                    tempoPassado += Time.deltaTime;
+                    canvasGroupVitoria.alpha = Mathf.Clamp01(tempoPassado / duracaoFade);
+                    yield return null;
+                }
+
+                canvasGroupVitoria.alpha = 1f;
+            }
+        }
 
         yield return new WaitForSeconds(delayAntesDoMenu);
 
         Destroy(gameObject);
+        Progresso.serpenteDerrotada = true;
         SceneManager.LoadScene(nomeCenaMenu);
     }
 
