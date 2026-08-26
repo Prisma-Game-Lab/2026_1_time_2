@@ -2671,6 +2671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 1396486384}
   musicaSource: {fileID: 1396486383}
+  musicaMenuIntro: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
+  musicaMenuLoop: {fileID: 8300000, guid: 6dd36c247a76aee478e8cd83f09af022, type: 3}
   somPlayerDano: {fileID: 8300000, guid: 1c933822582fa8844b894c2f280fedd7, type: 3}
   somAtlatlVoando: {fileID: 8300000, guid: 19e64001a3e0d2444887c0869349734d, type: 3}
   somAtlatlAcerto: {fileID: 8300000, guid: 8fb2b94dac0f2e544993166f693202b4, type: 3}
