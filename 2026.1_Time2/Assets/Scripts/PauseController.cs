@@ -105,6 +105,11 @@ public class PauseManager : MonoBehaviour
         Config.SetActive(true);
     }
 
+    public bool IsJogoPausado()
+    {
+        return jogoPausado;
+    }
+
     // Funções para os Sliders de Áudio
     public void MudarVolumeGeral(float valor)
     {

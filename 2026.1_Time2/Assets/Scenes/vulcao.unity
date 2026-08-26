@@ -1778,6 +1778,10 @@ PrefabInstance:
       propertyPath: deathScreen
       value: 
       objectReference: {fileID: 2073423035}
+    - target: {fileID: 1436436919659193409, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: pauseManager
+      value: 
+      objectReference: {fileID: 1463976659}
     - target: {fileID: 1493418141395766661, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4445,6 +4449,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+--- !u!114 &1463976659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1785267051087206334, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+  m_PrefabInstance: {fileID: 1463976658}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a63b4d80d86446a7b9ab687f3f2102e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1471967249
 GameObject:
   m_ObjectHideFlags: 0
@@ -4652,7 +4667,9 @@ MonoBehaviour:
   quantidadeTlaloquinhos: 5
   animator: {fileID: 0}
   textoVitoria: {fileID: 1948113031}
-  delayAntesDoMenu: 5
+  canvasGroupVitoria: {fileID: 1948113035}
+  duracaoFade: 1.5
+  delayAntesDoMenu: 1
   nomeCenaMenu: RoadMap
 --- !u!70 &1471967255
 CapsuleCollider2D:
@@ -5048,6 +5065,11 @@ Transform:
 --- !u!1 &1948113031 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5427062442784452165, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 816642935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &1948113035 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 2269322336279850982, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
   m_PrefabInstance: {fileID: 816642935}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1976747884
