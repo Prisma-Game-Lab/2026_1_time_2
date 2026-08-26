@@ -25,6 +25,7 @@ public class TornadoProjectile : MonoBehaviour
     private Vector2 moveDirection;
     private SpriteRenderer spriteRenderer;
     private CircleCollider2D circleCollider;
+    private BossSnakeAI bossSnakeAI;
 
     void Awake()
     {
@@ -73,6 +74,11 @@ public class TornadoProjectile : MonoBehaviour
     {
         transform.position += (Vector3)(moveDirection * speed * Time.deltaTime);
         Ricochet();
+
+        if(bossSnakeAI.getCurrentHealth() == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Ricochet()

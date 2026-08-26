@@ -204,12 +204,12 @@ public class BossSnakeAttacks : MonoBehaviour
             {
                 Debug.Log("Serpente bateu a cabeça e está DESNORTEADA!");
                 isStunned = true;
-                IniciarStunVisual();
+                //IniciarStunVisual();
                 SetEstadoAnimacao(0);
                 HitboxParaIdle();
                 yield return new WaitForSeconds(biteStunDuration);
                 isStunned = false;
-                PararStunVisual();
+                //PararStunVisual();
                 missedBitesCount = 0;
                 isAttacking = false;
                 yield break;
@@ -290,13 +290,13 @@ public class BossSnakeAttacks : MonoBehaviour
 
         Debug.Log("Serpente terminou os mergulhos e está EXAUSTA!");
         isStunned = true;
-        IniciarStunVisual();
+        //IniciarStunVisual();
         SetEstadoAnimacao(0);
         HitboxParaIdle();
 
         yield return new WaitForSeconds(dashTiredDuration);
         isStunned = false;
-        PararStunVisual();
+        //PararStunVisual();
 
         isAttacking = false;
     }
@@ -349,6 +349,7 @@ public class BossSnakeAttacks : MonoBehaviour
             AudioManager.Instance.PlaySerpenteAviso();
     }
 
+    /*
     void IniciarStunVisual()
     {
         if (stunBlinkCoroutine != null)
@@ -356,6 +357,7 @@ public class BossSnakeAttacks : MonoBehaviour
         stunBlinkCoroutine = StartCoroutine(BlinkVermelho());
     }
 
+    
     void PararStunVisual()
     {
         if (stunBlinkCoroutine != null)
@@ -366,6 +368,7 @@ public class BossSnakeAttacks : MonoBehaviour
         if (spriteRenderer != null)
             spriteRenderer.color = corOriginal;
     }
+    */
 
     IEnumerator BlinkVermelho()
     {

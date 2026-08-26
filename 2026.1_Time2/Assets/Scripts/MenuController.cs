@@ -46,6 +46,8 @@ public class MenuController : MonoBehaviour
         {
             SceneManager.LoadScene("RoadMap");
         }
+
+        Progresso.ResetarProgresso();
     }
 
     public void OpenSettings()

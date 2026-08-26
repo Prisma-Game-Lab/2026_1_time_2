@@ -66,14 +66,13 @@ public class BossSnakeAI : MonoBehaviour
         if (isDead) return;
         currentHealth -= damage;
 
-        if (!attacks.IsStunned())
-        {
+
             if (hitFlashCoroutine != null) StopCoroutine(hitFlashCoroutine);
             hitFlashCoroutine = StartCoroutine(FlashHit());
 
             if (somDeAcerto != null && AudioManager.Instance != null)
                 AudioManager.Instance.PlaySFX(somDeAcerto);
-        }
+
 
         if (currentHealth <= 0)
         {
@@ -90,8 +89,7 @@ public class BossSnakeAI : MonoBehaviour
         spriteRenderer.color = corHit;
         yield return new WaitForSeconds(duracaoFlashHit);
 
-        if (!attacks.IsStunned())
-            spriteRenderer.color = corOriginal;
+        spriteRenderer.color = corOriginal;
     }
 
     void Die()
@@ -211,5 +209,7 @@ public class BossSnakeAI : MonoBehaviour
             yield return new WaitForSeconds(GetCurrentDelay());
         }
     }
+
+    public int getCurrentHealth() => currentHealth;
 
 }

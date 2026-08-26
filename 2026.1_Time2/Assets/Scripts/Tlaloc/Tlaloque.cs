@@ -60,6 +60,11 @@ public class Tlaloque : MonoBehaviour
         {
             Move();
         }
+        
+        if(tlalocBoss.getVida() == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void Move()
