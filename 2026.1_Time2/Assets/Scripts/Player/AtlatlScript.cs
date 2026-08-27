@@ -37,6 +37,8 @@ public class AtlatlScript : MonoBehaviour
             float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle - 90);
         }
+
+        //Invoke("CairNoChao", 3.0f); // Se voar por 3s sem acertar nada, cai no chão
     }
 
     public void ConfigurarOrigem(WeaponThrow origem)
@@ -54,7 +56,7 @@ public class AtlatlScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (estaVoando && other.CompareTag("Enemy"))
+        if (estaVoando && !noChao && other.CompareTag("Enemy"))
         {
             estaVoando = false;
 
@@ -66,7 +68,15 @@ public class AtlatlScript : MonoBehaviour
             }
 
             StartCoroutine(GrudarNoInimigo(other.transform));
+            return;
         }
+
+        if (estaVoando && (other.CompareTag("Obstaculo") || other.CompareTag("Cenario")))
+        {
+            CairNoChao();
+            return;
+        }
+
         if (noChao && other.CompareTag("Player"))
         {
             ColetarPeloPlayer();
@@ -97,6 +107,7 @@ public class AtlatlScript : MonoBehaviour
 
     void CairNoChao()
     {
+        estaVoando = false;
         noChao = true;
         if (meuCollider != null) meuCollider.isTrigger = true;
         if (rb != null) rb.velocity = Vector2.zero;

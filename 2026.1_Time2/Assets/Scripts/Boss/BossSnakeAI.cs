@@ -7,6 +7,7 @@ using TMPro;
 [RequireComponent(typeof(BossSnakeAttacks))]
 public class BossSnakeAI : MonoBehaviour
 {
+    public static BossSnakeAI Instance { get; private set; }
     public enum AttackType { Tornado, Bite, DashThrough }
 
     [Header("Vida")]

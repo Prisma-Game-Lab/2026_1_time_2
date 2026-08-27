@@ -908,6 +908,7 @@ MonoBehaviour:
   cooldown: 3
   tempoEntreArremessos: 0.8
   "tempoEntreLan\xE7aEOutra": 0.1
+  pauseManager: {fileID: 0}
 --- !u!1 &8483505029298027775
 GameObject:
   m_ObjectHideFlags: 0

@@ -3318,6 +3318,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 436259246858388179, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: pauseManager
+      value: 
+      objectReference: {fileID: 695107104}
     - target: {fileID: 1070752096288974521, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

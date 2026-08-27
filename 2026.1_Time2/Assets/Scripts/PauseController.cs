@@ -19,6 +19,8 @@ public class PauseManager : MonoBehaviour
 
     private bool jogoPausado = false;
 
+    public bool getPausado() => jogoPausado;
+
     private void Start()
     {
         painelDePause.SetActive(false);
