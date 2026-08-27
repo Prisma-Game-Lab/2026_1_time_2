@@ -73,6 +73,11 @@ public class TornadoProjectile : MonoBehaviour
     {
         transform.position += (Vector3)(moveDirection * speed * Time.deltaTime);
         Ricochet();
+
+        if(BossSnakeAI.Instance.getCurrentHealth() == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void Ricochet()

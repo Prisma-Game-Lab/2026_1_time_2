@@ -134,6 +134,20 @@ public class Tlaloc : MonoBehaviour
     void Die()
     {
         StopAllCoroutines();
+        for(int i = 0; i < lavas.Length; i++)
+        {
+            if (lavas[i] != null)
+            {
+                Destroy(lavas[i].gameObject);
+            }
+        }
+        for(int i = 0; i < porradass.Length; i++)
+        {
+            if (porradass[i] != null)
+            {
+                Destroy(porradass[i].gameObject);
+            }
+        }
         if (AudioManager.Instance != null) AudioManager.Instance.PlayTlalocMorte();
         Debug.Log("Tlaloc derrotado!");
 
@@ -496,5 +510,10 @@ public class Tlaloc : MonoBehaviour
             spriteRenderer.color = corOriginal;
             yield return new WaitForSeconds(flashInterval);
         }
+    }
+
+    public float getVida()
+    {
+        return currentHealth;
     }
 }

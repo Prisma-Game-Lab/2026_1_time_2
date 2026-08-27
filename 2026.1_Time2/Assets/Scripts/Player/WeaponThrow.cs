@@ -21,6 +21,20 @@ public class WeaponThrow : MonoBehaviour
     private float tempoParaProximaRecarga = 0f;
 
     private Camera mainCamera;
+    [SerializeField] private PauseManager pauseManager;
+
+    private void AtualizarUI()
+    {
+        if (lancasUI == null) return;
+
+        for (int i = 0; i < lancasUI.Length; i++)
+        {
+            if (lancasUI[i] != null)
+            {
+                lancasUI[i].SetActive(i < numAtual);
+            }
+        }
+    }
 
     private void Start()
     {
@@ -31,20 +45,20 @@ public class WeaponThrow : MonoBehaviour
     private void OnEnable()
     {
         AtualizarRecargaPassiva();
+        AtualizarUI();
     }
 
     void Update()
     {
         // 1. Sistema de Arremesso
-        if (Input.GetMouseButtonDown(0) && numAtual > 0 && Time.time >= proximoTempoDeArremesso)
+        if (Input.GetMouseButtonDown(0) && numAtual > 0 && Time.time >= proximoTempoDeArremesso && !pauseManager.getPausado())
         {
             DispararUmaLança();
             proximoTempoDeArremesso = Time.time + tempoEntreArremessos;
         }
-        if(Input.GetMouseButtonDown(1) && numAtual > 0 && Time.time >= proximoTempoDeArremesso)
+        if (Input.GetMouseButtonDown(1) && numAtual > 0 && Time.time >= proximoTempoDeArremesso)
         {
             StartCoroutine(DispararTodasAsLanças());
-
             proximoTempoDeArremesso = Time.time + tempoEntreArremessos;
         }
 
@@ -54,7 +68,8 @@ public class WeaponThrow : MonoBehaviour
             if (Time.time >= tempoParaProximaRecarga)
             {
                 numAtual += 1;
-                lancasUI[numAtual - 1].SetActive(true);
+                AtualizarUI();
+
                 if (numAtual < numMax)
                 {
                     tempoParaProximaRecarga = Time.time + cooldown;
@@ -68,7 +83,7 @@ public class WeaponThrow : MonoBehaviour
             meuSpriteRenderer.enabled = (numAtual > 0);
         }
 
-        if(Time.deltaTime > 0)
+        if (Time.deltaTime > 0)
         {
             RotateTowardsMouse();
         }
@@ -86,10 +101,8 @@ public class WeaponThrow : MonoBehaviour
 
     private void DispararUmaLança()
     {
-        // referência do objeto instanciado
         GameObject novoAtlatl = Instantiate(atlatl, lançamento.position, transform.rotation);
 
-        // passa este script para o Atlatl saber quem o criou
         AtlatlScript scriptAtlatl = novoAtlatl.GetComponent<AtlatlScript>();
         if (scriptAtlatl != null)
         {
@@ -102,7 +115,7 @@ public class WeaponThrow : MonoBehaviour
         }
 
         numAtual -= 1;
-        lancasUI[numAtual].SetActive(false);
+        AtualizarUI();
     }
 
     private void AtualizarRecargaPassiva()
@@ -114,6 +127,11 @@ public class WeaponThrow : MonoBehaviour
             numAtual += 1;
             tempoParaProximaRecarga += cooldown;
         }
+
+        if (numAtual >= numMax)
+        {
+            tempoParaProximaRecarga = 0;
+        }
     }
 
     public void RecuperarMunicaoDoChao()
@@ -121,8 +139,12 @@ public class WeaponThrow : MonoBehaviour
         if (numAtual < numMax)
         {
             numAtual += 1;
-            lancasUI[numAtual - 1].SetActive(true);
-            tempoParaProximaRecarga += cooldown;
+            AtualizarUI();
+
+            if (numAtual >= numMax)
+            {
+                tempoParaProximaRecarga = 0;
+            }
         }
     }
 
