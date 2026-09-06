@@ -71,11 +71,13 @@ public class AtlatlScript : MonoBehaviour
             return;
         }
 
+        /*
         if (estaVoando && (other.CompareTag("Obstaculo") || other.CompareTag("Cenario")))
         {
             CairNoChao();
             return;
         }
+        */
 
         if (noChao && other.CompareTag("Player"))
         {
