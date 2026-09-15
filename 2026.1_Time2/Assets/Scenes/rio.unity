@@ -166,6 +166,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 3699217178459836711, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699217178459836711, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699217178459836711, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699217178459836711, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3699217178459836711, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000038146973
+      objectReference: {fileID: 0}
     - target: {fileID: 5807315081682698920, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
       propertyPath: m_LocalPosition.x
       value: 391.5
@@ -205,6 +225,46 @@ PrefabInstance:
     - target: {fileID: 5807315081682698920, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356238133958940396, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356238133958940396, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356238133958940396, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356238133958940396, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356238133958940396, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000038146973
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573217205111387687, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573217205111387687, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573217205111387687, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573217205111387687, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573217205111387687, guid: 15a4e05c9bd654cd69d0fe0289f87327, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.0000076293945
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -262,6 +322,10 @@ PrefabInstance:
     - target: {fileID: 5941832418612301831, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
       propertyPath: m_Name
       value: DeathMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941832418612301831, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1347,6 +1411,10 @@ PrefabInstance:
     - target: {fileID: 8703033039237341287, guid: 8ca7b7e89b791f644980c2422a2cf610, type: 3}
       propertyPath: m_Name
       value: Crosshair
+      objectReference: {fileID: 0}
+    - target: {fileID: 8703033039237341287, guid: 8ca7b7e89b791f644980c2422a2cf610, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
