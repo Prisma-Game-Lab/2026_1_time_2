@@ -475,10 +475,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textComponent: {fileID: 1708912062}
   falas:
-  - texto: E foi assim que O Semeador da Discordia garantiu seu total poder sobre
-      todo o povo
-  - texto: Enquanto voce continuou sua vida
-  - texto: "\u2026.servindo ao ultimo sol"
+  - texto: "E foi assim que O Semeador da Disc\xF3rdia garantiu seu total poder sobre
+      todo o povo"
+  - texto: "Enquanto voc\xEA continuou sua vida"
+  - texto: "  ...servindo ao \xFAltimo sol"
   velocidadeTexto: 0.05
   proximaCena: Menu
   imagem1: {fileID: 1509078769}
@@ -767,8 +767,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 757008ab7e4608544a7d0f6311528af6, type: 2}
-  m_sharedMaterial: {fileID: 8610358679405672281, guid: 757008ab7e4608544a7d0f6311528af6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d63c0c7580b3a1446873e4268b6d4474, type: 2}
+  m_sharedMaterial: {fileID: -2088953309147025945, guid: d63c0c7580b3a1446873e4268b6d4474, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
