@@ -44,8 +44,8 @@ public class Player : MonoBehaviour
     public Sprite rostoMachucado;
 
     [Header("Configuração de Troca de Arma")]
-    public float weaponSwitchCooldown = 0.5f; // Tempo de espera entre as trocas em segundos
-    private float nextWeaponSwitchTime = 0f; // Guarda quando a próxima troca será permitida
+    public float weaponSwitchCooldown = 0.5f;
+    private float nextWeaponSwitchTime = 0f;
 
     private Coroutine rotinaRosto;
 
@@ -60,6 +60,11 @@ public class Player : MonoBehaviour
 
     [SerializeField] private PauseManager pauseManager;
 
+    [Header("Knockback Settings")]
+    [SerializeField] private float knockbackForce = 8f;
+    [SerializeField] private float knockbackDuration = 0.2f;
+    private bool isKnockbackActive = false;
+    public bool IsKnockbackActive => isKnockbackActive;
 
     void Start()
     {
@@ -70,11 +75,13 @@ public class Player : MonoBehaviour
             corOriginal = spriteRenderer.color;
 
         animator = GetComponent<Animator>();
+        if (rb == null)
+            rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        if (!isStunned)
+        if (!isStunned && !isKnockbackActive)
         {
             movement.x = Input.GetAxisRaw("Horizontal");
             movement.y = Input.GetAxisRaw("Vertical");
@@ -82,29 +89,46 @@ public class Player : MonoBehaviour
         else
         {
             movement = Vector2.zero;
-            tempoStunAtual += Time.deltaTime;
-            if (tempoStunAtual >= tempoStun)
+
+            if (isStunned)
             {
-                isStunned = false;
-                tempoStunAtual = 0f;
+                tempoStunAtual += Time.deltaTime;
+                if (tempoStunAtual >= tempoStun)
+                {
+                    isStunned = false;
+                    tempoStunAtual = 0f;
+                }
             }
         }
 
-        //Animação do player
+        // Animação do player
         if (animator != null)
         {
             float speed = movement.sqrMagnitude;
+            bool pausado = (pauseManager != null) ? pauseManager.IsJogoPausado() : false;
 
-            if (speed > 0.01f && !pauseManager.IsJogoPausado())
+            if (!pausado)
             {
-                // Se estiver andando, envia a nova direção para a Blend Tree
-                animator.SetFloat("InputX", movement.x);
-                animator.SetFloat("InputY", movement.y);
-                animator.speed = 1f; // Animação roda normalmente
+                animator.SetFloat("Speed", speed);
+
+                if (speed > 0.01f)
+                {
+                    animator.SetFloat("InputX", movement.x);
+                    animator.SetFloat("InputY", movement.y);
+
+                    animator.SetFloat("LastInputX", movement.x);
+                    animator.SetFloat("LastInputY", movement.y);
+
+                    animator.speed = 1f;
+                }
+                else
+                {
+                    animator.speed = 1f;
+                }
             }
             else
             {
-                animator.speed = 0f; // Congela a animação no último frame gravado
+                animator.speed = 0f;
             }
         }
 
@@ -115,7 +139,6 @@ public class Player : MonoBehaviour
 
         if (Time.timeScale != 0f)
         {
-            //RotateTowardsMouse();
             SelectWeapon();
             PlayerDash();
             if (isInvincible)
@@ -132,6 +155,8 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isKnockbackActive) return;
+
         Vector2 move = movement;
         if (move.sqrMagnitude > 1f) move = move.normalized;
         rb.MovePosition(rb.position + (move * movementSpeed + forcaExterna) * Time.fixedDeltaTime);
@@ -141,9 +166,9 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            TakeDamage(takenDamage);
+            TakeDamage(takenDamage, collision.transform.position);
         }
-        if(collision.gameObject.CompareTag("Lava"))
+        if (collision.gameObject.CompareTag("Lava"))
         {
             estaNaLava = true;
         }
@@ -153,7 +178,7 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Piranha"))
         {
-            TakeDamage(takenDamage);
+            TakeDamage(takenDamage, collision.transform.position);
         }
         if (collision.gameObject.CompareTag("Peixe"))
         {
@@ -172,13 +197,22 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage(takenDamage, collision.transform.position);
+        }
         if (collision.gameObject.CompareTag("Tornado"))
         {
-            TakeDamage(takenDamage);
+            TakeDamage(takenDamage, collision.transform.position);
         }
     }
 
     public void TakeDamage(int damage)
+    {
+        TakeDamage(damage, Vector2.zero, false);
+    }
+
+    public void TakeDamage(int damage, Vector2 damageSourcePosition, bool applyKnockback = true)
     {
         if (!isInvincible)
         {
@@ -188,10 +222,9 @@ public class Player : MonoBehaviour
                 AudioManager.Instance.PlayPlayerDano();
 
             if (rotinaRosto != null)
-            {
                 StopCoroutine(rotinaRosto);
-            }
             rotinaRosto = StartCoroutine(EfeitoRostoDano());
+
             if (currentHealth >= 0 && currentHealth < coracoes.Length)
                 Destroy(coracoes[currentHealth]);
 
@@ -205,6 +238,12 @@ public class Player : MonoBehaviour
                 if (spriteRenderer != null) spriteRenderer.color = corOriginal;
                 deathScreen.SetActive(true);
                 Destroy(gameObject);
+                return;
+            }
+
+            if (applyKnockback)
+            {
+                StartCoroutine(Knockback(damageSourcePosition));
             }
         }
     }
@@ -293,12 +332,28 @@ public class Player : MonoBehaviour
         }
     }
 
-        private IEnumerator EfeitoRostoDano()
+    private IEnumerator EfeitoRostoDano()
     {
         rostoNaTela.sprite = rostoMachucado;
-
         yield return new WaitForSeconds(3f);
-
         rostoNaTela.sprite = rostoNormal;
+    }
+
+    private IEnumerator Knockback(Vector2 damageSourcePosition)
+    {
+        isKnockbackActive = true;
+
+        Vector2 knockbackDirection = ((Vector2)transform.position - damageSourcePosition).normalized;
+
+        if (knockbackDirection == Vector2.zero)
+            knockbackDirection = Vector2.up;
+
+        rb.velocity = Vector2.zero;
+        rb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(knockbackDuration);
+
+        rb.velocity = Vector2.zero;
+        isKnockbackActive = false;
     }
 }
