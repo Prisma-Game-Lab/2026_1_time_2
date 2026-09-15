@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 44fa6286748d7a242a2e60566e61795d
+guid: c1dde841d4ed1e04e891fb1b07d6b120
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Ambages
+  - Opal
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
