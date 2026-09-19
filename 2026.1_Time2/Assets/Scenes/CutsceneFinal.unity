@@ -478,7 +478,11 @@ MonoBehaviour:
   - texto: "E foi assim que O Semeador da Disc\xF3rdia garantiu seu total poder sobre
       todo o povo"
   - texto: "Enquanto voc\xEA continuou sua vida"
+<<<<<<< Updated upstream
   - texto: "  ...servindo ao \xFAltimo sol"
+=======
+  - texto: "\u2026.servindo ao \xFAltimo sol"
+>>>>>>> Stashed changes
   velocidadeTexto: 0.05
   proximaCena: Menu
   imagem1: {fileID: 1509078769}
