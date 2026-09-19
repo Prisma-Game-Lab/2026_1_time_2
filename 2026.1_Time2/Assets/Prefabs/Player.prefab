@@ -305,7 +305,7 @@ MonoBehaviour:
   invincibleTime: 3
   flashInterval: 0.1
   movementSpeed: 6
-  dashSpeed: 10
+  dashSpeed: 15
   dashDuration: 0.2
   dashCooldown: 1
   weapons:
