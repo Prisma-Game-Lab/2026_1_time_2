@@ -81,7 +81,7 @@ public class Tlaloc : MonoBehaviour
             if (p != null) playerTransform = p.transform;
         }
 
-        StartCoroutine(chooseAttack(tempoIniciarBoss));
+        //StartCoroutine(chooseAttack(tempoIniciarBoss));
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
@@ -102,7 +102,7 @@ public class Tlaloc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
+        
         if (Input.GetKeyDown(KeyCode.P))
         {
             StartCoroutine(lavaAttackAtivation(currentHealth, maxHealth));
@@ -115,7 +115,7 @@ public class Tlaloc : MonoBehaviour
         {
             PorradaAttack();
         }
-        */
+        
     }
 
     public void TakeDamage(float damage)
@@ -388,12 +388,13 @@ public class Tlaloc : MonoBehaviour
         Destroy(indicador);
 
         // CONFIGURAÇÃO DO RAIO CAINDO DAS NUVENS:
-        Vector3 posicaoNuvem = new Vector3(pontoImpactoChao.x, alturaDasNuvensY, 0);
-        GameObject raioVisual = Instantiate(prefabRaio, posicaoNuvem, Quaternion.identity);
-
         float distanciaAteOChao = alturaDasNuvensY - pontoImpactoChao.y;
 
-        raioVisual.transform.localScale = new Vector3(raioVisual.transform.localScale.x, distanciaAteOChao, 1);
+        Vector3 posicaoNuvem = new Vector3(pontoImpactoChao.x, distanciaAteOChao, 0);
+        GameObject raioVisual = Instantiate(prefabRaio, pontoImpactoChao, Quaternion.identity);
+
+        //raioVisual.transform.localScale = new Vector3(raioVisual.transform.localScale.x, distanciaAteOChao, 1);
+        //float distanciaAteOChao = alturaDasNuvensY - pontoImpactoChao.y;
 
         VerificarDanoNoPlayer(pontoImpactoChao);
 
