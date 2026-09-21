@@ -996,14 +996,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1642406628366882430, guid: d4c3f27830fb079459a7e99b90893765, type: 3}
-      propertyPath: m_SortingLayer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1642406628366882430, guid: d4c3f27830fb079459a7e99b90893765, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1637683447
-      objectReference: {fileID: 0}
     - target: {fileID: 7422030212752178332, guid: d4c3f27830fb079459a7e99b90893765, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.7712061
@@ -5185,8 +5177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723c7311a9fdcc44285642ed41f6f3b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  precisao: 100
-  offset: 0
+  precisao: 5
+  offset: 11
 --- !u!1 &1590325303
 GameObject:
   m_ObjectHideFlags: 0

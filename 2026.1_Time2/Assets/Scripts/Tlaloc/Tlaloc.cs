@@ -67,6 +67,9 @@ public class Tlaloc : MonoBehaviour
     [SerializeField] private float delayAntesDoMenu = 2.0f;
     [SerializeField] private string nomeCenaMenu = "Menu";
 
+    [Header("Controle de Risada")]
+    private int risadasRestantes = 3;
+
 
     // Start is called before the first frame update
     void Start()
@@ -122,12 +125,26 @@ public class Tlaloc : MonoBehaviour
     {
         if (isDead) return;
         currentHealth -= damage;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayTlalocDorAleatoria();
+
         StartCoroutine(FlashRed());
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             isDead = true;
             Die();
+        }
+    }
+
+    private void TentarRir()
+    {
+        if (risadasRestantes > 0 && Random.value < 0.35f)
+        {
+            risadasRestantes--;
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayTlalocRiso();
         }
     }
 
@@ -303,7 +320,12 @@ public class Tlaloc : MonoBehaviour
     {
         isThunderActive = true;
 
-        // Invoca a primeira leva de Tlaloquinhos
+        // Inicia o áudio contínuo de tempestade (vento, chuva e trovoadas de fundo)
+        if (AudioManager.Instance != null && AudioManager.Instance.somTlalocTempestadeAmbiente != null)
+        {
+            AudioManager.Instance.TocarAmbiente(AudioManager.Instance.somTlalocTempestadeAmbiente, true);
+        }
+
         SpawnarTlaloquinhos();
         contadorGeralDeRaios = 0;
 
@@ -316,7 +338,6 @@ public class Tlaloc : MonoBehaviour
                 contadorGeralDeRaios++;
                 Vector2 pontoNoChao;
 
-                // A cada 5 raios disparados, o raio cai exatamente onde o Player está
                 if (contadorGeralDeRaios % 5 == 0 && playerTransform != null)
                 {
                     pontoNoChao = playerTransform.position;
@@ -330,8 +351,13 @@ public class Tlaloc : MonoBehaviour
                 yield return new WaitForSeconds(intervaloEntreRaios);
             }
 
-            // Intervalo de descanso entre cada onda de raios
             yield return new WaitForSeconds(1.0f);
+        }
+
+        // Para o som de tempestade quando os tlaloques morrem
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PararAmbiente();
         }
 
         isThunderActive = false;
@@ -436,6 +462,7 @@ public class Tlaloc : MonoBehaviour
     //ATAQUE DE PORRADA
     void PorradaAttack()
     {
+        TentarRir();
         int num = SortearNumeros(1, 0, 3)[0];
         StartCoroutine(PorradaAttackCoroutine(rotationAngle[num], porradasObjs[num], num));
     }

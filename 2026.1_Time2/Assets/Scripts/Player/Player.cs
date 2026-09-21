@@ -310,6 +310,10 @@ public class Player : MonoBehaviour
     IEnumerator DashCoroutine()
     {
         isDashing = true;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayPlayerDash();
+
         float originalSpeed = movementSpeed;
         movementSpeed += dashSpeed;
         yield return new WaitForSeconds(dashDuration);
