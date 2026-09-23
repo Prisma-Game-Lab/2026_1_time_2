@@ -2676,33 +2676,33 @@ MonoBehaviour:
   musicaMenuLoop: {fileID: 8300000, guid: 6dd36c247a76aee478e8cd83f09af022, type: 3}
   ambienteSource: {fileID: 1396486384}
   somPlayerDano: {fileID: 8300000, guid: 1c933822582fa8844b894c2f280fedd7, type: 3}
-  somPlayerDash: {fileID: 0}
+  somPlayerDash: {fileID: 8300000, guid: d889c86a31d47bb4c8c24f8f13a01171, type: 3}
   somAtlatlVoando: {fileID: 8300000, guid: 19e64001a3e0d2444887c0869349734d, type: 3}
-  somAtlatlAcerto: {fileID: 8300000, guid: 8fb2b94dac0f2e544993166f693202b4, type: 3}
+  somAtlatlAcerto: {fileID: 8300000, guid: da4a3d4aafa46e34ebacd4ba29a0301b, type: 3}
   somMacuahuitlErro: {fileID: 8300000, guid: cada9c4ff283f8648b11b71ca6b8c352, type: 3}
   somMacuahuitlAcerto: {fileID: 8300000, guid: f630d2be20f0608468ed6fe1d46ea16a, type: 3}
   somSerpenteAviso: {fileID: 8300000, guid: 22ff0228d26b2a44a9f7481dd9cd1100, type: 3}
-  somSerpenteMato: {fileID: 0}
+  somSerpenteMato: {fileID: 8300000, guid: 5375e6c5307cd334ba6b6904151c2b82, type: 3}
   somSerpenteMorte: {fileID: 8300000, guid: 3f3a9a19085f98641a8f491bd875d3c3, type: 3}
   somMulherGrito: {fileID: 8300000, guid: 8c36f44af735f8a469d9bbeb7057d04d, type: 3}
   somMulherMorte: {fileID: 8300000, guid: df9407ce87ae02845b014558d8183f3b, type: 3}
-  somMulherGiro: {fileID: 0}
-  somMulherDano1: {fileID: 0}
-  somMulherDano2: {fileID: 0}
+  somMulherGiro: {fileID: 8300000, guid: aaf2514ca78dfe84ea28fe414cf6db1e, type: 3}
+  somMulherDano1: {fileID: 8300000, guid: 50c0889c3ad6c004db92dcd931cd4279, type: 3}
+  somMulherDano2: {fileID: 8300000, guid: 8e6eaf8f729b9d34487a19d3278c26ea, type: 3}
   somTlalocLava: {fileID: 8300000, guid: be62b4e9ef557834a80b2bcdc7393a14, type: 3}
   somTlalocRaio: {fileID: 8300000, guid: 386d05cf79fb19248be52d4291862f4a, type: 3}
   somTlalocPorrada: {fileID: 8300000, guid: 3aad6e7c1f7146b4980c452faaeb149c, type: 3}
   somTlalocMorte: {fileID: 8300000, guid: fff1fb3436e3a544fac9e7cde30d11ca, type: 3}
   somTlaloqueMorte: {fileID: 8300000, guid: 5f805776e07b39147a4354bab64c4728, type: 3}
-  somTlalocRiso: {fileID: 0}
-  somTlalocDor1: {fileID: 0}
-  somTlalocDor2: {fileID: 0}
-  somTlalocTempestadeAmbiente: {fileID: 0}
+  somTlalocRiso: {fileID: 8300000, guid: ba2b98ee27edb3a4db3ba536db415c62, type: 3}
+  somTlalocDor1: {fileID: 8300000, guid: 2a0fa7ceb33afda45b22140dc0b7794e, type: 3}
+  somTlalocDor2: {fileID: 8300000, guid: 2219e95109e5e034b884ca441de9cdab, type: 3}
+  somTlalocTempestadeAmbiente: {fileID: 8300000, guid: 03447418dbf58704e90bc0dee478dbf0, type: 3}
   musicaFaseSerpente: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
   musicaFaseTlaloc: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
-  musicaFaseMulher: {fileID: 0}
+  musicaFaseMulher: {fileID: 8300000, guid: fb09e8de06dc3234c98c340521d3c5d0, type: 3}
   musicaMenu: {fileID: 8300000, guid: a04ec07faed980e4eb3d993cfea6d010, type: 3}
-  musicaWorldMap: {fileID: 0}
+  musicaWorldMap: {fileID: 8300000, guid: 971569828752aac4bb83a644907319fa, type: 3}
   somCliqueBotao: {fileID: 8300000, guid: 19e64001a3e0d2444887c0869349734d, type: 3}
   somRecompensa: {fileID: 0}
 --- !u!4 &1396486386
