@@ -218,6 +218,11 @@ public class Player : MonoBehaviour
         {
             currentHealth -= damage;
 
+            if (animator != null)
+            {
+                animator.SetTrigger("TomouDano");
+            }
+
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayPlayerDano();
 
@@ -311,6 +316,8 @@ public class Player : MonoBehaviour
     {
         isDashing = true;
 
+        if (animator != null) animator.SetBool("isDashing", true);
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayPlayerDash();
 
@@ -319,10 +326,14 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(dashDuration);
         movementSpeed = originalSpeed;
         float tempoRestanteDoCooldown = dashCooldown - dashDuration;
+
+        if (animator != null) animator.SetBool("isDashing", false);
+
         if (tempoRestanteDoCooldown > 0)
         {
             yield return new WaitForSeconds(tempoRestanteDoCooldown);
         }
+
         isDashing = false;
     }
 
