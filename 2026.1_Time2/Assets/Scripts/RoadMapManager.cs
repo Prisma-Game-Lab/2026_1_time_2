@@ -15,10 +15,18 @@ public class RoadMapManager : MonoBehaviour
 
     void Start()
     {
+        if (AudioManager.Instance != null && AudioManager.Instance.musicaWorldMap != null)
+        {
+            AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaWorldMap);
+        }
+
         AtualizarBandeiras();
 
         if (Progresso.TodasFasesCompletas())
         {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayRecompensa();
+
             StartCoroutine(IniciarCutsceneFinal());
         }
     }

@@ -138,6 +138,10 @@ public class MulherScript : MonoBehaviour
     {
         if (isDead || forcarHitboxDesligada) return;
         currentHealth -= damage;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayMulherDanoAleatorio();
+
         StartCoroutine(FlashRed());
         if (currentHealth <= 0)
         {
@@ -321,6 +325,10 @@ public class MulherScript : MonoBehaviour
     {
         canMove = false;
         animMulher.SetTrigger("AttackGiroPreparando");
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayMulherGiro();
+
         yield return new WaitForSeconds(1.0f);
 
         canMove = true;

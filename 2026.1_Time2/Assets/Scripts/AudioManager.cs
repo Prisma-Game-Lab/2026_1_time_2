@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -13,10 +14,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip musicaMenuIntro;
     public AudioClip musicaMenuLoop;
 
+    [Header("Audio Source - Ambiente")]
+    public AudioSource ambienteSource;
+
     private Coroutine rotinaMusica;
 
-    [Header("Sons - Player")]
+    [Header("Sons - Player (Eztli)")]
     public AudioClip somPlayerDano;
+    public AudioClip somPlayerDash;
 
     [Header("Sons - Atlatl")]
     public AudioClip somAtlatlVoando;
@@ -28,17 +33,15 @@ public class AudioManager : MonoBehaviour
 
     [Header("Sons - Serpente")]
     public AudioClip somSerpenteAviso;
+    public AudioClip somSerpenteMato;
     public AudioClip somSerpenteMorte;
 
     [Header("Sons - Mulher")]
     public AudioClip somMulherGrito;
     public AudioClip somMulherMorte;
-
-    [Header("Músicas das Fases")]
-    public AudioClip musicaFaseSerpente;
-    public AudioClip musicaFaseTlaloc;
-    public AudioClip musicaFaseMulher;
-    public AudioClip musicaMenu;
+    public AudioClip somMulherGiro;
+    public AudioClip somMulherDano1;
+    public AudioClip somMulherDano2;
 
     [Header("Sons - Boss Tlaloc")]
     public AudioClip somTlalocLava;
@@ -46,9 +49,21 @@ public class AudioManager : MonoBehaviour
     public AudioClip somTlalocPorrada;
     public AudioClip somTlalocMorte;
     public AudioClip somTlaloqueMorte;
+    public AudioClip somTlalocRiso;
+    public AudioClip somTlalocDor1;
+    public AudioClip somTlalocDor2;
+    public AudioClip somTlalocTempestadeAmbiente;
 
-    [Header("Sons - UI / Menu")]
+    [Header("Músicas das Fases e Mapa")]
+    public AudioClip musicaFaseSerpente;
+    public AudioClip musicaFaseTlaloc;
+    public AudioClip musicaFaseMulher;
+    public AudioClip musicaMenu;
+    public AudioClip musicaWorldMap;
+
+    [Header("Sons - UI / Recompensa")]
     public AudioClip somCliqueBotao;
+    public AudioClip somRecompensa;
 
     void Awake()
     {
@@ -63,6 +78,13 @@ public class AudioManager : MonoBehaviour
         if (sfxSource == null)
             sfxSource = GetComponent<AudioSource>();
 
+        if (ambienteSource == null)
+        {
+            AudioSource[] sources = GetComponents<AudioSource>();
+            if (sources.Length > 2)
+                ambienteSource = sources[2];
+        }
+
         CarregarVolumes();
     }
 
@@ -75,6 +97,7 @@ public class AudioManager : MonoBehaviour
         AudioListener.volume = volGeral;
         if (musicaSource != null) musicaSource.volume = volMusica;
         if (sfxSource != null) sfxSource.volume = volSFX;
+        if (ambienteSource != null) ambienteSource.volume = volSFX;
     }
 
     public void TocarMusicaComIntro(AudioClip introClip, AudioClip loopClip)
@@ -88,7 +111,7 @@ public class AudioManager : MonoBehaviour
         rotinaMusica = StartCoroutine(RotinaTocarIntroELoop(introClip, loopClip));
     }
 
-    private System.Collections.IEnumerator RotinaTocarIntroELoop(AudioClip intro, AudioClip loop)
+    private IEnumerator RotinaTocarIntroELoop(AudioClip intro, AudioClip loop)
     {
         musicaSource.clip = intro;
         musicaSource.loop = false;
@@ -129,6 +152,20 @@ public class AudioManager : MonoBehaviour
             musicaSource.Stop();
     }
 
+    public void TocarAmbiente(AudioClip clip, bool loop = true)
+    {
+        if (clip == null || ambienteSource == null) return;
+        ambienteSource.clip = clip;
+        ambienteSource.loop = loop;
+        ambienteSource.Play();
+    }
+
+    public void PararAmbiente()
+    {
+        if (ambienteSource != null)
+            ambienteSource.Stop();
+    }
+
     public void SetVolumeGeral(float volume)
     {
         AudioListener.volume = volume;
@@ -138,35 +175,62 @@ public class AudioManager : MonoBehaviour
 
     public void SetVolumeMusica(float volume)
     {
-        if (musicaSource != null)
-            musicaSource.volume = volume;
-
+        if (musicaSource != null) musicaSource.volume = volume;
         PlayerPrefs.SetFloat("VolMusica", volume);
         PlayerPrefs.Save();
     }
 
     public void SetVolumeSFX(float volume)
     {
-        if (sfxSource != null)
-            sfxSource.volume = volume;
-
+        if (sfxSource != null) sfxSource.volume = volume;
+        if (ambienteSource != null) ambienteSource.volume = volume;
         PlayerPrefs.SetFloat("VolSFX", volume);
         PlayerPrefs.Save();
     }
 
+    // Player
     public void PlayPlayerDano() => PlaySFX(somPlayerDano);
+    public void PlayPlayerDash() => PlaySFX(somPlayerDash);
+
+    // Armas
     public void PlayAtlatlVoando() => PlaySFX(somAtlatlVoando);
     public void PlayAtlatlAcerto() => PlaySFX(somAtlatlAcerto);
     public void PlayMacuahuitlErro() => PlaySFX(somMacuahuitlErro);
     public void PlayMacuahuitlAcerto() => PlaySFX(somMacuahuitlAcerto);
+
+    // Serpente
     public void PlaySerpenteAviso() => PlaySFX(somSerpenteAviso);
+    public void PlaySerpenteMato() => PlaySFX(somSerpenteMato);
     public void PlaySerpenteMorte() => PlaySFX(somSerpenteMorte);
+
+    // Mulher
     public void PlayMulherGrito() => PlaySFX(somMulherGrito);
     public void PlayMulherMorte() => PlaySFX(somMulherMorte);
+    public void PlayMulherGiro() => PlaySFX(somMulherGiro);
+    public void PlayMulherDanoAleatorio()
+    {
+        AudioClip[] clips = { somMulherDano1, somMulherDano2 };
+        AudioClip sorteado = clips[Random.Range(0, clips.Length)];
+        if (sorteado != null) PlaySFX(sorteado);
+        else PlaySFX(somMulherDano1 != null ? somMulherDano1 : somMulherDano2);
+    }
+
+    // Tlaloc
     public void PlayTlalocLava() => PlaySFX(somTlalocLava);
     public void PlayTlalocRaio() => PlaySFX(somTlalocRaio);
     public void PlayTlalocPorrada() => PlaySFX(somTlalocPorrada);
     public void PlayTlalocMorte() => PlaySFX(somTlalocMorte);
     public void PlayTlaloqueMorte() => PlaySFX(somTlaloqueMorte);
+    public void PlayTlalocRiso() => PlaySFX(somTlalocRiso);
+    public void PlayTlalocDorAleatoria()
+    {
+        AudioClip[] clips = { somTlalocDor1, somTlalocDor2 };
+        AudioClip sorteado = clips[Random.Range(0, clips.Length)];
+        if (sorteado != null) PlaySFX(sorteado);
+        else PlaySFX(somTlalocDor1 != null ? somTlalocDor1 : somTlalocDor2);
+    }
+
+    // UI / Recompensa
     public void PlayCliqueBotao() => PlaySFX(somCliqueBotao);
+    public void PlayRecompensa() => PlaySFX(somRecompensa);
 }
