@@ -60,11 +60,11 @@ public class AtlatlScript : MonoBehaviour
         {
             estaVoando = false;
 
-            BossSnakeAI boss = other.GetComponentInParent<BossSnakeAI>();
+            SerpenteBossManager boss = other.GetComponentInParent<SerpenteBossManager>();
             if (boss != null)
             {
                 AudioClip som = AudioManager.Instance != null ? AudioManager.Instance.somAtlatlAcerto : null;
-                boss.TakeDamage((int)attackDamage, som);
+                boss.TakeDamage((int)attackDamage);
             }
 
             StartCoroutine(GrudarNoInimigo(other.transform));

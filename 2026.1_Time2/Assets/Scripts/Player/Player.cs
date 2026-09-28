@@ -234,6 +234,7 @@ public class Player : MonoBehaviour
                 Destroy(coracoes[currentHealth]);
 
             isInvincible = true;
+            invincibleTime = 3.0f; 
 
             if (flashCoroutine != null) StopCoroutine(flashCoroutine);
             flashCoroutine = StartCoroutine(FlashRed());
@@ -242,6 +243,7 @@ public class Player : MonoBehaviour
             {
                 if (spriteRenderer != null) spriteRenderer.color = corOriginal;
                 deathScreen.SetActive(true);
+                Debug.Log("Player morreu!");
                 Destroy(gameObject);
                 return;
             }
@@ -308,6 +310,8 @@ public class Player : MonoBehaviour
         bool dashInput = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.LeftShift);
         if (dashInput && !isDashing)
         {
+            isInvincible = true;
+            invincibleTime = 0.5f;
             StartCoroutine(DashCoroutine());
         }
     }
