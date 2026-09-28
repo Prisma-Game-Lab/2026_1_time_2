@@ -54,11 +54,11 @@ public class PlayerAttack : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
-            BossSnakeAI boss = other.GetComponentInParent<BossSnakeAI>();
+            SerpenteBossManager boss = other.GetComponentInParent<SerpenteBossManager>();
             if (boss != null)
             {
                 AudioClip som = AudioManager.Instance != null ? AudioManager.Instance.somMacuahuitlAcerto : null;
-                boss.TakeDamage((int)attackDamage, som);
+                boss.TakeDamage((int)attackDamage);
                 inimigosAtingidos.Add(other);
             }
         }

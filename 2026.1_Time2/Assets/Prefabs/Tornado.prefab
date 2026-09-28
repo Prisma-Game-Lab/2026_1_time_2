@@ -91,7 +91,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -137,7 +137,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -158,15 +158,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3437583049548452935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 835538d1c97da5c4881f5cb18f6d5325, type: 3}
+  m_Script: {fileID: 11500000, guid: 5490e2c49b17d4ee3abc8c1e9ec005be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
   damage: 0
-  lifetime: 15
+  lifetime: 10
   framesAnimacao:
   - {fileID: 184971750, guid: 52892986fbee12c47931c7fe5f70246f, type: 3}
   - {fileID: -1952931107, guid: 52892986fbee12c47931c7fe5f70246f, type: 3}
   - {fileID: 87362033, guid: 52892986fbee12c47931c7fe5f70246f, type: 3}
-  tempoEntreFrames: 0.25
+  tempoEntreFrames: 0.1
   multiplicadorHitbox: 0.5

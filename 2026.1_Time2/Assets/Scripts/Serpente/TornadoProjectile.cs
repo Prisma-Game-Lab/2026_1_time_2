@@ -9,14 +9,13 @@ public class TornadoProjectile : MonoBehaviour
     [HideInInspector] public float damage;
     public float lifetime = 3f;
 
-    [Header("Visual - Animação")]
-    public Sprite[] framesAnimacao; // arraste os 3 frames fatiados aqui, na ordem
-    public float tempoEntreFrames = 0.1f; // controla a velocidade do "giro"
+    [Header("Visual - Animacao")]
+    public Sprite[] framesAnimacao; 
+    public float tempoEntreFrames = 0.1f;
 
     [Header("Hitbox")]
     [Range(0.1f, 1f)]
-    public float multiplicadorHitbox = 0.5f; // reduz a hitbox em relação ao sprite (tornado tem muito espaço vazio/transparente nas bordas)
-
+    public float multiplicadorHitbox = 0.5f; 
     private float arenaLeft = -15.05f;
     private float arenaRight = 14.95f;
     private float arenaBottom = -10f;
@@ -74,7 +73,7 @@ public class TornadoProjectile : MonoBehaviour
         transform.position += (Vector3)(moveDirection * speed * Time.deltaTime);
         Ricochet();
 
-        if(BossSnakeAI.Instance.getCurrentHealth() == 0)
+        if(SerpenteBossManager.Instance != null && SerpenteBossManager.Instance.getCurrentHealth() == 0)
         {
             Destroy(gameObject);
         }
