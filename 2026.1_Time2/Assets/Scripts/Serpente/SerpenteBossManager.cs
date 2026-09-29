@@ -61,7 +61,7 @@ public class SerpenteBossManager : MonoBehaviour
         Transform cabeca = snakeMovimento.GetCabeca();
 
         Vector3 pontoDeNascer = new Vector3(-limiteX - 15f, centroDaArena.y, 0f);
-        Quaternion viradaParaDireita = Quaternion.Euler(0, 0, 0); // 0 = Direita
+        Quaternion viradaParaDireita = Quaternion.Euler(0, 0, 0);
         
         snakeMovimento.estaOrbitando = false;
         snakeMovimento.ReposicionarCobra(pontoDeNascer, viradaParaDireita);

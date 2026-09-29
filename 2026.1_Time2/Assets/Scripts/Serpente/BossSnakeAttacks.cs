@@ -18,7 +18,7 @@ public class BossSnakeAttacks : MonoBehaviour
 
     [Header("Configurações do Ataque Tornado")]
     public GameObject tornadoPrefab;
-    public Transform player; // Arraste o jogador para cá no Inspector para os tornados mirarem nele
+    public Transform player;
     public int minTornados = 10;
     public int maxTornados = 20;
     public float tornadoSpawnRadius = 2f;
@@ -27,7 +27,7 @@ public class BossSnakeAttacks : MonoBehaviour
     public float tornadoMinSpeed = 1.5f;
     public float tornadoMaxSpeed = 5f;
     public float tornadoDamage = 1f;
-    public float cadenciaTornado = 0.2f; // Tempo entre cuspir um tornado e outro
+    public float cadenciaTornado = 0.2f;
 
     [Header("Configurações do Bote (Mordida)")]
     public float tempoDeCompressao = 1.5f;
