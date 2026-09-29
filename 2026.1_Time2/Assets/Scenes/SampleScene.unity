@@ -1863,7 +1863,7 @@ MonoBehaviour:
   player: {fileID: 1882627900}
   limiteX: 15
   limiteY: 10
-  maxHealth: 300
+  maxHealth: 800
   corHit: {r: 1, g: 0, b: 0, a: 1}
   duracaoFlashHit: 0.1
   delayEntreAtaques: 5
