@@ -144,7 +144,7 @@ public class SerpenteBossManager : MonoBehaviour
 
         while (!isDead && player!= null)
         {
-            int ataqueSorteado = Random.Range(2, 3);
+            int ataqueSorteado = Random.Range(0, 3);
             
             GravarMemoriaDaOrbita();
             

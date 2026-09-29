@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2e835c753fc9b45bb06d42ff3f4bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 300
+  maxHealth: 1000
   currentHealth: 0
   tempoIniciarBoss: 5
   bastaoScript: {fileID: 2047202424}
