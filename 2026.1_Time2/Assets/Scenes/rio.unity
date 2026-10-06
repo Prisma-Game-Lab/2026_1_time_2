@@ -329,7 +329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5941832418612301831, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -453,6 +453,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &460570907 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4052450648511025581, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 1817406423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &514232433
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,6 +950,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &665084914 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7504193997169811883, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 1817406423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &747269085
 GameObject:
   m_ObjectHideFlags: 0
@@ -2767,6 +2777,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1739039730 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5630355483528014377, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 1817406423}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1757946245
 GameObject:
   m_ObjectHideFlags: 0
@@ -2909,6 +2924,18 @@ PrefabInstance:
       propertyPath: pauseManager
       value: 
       objectReference: {fileID: 211840186}
+    - target: {fileID: 436259246858388179, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: lancasUI.Array.data[0]
+      value: 
+      objectReference: {fileID: 1739039730}
+    - target: {fileID: 436259246858388179, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: lancasUI.Array.data[1]
+      value: 
+      objectReference: {fileID: 665084914}
+    - target: {fileID: 436259246858388179, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: lancasUI.Array.data[2]
+      value: 
+      objectReference: {fileID: 460570907}
     - target: {fileID: 623486109024462249, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

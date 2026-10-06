@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -139,6 +140,7 @@ public class Player : MonoBehaviour
 
         if (Time.timeScale != 0f)
         {
+
             SelectWeapon();
             PlayerDash();
             if (isInvincible)
@@ -307,6 +309,10 @@ public class Player : MonoBehaviour
     private bool isDashing = false;
     void PlayerDash()
     {
+        // Se estiver na cena RoadMap, cancela o dash imediatamente
+        if (SceneManager.GetActiveScene().name == "RoadMap")
+            return;
+
         bool dashInput = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.LeftShift);
         if (dashInput && !isDashing)
         {
