@@ -1342,6 +1342,18 @@ PrefabInstance:
       propertyPath: pauseManager
       value: 
       objectReference: {fileID: 138623366}
+    - target: {fileID: 436259246858388179, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: lancasUI.Array.data[0]
+      value: 
+      objectReference: {fileID: 1258382825}
+    - target: {fileID: 436259246858388179, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: lancasUI.Array.data[1]
+      value: 
+      objectReference: {fileID: 1258382824}
+    - target: {fileID: 436259246858388179, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+      propertyPath: lancasUI.Array.data[2]
+      value: 
+      objectReference: {fileID: 1258382823}
     - target: {fileID: 623486109024462249, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1607,6 +1619,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+--- !u!1 &1258382823 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4052450648511025581, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 1258382822}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1258382824 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7504193997169811883, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 1258382822}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1258382825 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5630355483528014377, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
+  m_PrefabInstance: {fileID: 1258382822}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1707305451
 GameObject:
   m_ObjectHideFlags: 0

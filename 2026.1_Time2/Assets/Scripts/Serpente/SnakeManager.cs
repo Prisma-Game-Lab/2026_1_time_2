@@ -35,6 +35,11 @@ public class SnakeManager : MonoBehaviour
         pendingBodyParts = new List<GameObject>(bodyPartsPrefabs);
         totalPartsNoInicio = bodyPartsPrefabs.Count;
         CreateBodyParts();
+
+        if (AudioManager.Instance != null && AudioManager.Instance.musicaFaseSerpente != null)
+        {
+            AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseSerpente);
+        }
     }
 
     void FixedUpdate()

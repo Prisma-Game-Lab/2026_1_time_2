@@ -84,7 +84,7 @@ public class Tlaloc : MonoBehaviour
             if (p != null) playerTransform = p.transform;
         }
 
-        //StartCoroutine(chooseAttack(tempoIniciarBoss));
+        StartCoroutine(chooseAttack(tempoIniciarBoss));
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
