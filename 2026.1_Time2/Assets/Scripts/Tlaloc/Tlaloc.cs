@@ -62,10 +62,10 @@ public class Tlaloc : MonoBehaviour
 
     [Header("Tela de Vitória")]
     [SerializeField] private GameObject textoVitoria;
-    [SerializeField] private CanvasGroup canvasGroupVitoria;
+    [SerializeField] private GameObject canvasGroupVitoria;
     [SerializeField] private float duracaoFade = 1.5f;
-    [SerializeField] private float delayAntesDoMenu = 2.0f;
-    [SerializeField] private string nomeCenaMenu = "Menu";
+    [SerializeField] private float delayAntesDoMenu = 5.0f;
+    [SerializeField] private string nomeCenaMenu = "RoadMap";
 
     [Header("Controle de Risada")]
     private int risadasRestantes = 3;
@@ -97,9 +97,7 @@ public class Tlaloc : MonoBehaviour
             AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseTlaloc);
         }
 
-        if (textoVitoria != null)
-            textoVitoria.SetActive(false);
-
+        canvasGroupVitoria.SetActive(false);
     }
 
     // Update is called once per frame
@@ -180,24 +178,9 @@ public class Tlaloc : MonoBehaviour
 
     IEnumerator VitoriaCoroutine()
     {
-        if (textoVitoria != null)
+        if (canvasGroupVitoria != null)
         {
-            textoVitoria.SetActive(true);
-
-            if (canvasGroupVitoria != null)
-            {
-                canvasGroupVitoria.alpha = 0f;
-
-                float tempoPassado = 0f;
-                while (tempoPassado < duracaoFade)
-                {
-                    tempoPassado += Time.deltaTime;
-                    canvasGroupVitoria.alpha = Mathf.Clamp01(tempoPassado / duracaoFade);
-                    yield return null;
-                }
-
-                canvasGroupVitoria.alpha = 1f;
-            }
+            canvasGroupVitoria.SetActive(true);
         }
 
         yield return new WaitForSeconds(delayAntesDoMenu);

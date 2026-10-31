@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class SerpenteBossManager : MonoBehaviour
 {
@@ -35,6 +37,12 @@ public class SerpenteBossManager : MonoBehaviour
     
     private Vector3 centroDaArena; 
 
+    [Header("Tela de Vitória")]
+    [SerializeField] private GameObject canvasGroupVitoria;
+    [SerializeField] private float duracaoFade = 1.5f;
+    [SerializeField] private float delayAntesDoMenu = 5.0f;
+    [SerializeField] private string nomeCenaMenu = "RoadMap";
+
     void Awake()
     {
         if (Instance == null) Instance = this;
@@ -49,6 +57,8 @@ public class SerpenteBossManager : MonoBehaviour
         centroDaArena = transform.position;
 
         StartCoroutine(RotinaDeEntrada());
+
+        canvasGroupVitoria.SetActive(false);
     }
 
     IEnumerator RotinaDeEntrada()
@@ -135,6 +145,8 @@ public class SerpenteBossManager : MonoBehaviour
         
         Debug.Log("Serpente derrotada!");
         Destroy(gameObject, 0.5f); 
+
+        StartCoroutine(VitoriaCoroutine());
     }
 
     IEnumerator AttackLoop()
@@ -265,5 +277,19 @@ public class SerpenteBossManager : MonoBehaviour
         
         snakeMovimento.estaOrbitando = true;
         snakeMovimento.speed = velocidadeOriginal;
+    }
+
+    IEnumerator VitoriaCoroutine()
+    {
+        if (canvasGroupVitoria != null)
+        {
+            canvasGroupVitoria.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(delayAntesDoMenu);
+
+        Destroy(gameObject);
+        Progresso.tlalocDerrotado = true;
+        SceneManager.LoadScene(nomeCenaMenu);
     }
 }

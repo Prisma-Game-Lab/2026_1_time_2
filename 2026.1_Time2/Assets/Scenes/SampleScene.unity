@@ -1634,6 +1634,85 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5630355483528014377, guid: 2e825b18d6a2a7e4ebd15d9c7fbe0637, type: 3}
   m_PrefabInstance: {fileID: 1258382822}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1380787095
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4007094532745085139, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134766379814425186, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_Name
+      value: TelaVitoria
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1963.8292
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1280.3844
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.1126995
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8447466554698826646, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005116593744639552, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.47777778
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005116593744639552, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 405
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005116593744639552, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 5.8333
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 8162630687444131751, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+--- !u!1 &1380787096 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6134766379814425186, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+  m_PrefabInstance: {fileID: 1380787095}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1707305451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,13 +2081,17 @@ MonoBehaviour:
   player: {fileID: 1882627900}
   limiteX: 15
   limiteY: 10
-  maxHealth: 800
+  maxHealth: 500
   corHit: {r: 1, g: 0, b: 0, a: 1}
   duracaoFlashHit: 0.1
   delayEntreAtaques: 5
   multiplicadorVelocidadeTangente: 3
   isAtivo: 0
   tempoDeEsperaInicial: 3
+  canvasGroupVitoria: {fileID: 1380787096}
+  duracaoFade: 1.5
+  delayAntesDoMenu: 5
+  nomeCenaMenu: RoadMap
 --- !u!114 &2034767018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2252,3 +2335,4 @@ SceneRoots:
   - {fileID: 3155170139930973591}
   - {fileID: 1258382822}
   - {fileID: 2034767016}
+  - {fileID: 1380787095}

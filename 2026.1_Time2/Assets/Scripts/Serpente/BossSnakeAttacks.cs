@@ -241,6 +241,12 @@ public class BossSnakeAttacks : MonoBehaviour
             yield return null;
         }
 
+        if (player == null)
+        {
+            Debug.LogWarning("Player não encontrado! Abortando ataque de mordida.");
+            yield break;
+        }
+        
         Vector3 alvoDoBote = player.position; 
         
         for (int i = 1; i < corpo.Count; i++)

@@ -18,6 +18,7 @@ public class DialogoFinal : MonoBehaviour
     public LinhaDialogoFinal[] falas;
     public float velocidadeTexto;
     public string proximaCena;
+    public GameObject indicadorClique;
 
     [Header("Imagens da Cutscene")]
     public GameObject imagem1;
@@ -33,12 +34,14 @@ public class DialogoFinal : MonoBehaviour
 
         if (imagem1 != null) imagem1.SetActive(true);
         if (imagem2 != null) imagem2.SetActive(false);
+        indicadorClique.SetActive(false);
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            indicadorClique.SetActive(false);
             if (textComponent.text == falas[index].texto)
             {
                 ProximaFala();
@@ -47,6 +50,8 @@ public class DialogoFinal : MonoBehaviour
             {
                 StopAllCoroutines();
                 textComponent.text = falas[index].texto;
+                indicadorClique.SetActive(true);
+                StartCoroutine(ShakeIndicador());
             }
         }
     }
@@ -58,6 +63,8 @@ public class DialogoFinal : MonoBehaviour
             textComponent.text += c;
             yield return new WaitForSeconds(velocidadeTexto);
         }
+        indicadorClique.SetActive(true);
+        StartCoroutine(ShakeIndicador());
     }
 
     void ProximaFala()
@@ -67,6 +74,7 @@ public class DialogoFinal : MonoBehaviour
             index++;
             textComponent.text = string.Empty;
             StartCoroutine(DigitaFala());
+            StopCoroutine(ShakeIndicador());
 
             if (index == 1)
             {
@@ -77,6 +85,17 @@ public class DialogoFinal : MonoBehaviour
         else
         {
             SceneManager.LoadScene("Menu");
+        }
+    }
+
+    IEnumerator ShakeIndicador()
+    {
+        Debug.Log("Animação do indicador de clique subindo e descendo!");
+        while (true)
+        {
+            float newY = -25f + Mathf.Sin(Time.time * 5f) * 7f; 
+            indicadorClique.transform.localPosition = new Vector3(indicadorClique.transform.localPosition.x, newY, indicadorClique.transform.localPosition.z);
+            yield return null;
         }
     }
 }
