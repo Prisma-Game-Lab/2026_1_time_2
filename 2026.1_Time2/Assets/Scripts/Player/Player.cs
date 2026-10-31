@@ -316,6 +316,8 @@ public class Player : MonoBehaviour
         bool dashInput = Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.LeftShift);
         if (dashInput && !isDashing)
         {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayPlayerDash();
             isInvincible = true;
             invincibleTime = 0.5f;
             StartCoroutine(DashCoroutine());
@@ -328,8 +330,6 @@ public class Player : MonoBehaviour
 
         if (animator != null) animator.SetBool("isDashing", true);
 
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlayPlayerDash();
 
         float originalSpeed = movementSpeed;
         movementSpeed += dashSpeed;
