@@ -67,8 +67,10 @@ public class Tlaloc : MonoBehaviour
     [SerializeField] private float delayAntesDoMenu = 5.0f;
     [SerializeField] private string nomeCenaMenu = "RoadMap";
 
-    [Header("Controle de Risada")]
+    [Header("Controle de Risada e Som de Dano")]
     private int risadasRestantes = 3;
+    [Range(0f, 1f)]
+    [SerializeField] private float chanceGritoDor = 0.25f;
 
 
     // Start is called before the first frame update
@@ -124,8 +126,11 @@ public class Tlaloc : MonoBehaviour
         if (isDead) return;
         currentHealth -= damage;
 
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlayTlalocDorAleatoria();
+        if (Random.value < chanceGritoDor)
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayTlalocDorAleatoria();
+        }
 
         StartCoroutine(FlashRed());
         if (currentHealth <= 0)

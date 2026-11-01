@@ -66,6 +66,10 @@ public class MulherScript : MonoBehaviour
     [SerializeField] private float delayAntesDoMenu = 2.0f;
     [SerializeField] private string nomeCenaMenu = "Menu";
 
+    [Header("Som de Dano")]
+    [Range(0f, 1f)]
+    [SerializeField] private float chanceGritoDor = 0.25f;
+
     void Start()
     {
         StartCoroutine(ChooseAttack(tempoIniciarBoss));
@@ -139,8 +143,11 @@ public class MulherScript : MonoBehaviour
         if (isDead || forcarHitboxDesligada) return;
         currentHealth -= damage;
 
-        if (AudioManager.Instance != null)
-            AudioManager.Instance.PlayMulherDanoAleatorio();
+        if (Random.value < chanceGritoDor)
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayTlalocDorAleatoria();
+        }
 
         StartCoroutine(FlashRed());
         if (currentHealth <= 0)
