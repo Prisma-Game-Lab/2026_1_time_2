@@ -38,7 +38,8 @@ public class SerpenteBossManager : MonoBehaviour
     private Vector3 centroDaArena; 
 
     [Header("Tela de Vitória")]
-    [SerializeField] private GameObject canvasGroupVitoria;
+    [SerializeField] private GameObject textoVitoria;
+    [SerializeField] private CanvasGroup canvasGroupVitoria;
     [SerializeField] private float duracaoFade = 1.5f;
     [SerializeField] private float delayAntesDoMenu = 5.0f;
     [SerializeField] private string nomeCenaMenu = "RoadMap";
@@ -58,7 +59,8 @@ public class SerpenteBossManager : MonoBehaviour
 
         StartCoroutine(RotinaDeEntrada());
 
-        canvasGroupVitoria.SetActive(false);
+        if (textoVitoria != null)
+            textoVitoria.SetActive(false);
     }
 
     IEnumerator RotinaDeEntrada()
@@ -113,6 +115,7 @@ public class SerpenteBossManager : MonoBehaviour
             isDead = true;
             Die();
         }
+
     }
 
     public int getCurrentHealth()
@@ -142,9 +145,21 @@ public class SerpenteBossManager : MonoBehaviour
     {
         StopAllCoroutines();
         if (ataques != null) ataques.StopAllCoroutines();
-        
+
         Debug.Log("Serpente derrotada!");
-        Destroy(gameObject, 0.5f); 
+
+
+        SpriteRenderer[] partesDoCorpo = GetComponentsInChildren<SpriteRenderer>();
+        foreach (SpriteRenderer parte in partesDoCorpo)
+        {
+            parte.enabled = false;
+        }
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = false;
+        }
 
         StartCoroutine(VitoriaCoroutine());
     }
@@ -281,15 +296,30 @@ public class SerpenteBossManager : MonoBehaviour
 
     IEnumerator VitoriaCoroutine()
     {
-        if (canvasGroupVitoria != null)
+        if (textoVitoria != null)
         {
-            canvasGroupVitoria.SetActive(true);
+            textoVitoria.SetActive(true);
+
+            if (canvasGroupVitoria != null)
+            {
+                canvasGroupVitoria.alpha = 0f;
+
+                float tempoPassado = 0f;
+                while (tempoPassado < duracaoFade)
+                {
+                    tempoPassado += Time.deltaTime;
+                    canvasGroupVitoria.alpha = Mathf.Clamp01(tempoPassado / duracaoFade);
+                    yield return null;
+                }
+                canvasGroupVitoria.alpha = 1f;
+            }
         }
+
 
         yield return new WaitForSeconds(delayAntesDoMenu);
 
         Destroy(gameObject);
-        Progresso.tlalocDerrotado = true;
+        Progresso.serpenteDerrotada = true;
         SceneManager.LoadScene(nomeCenaMenu);
     }
 }

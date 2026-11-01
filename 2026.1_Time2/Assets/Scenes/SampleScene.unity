@@ -336,6 +336,16 @@ Transform:
   - {fileID: 1776091514}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &291338298 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6135938264283590888, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+  m_PrefabInstance: {fileID: 1380787095}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &291338300 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 7674144448679060106, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+  m_PrefabInstance: {fileID: 1380787095}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &441641762 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 499270001979620380, guid: ab8fb714effda489888aaa02edad5dee, type: 3}
@@ -1646,6 +1656,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4491958487767003488, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6134766379814425186, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
       propertyPath: m_Name
       value: TelaVitoria
@@ -1695,12 +1709,20 @@ PrefabInstance:
       value: 0.47777778
       objectReference: {fileID: 0}
     - target: {fileID: 9005116593744639552, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 819.6863
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005116593744639552, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 405
+      value: 291.8615
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005116593744639552, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.00000089407
       objectReference: {fileID: 0}
     - target: {fileID: 9005116593744639552, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5.8333
+      value: -0.00000047683716
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -1708,11 +1730,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
---- !u!1 &1380787096 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6134766379814425186, guid: 990c7836f119d420d9cdd21ec70daed5, type: 3}
-  m_PrefabInstance: {fileID: 1380787095}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1707305451
 GameObject:
   m_ObjectHideFlags: 0
@@ -2088,9 +2105,10 @@ MonoBehaviour:
   multiplicadorVelocidadeTangente: 3
   isAtivo: 0
   tempoDeEsperaInicial: 3
-  canvasGroupVitoria: {fileID: 1380787096}
+  textoVitoria: {fileID: 291338298}
+  canvasGroupVitoria: {fileID: 291338300}
   duracaoFade: 1.5
-  delayAntesDoMenu: 5
+  delayAntesDoMenu: 3
   nomeCenaMenu: RoadMap
 --- !u!114 &2034767018
 MonoBehaviour:
