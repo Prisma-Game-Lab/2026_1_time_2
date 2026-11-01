@@ -62,7 +62,7 @@ public class Tlaloc : MonoBehaviour
 
     [Header("Tela de Vitória")]
     [SerializeField] private GameObject textoVitoria;
-    [SerializeField] private GameObject canvasGroupVitoria;
+    [SerializeField] private CanvasGroup canvasGroupVitoria;
     [SerializeField] private float duracaoFade = 1.5f;
     [SerializeField] private float delayAntesDoMenu = 5.0f;
     [SerializeField] private string nomeCenaMenu = "RoadMap";
@@ -99,7 +99,8 @@ public class Tlaloc : MonoBehaviour
             AudioManager.Instance.TocarMusica(AudioManager.Instance.musicaFaseTlaloc);
         }
 
-        canvasGroupVitoria.SetActive(false);
+        if (textoVitoria != null)
+            textoVitoria.SetActive(false);
     }
 
     // Update is called once per frame
@@ -183,9 +184,24 @@ public class Tlaloc : MonoBehaviour
 
     IEnumerator VitoriaCoroutine()
     {
-        if (canvasGroupVitoria != null)
+        if (textoVitoria != null)
         {
-            canvasGroupVitoria.SetActive(true);
+            textoVitoria.SetActive(true);
+
+            if (canvasGroupVitoria != null)
+            {
+                canvasGroupVitoria.alpha = 0f;
+
+                float tempoPassado = 0f;
+                while (tempoPassado < duracaoFade)
+                {
+                    tempoPassado += Time.deltaTime;
+                    canvasGroupVitoria.alpha = Mathf.Clamp01(tempoPassado / duracaoFade);
+                    yield return null;
+                }
+
+                canvasGroupVitoria.alpha = 1f;
+            }
         }
 
         yield return new WaitForSeconds(delayAntesDoMenu);
