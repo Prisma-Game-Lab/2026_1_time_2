@@ -9,10 +9,20 @@ public class MulherScript : MonoBehaviour
     public int maxHealth = 300;
     [SerializeField] private float currentHealth;
     private bool isDead = false;
-    private bool canMove = true;
     public float tempoIniciarBoss = 2.0f;
 
     public PlayerAttack bastaoScript;
+
+    [Header("Controle de Ataques")]
+    [SerializeField] private float intervaloEntreAtaques = 3f;
+    private bool ataqueEmAndamento = false;
+    private bool canMove = true;
+    private bool emPoseDeAtaque = false;
+
+    [Header("Movimento")]
+    [SerializeField] private float velocidade = 2f;
+    [SerializeField] private float margemTrocaDirecao = 0.25f;
+    private Vector2 direcaoAnim = Vector2.down;
 
     [Header("Configurações do Ataque Laser (Raio Lunar)")]
     [SerializeField] private int quantidadeDeLasers = 3;
@@ -26,6 +36,7 @@ public class MulherScript : MonoBehaviour
 
     [Header("Configurações do Ataque de Choro")]
     [SerializeField] private float tempoDeChoro = 10.0f;
+    [SerializeField] private float tempoSaidaChoro = 0.6f;
     [SerializeField] private float forçaDoChoro = 3f;
     [SerializeField] private float CooldownPeixes = 1f;
     [SerializeField] private GameObject piranhas;
@@ -52,12 +63,14 @@ public class MulherScript : MonoBehaviour
 
     [Header("Piscar ao tomar dano")]
     public float flashInterval = 0.1f;
-   [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private Color corOriginal;
 
     [Header("Animação")]
     public Animator animMulher;
     public Animator animLaser;
+    private static readonly int hashAndando = Animator.StringToHash("Andando");
+    private static readonly int hashDirecao = Animator.StringToHash("Direcao");
 
     [Header("Tela de Vitória")]
     [SerializeField] private GameObject textoVitoria;
@@ -97,6 +110,8 @@ public class MulherScript : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+
         if (player != null && pivotLaser != null && !laserAtualLockado)
         {
             Vector3 direcao = player.position - pivotLaser.transform.position;
@@ -104,23 +119,19 @@ public class MulherScript : MonoBehaviour
             pivotLaser.transform.rotation = Quaternion.Euler(0f, 0f, angulo);
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        if (!ataqueEmAndamento)
         {
-            StartCoroutine(LaserAttack());
-        }
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            StartCoroutine(ChoroAttack());
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            StartCoroutine(PiruetaAttack());
+            if (Input.GetKeyDown(KeyCode.P)) StartCoroutine(LaserAttack());
+            if (Input.GetKeyDown(KeyCode.O)) StartCoroutine(ChoroAttack());
+            if (Input.GetKeyDown(KeyCode.I)) StartCoroutine(PiruetaAttack());
         }
 
         if (canMove && player != null)
         {
             Move();
         }
+
+        AtualizarAnimacaoMovimento();
 
         if (forcarHitboxDesligada)
         {
@@ -134,8 +145,44 @@ public class MulherScript : MonoBehaviour
     public void Move()
     {
         Vector2 direcao = (player.position - transform.position).normalized;
-        float velocidade = 2f;
         transform.position += (Vector3)(direcao * velocidade * Time.deltaTime);
+    }
+
+    void AtualizarAnimacaoMovimento()
+    {
+        if (animMulher == null) return;
+
+        bool andando = canMove && !emPoseDeAtaque && player != null;
+        animMulher.SetBool(hashAndando, andando);
+
+        if (!andando) return;
+
+        Vector2 dir = (player.position - transform.position).normalized;
+        AtualizarDirecao(dir);
+        animMulher.SetInteger(hashDirecao, DirecaoParaInt(direcaoAnim));
+    }
+
+    void AtualizarDirecao(Vector2 dir)
+    {
+        float ax = Mathf.Abs(dir.x);
+        float ay = Mathf.Abs(dir.y);
+        bool horizontalAtual = direcaoAnim.x != 0f;
+
+        bool horizontal = horizontalAtual
+            ? ax + margemTrocaDirecao >= ay
+            : ax > ay + margemTrocaDirecao;
+
+        direcaoAnim = horizontal
+            ? new Vector2(Mathf.Sign(dir.x), 0f)
+            : new Vector2(0f, Mathf.Sign(dir.y));
+    }
+
+    int DirecaoParaInt(Vector2 d)
+    {
+        if (d.x < 0f) return 0;
+        if (d.x > 0f) return 1;
+        if (d.y > 0f) return 2;
+        return 3;
     }
 
     public void TakeDamage(float damage)
@@ -161,6 +208,7 @@ public class MulherScript : MonoBehaviour
     void Die()
     {
         StopAllCoroutines();
+        LimparEstadoDeAtaque();
 
         if (spriteRenderer != null)
             spriteRenderer.enabled = false;
@@ -175,6 +223,22 @@ public class MulherScript : MonoBehaviour
         Debug.Log("Mulher derrotada!");
 
         StartCoroutine(VitoriaCoroutine());
+    }
+
+    void LimparEstadoDeAtaque()
+    {
+        canMove = false;
+        emPoseDeAtaque = false;
+        ataqueEmAndamento = false;
+        laserAtualLockado = false;
+        forcarHitboxDesligada = false;
+
+        pivotLaser.SetActive(false);
+        piranhas.SetActive(false);
+        if (colliderDoLaser != null) colliderDoLaser.enabled = false;
+        if (colliderPirueta != null) colliderPirueta.enabled = false;
+        if (scriptDeMovimento != null) scriptDeMovimento.forcaExterna = Vector2.zero;
+        if (animMulher != null) animMulher.SetBool(hashAndando, false);
     }
 
     IEnumerator VitoriaCoroutine()
@@ -232,28 +296,30 @@ public class MulherScript : MonoBehaviour
 
         while (player != null)
         {
+            yield return new WaitUntil(() => !ataqueEmAndamento);
+
             int randomAttack = Random.Range(0, 3);
             switch (randomAttack)
             {
-                case 0:
-                    StartCoroutine(ChoroAttack());
-                    break;
-                case 1:
-                    StartCoroutine(LaserAttack());
-                    break;
-                case 2:
-                    StartCoroutine(PiruetaAttack());
-                    break;
+                case 0: yield return StartCoroutine(ChoroAttack());   break;
+                case 1: yield return StartCoroutine(LaserAttack());   break;
+                case 2: yield return StartCoroutine(PiruetaAttack()); break;
             }
-            yield return new WaitForSeconds(10f);
+
+            yield return new WaitForSeconds(intervaloEntreAtaques);
         }
     }
 
     IEnumerator LaserAttack()
     {
-        canMove = false;
+        if (ataqueEmAndamento) yield break;
+        ataqueEmAndamento = true;
+
         for (int i = 0; i < quantidadeDeLasers; i++)
         {
+            canMove = false;
+            emPoseDeAtaque = true;
+
             animMulher.SetTrigger("AttackLaser");
             animLaser.SetTrigger("LaserPreparando");
             pivotLaser.SetActive(true);
@@ -272,16 +338,25 @@ public class MulherScript : MonoBehaviour
             laserAtualLockado = false;
             pivotLaser.SetActive(false);
             animMulher.SetTrigger("AttackLaserParando");
+
+            canMove = true;
+            emPoseDeAtaque = false;
             yield return new WaitForSeconds(intervaloEntreLasers);
         }
+
         canMove = true;
-        yield return new WaitForSeconds(5.0f);
+        emPoseDeAtaque = false;
+        ataqueEmAndamento = false;
     }
 
     IEnumerator ChoroAttack()
     {
-        animMulher.SetTrigger("AttackChoroPreparando");
+        if (ataqueEmAndamento) yield break;
+        ataqueEmAndamento = true;
+
         canMove = false;
+        emPoseDeAtaque = true;
+        animMulher.SetTrigger("AttackChoroPreparando");
         transform.position = new Vector3(-15f, 0f, 0f);
 
         if (AudioManager.Instance != null)
@@ -315,8 +390,13 @@ public class MulherScript : MonoBehaviour
             scriptDeMovimento.forcaExterna = Vector2.zero;
         }
         piranhas.SetActive(false);
-        canMove = true;
         animMulher.SetTrigger("AttackChoroParando");
+
+        yield return new WaitForSeconds(tempoSaidaChoro);
+
+        canMove = true;
+        emPoseDeAtaque = false;
+        ataqueEmAndamento = false;
     }
 
     void SpawnarPeixes()
@@ -330,7 +410,11 @@ public class MulherScript : MonoBehaviour
 
     IEnumerator PiruetaAttack()
     {
+        if (ataqueEmAndamento) yield break;
+        ataqueEmAndamento = true;
+
         canMove = false;
+        emPoseDeAtaque = true;
         animMulher.SetTrigger("AttackGiroPreparando");
 
         if (AudioManager.Instance != null)
@@ -350,20 +434,18 @@ public class MulherScript : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         colliderPirueta.enabled = false;
         forcarHitboxDesligada = false;
-        canMove = true;
         AlterarCollidersMulher(true);
+
+        canMove = true;
+        emPoseDeAtaque = false;
+        ataqueEmAndamento = false;
     }
 
     void AlterarCollidersMulher(bool estado)
     {
-        Debug.Log("Alterando estado dos colliders do corpo para: " + estado);
         foreach (Collider2D col in collidersDoCorpo)
         {
-            if (col != null)
-            {
-                col.enabled = estado;
-                Debug.Log("Collider " + col.name + " alterado para: " + estado);
-            }
+            if (col != null) col.enabled = estado;
         }
     }
 
